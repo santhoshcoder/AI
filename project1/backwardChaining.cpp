@@ -1,9 +1,9 @@
+/*
 Enclosed a program, which comprises the inference engine based on backward chaining.  You need it for your 
 project #1.  The program contains some errors and it is not designed to be efficient. 
 Modify the program to make it better and efficient.  Explain in your report how you have modified the
 program to make it better.
-
-
+*/
 
 /*****backward chaining *******/ 
 /* Install your IF clauses in sequence in the first case 
@@ -15,8 +15,9 @@ program to make it better.
    install your the clauses in sequence in the second 
    case statement of the main program 
    example strcpy(po,"YES"); 
-
-
+*/
+#include <stdio.h>
+#include <string.h>
 /*  conclusion list */ 
 char conclt[10][3]; 
 /*  variable list */ 
@@ -108,84 +109,102 @@ key. */
         { 
                 printf("** CLAUSE %d\n", i); 
                 for(j=1; j<5; j++) 
-                { k = 4 * (i-1) + j; 
-                  printf("VARIABLE %d  %s\n", j, clvarlt[k]); } 
+                { 
+                  k = 4 * (i-1) + j; 
+                  printf("VARIABLE %d  %s\n", j, clvarlt[k]); 
+                } 
                 if (i==4) 
-                { printf("HIT RETURN KEY TO CONTINUE"); gets(buff); } 
+                { 
+                  printf("HIT RETURN KEY TO CONTINUE"); gets(buff); 
+                } 
         } 
+
+
+
+
+        
+
+
+
+
         /****** inference section *****/ 
-        printf("** ENTER CONCLUSION ? "); gets(varble); 
+        printf("** ENTER CONCLUSION ? "); 
+        gets(varble); 
+        
         /* get conclusion statement number (sn) from the conclusion list 
            (conclt) */ 
         /* first statement starts search */ 
-b520: f=1; 
+        b520: f=1; 
           determine_member_concl_list(); 
-          if (sn != 0){ 
-                  /* if sn = 0 then no conclusion of that name */ do 
+          if (sn != 0)
+          { 
+                  /* if sn = 0 then no conclusion of that name */ 
+            do 
                   /* push statement number (sn) and clause number=1 on 
-goal 
-                     stack which is composed of the statement stack 
-(statsk) 
-                     and clause stack (clausk) */ 
+                  goal stack which is composed of the statement stack (statsk) and clause stack (clausk) */ 
                   { 
                           push_on_stack(); 
                           do 
                           { 
                            /* calculate clause location in clause-variable 
                               list */ 
-b545: i= (statsk[sp] -1) *4 + clausk[sp]; 
-          /* clause variable */ 
-          strcpy(varble, clvarlt[i]); 
-          if(strcmp(varble, "") != 0) { 
-                  /*is this clause variable a conclusion? */ 
-                  f = 1; 
-                  determine_member_concl_list(); 
-                  if(sn != 0) 
-                          /* it is a conclusion push it */ 
-                          goto b520; 
-                  /* check instantiation of this clause */ 
-                  instantiate(); 
-                  clausk[sp] = clausk[sp] + 1; 
-          } 
-                          } while(strcmp(varble, "") != 0); /*do-while*/ 
+                            b545: i= (statsk[sp] -1) *4 + clausk[sp]; 
+                                      /* clause variable */ 
+                                      strcpy(varble, clvarlt[i]); 
+                            if(strcmp(varble, "") != 0) 
+                            { 
+                                    /*is this clause variable a conclusion? */ 
+                                    f = 1; 
+                                    determine_member_concl_list(); 
+                                    if(sn != 0) 
+                                            /* it is a conclusion push it */ 
+                                            goto b520; 
+                                    /* check instantiation of this clause */ 
+                                    instantiate(); 
+                                    clausk[sp] = clausk[sp] + 1; 
+                            } 
+                          } 
+                          while(strcmp(varble, "") != 0); /*do-while*/ 
                           /*no more clauses check if part of statement */ 
                           sn = statsk[sp]; 
                           s = 0; 
                           /**** if then statements ****/ 
                           /* sample if parts of if then statements from 
                              the position knowledge base */ 
-                          switch (sn) { 
-                                  /* if part of statement 1 */ 
-                                  /****** comment 1500 ****/ 
-                          case 1: if(strcmp(de, "NO") == 0) s = 1; 
-                                  break; 
-                                  /* if part of statement 2 */ 
-                                  /***** comment 1510 ******/ 
-                          case 2: if(strcmp(de, "YES") == 0) s = 1; 
-                                  break; 
-                                  /* if part of statement 3 */ 
-                          case 3: if((strcmp(de, "YES") == 0) && 
-                                     (strcmp(di, "YES") == 0)) s =1; 
-                                  break; 
-                                  /* if part of statement 4 */ 
-                                  /******** comment 1560 ******/ 
-                          case 4: if((strcmp(qu, "YES") == 0) && 
-                                     (gr<3.5) && (ex >= 2)) s = 1; 
-                                  break; 
-                                  /******** comment 1570 ********/ 
-                                  /* if part of statement 5 */ 
-                          case 5: if((strcmp(qu, "YES") == 0) && 
-                                     (gr<3) && (ex<2)) s = 1; 
-                                  break; 
-                                  /* if part of statement 6 */ 
-                          case 6: if((strcmp(qu, "YES") == 0) && 
-                                     (gr >=3.5)) s = 1; 
+                          switch (sn) 
+                          { 
+                                    /* if part of statement 1 */ 
+                                    /****** comment 1500 ****/ 
+                            case 1: if(strcmp(de, "NO") == 0) s = 1; 
+                                    break; 
+                                    /* if part of statement 2 */ 
+                                    /***** comment 1510 ******/ 
+                            case 2: if(strcmp(de, "YES") == 0) s = 1; 
+                                    break; 
+                                    /* if part of statement 3 */ 
+                            case 3: if((strcmp(de, "YES") == 0) && 
+                                       (strcmp(di, "YES") == 0)) s =1; 
+                                    break; 
+                                    /* if part of statement 4 */ 
+                                    /******** comment 1560 ******/ 
+                            case 4: if((strcmp(qu, "YES") == 0) && 
+                                       (gr<3.5) && (ex >= 2)) s = 1; 
+                                    break; 
+                                    /******** comment 1570 ********/ 
+                                    /* if part of statement 5 */ 
+                            case 5: if((strcmp(qu, "YES") == 0) && 
+                                       (gr<3) && (ex<2)) s = 1; 
+                                    break; 
+                                    /* if part of statement 6 */ 
+                            case 6: if((strcmp(qu, "YES") == 0) && 
+                                       (gr >=3.5)) s = 1; 
 
-                                  break; 
-                                  /********* comment 1680 ******/ 
+                                    break; 
+                                    /********* comment 1680 ******/ 
                           } 
                           /* see if the then part should be invoked */ 
-                          if( s != 1) { 
+                          if( s != 1) 
+                          { 
                                   /* failed..search rest of statements for 
                                      same conclusion */ 
                                   /* get conclusion */ 
@@ -198,48 +217,52 @@ b545: i= (statsk[sp] -1) *4 + clausk[sp];
                                   sp = sp+1; 
                           } 
                           /* pop old conclusion and put on new one */ 
-                  } while((s != 1) && (sn !=0));  /* outer do-while loop */ 
-                  if(sn != 0){ 
+                  } 
+                  while((s != 1) && (sn !=0));  /* outer do-while loop */ 
+                  if(sn != 0)
+                  { 
                           /* if part true invoke then part */ 
                           /* then part of if-then statements from the 
                              position knowledge base */ 
-                          switch (sn) { 
-                                  /* then part of statement 1 */ 
-                                  /******* comment 1500 *******/ 
-                          case 1: strcpy(po, "NO"); 
-                                  printf("PO=NO\n"); 
-                                  break; 
-                                  /* then part of statement 2 */ 
-                                  /****** comment 1510 ******/ 
-                          case 2: strcpy(qu, "YES"); 
-                                  printf("QU=YES\n"); 
-                                  break; 
-                                  /* then part of statement 3 */ 
-                          case 3: strcpy(po, "YES"); 
-                                  printf("PO=RESEARCH\n"); 
-                                  break; 
-                                  /* then part of statement 4 */ 
-                                  /******** comment 1560 ******/ 
-                          case 4: strcpy(po, "YES"); 
-                                  printf("PO=SERVICE ENGINEER\n"); 
-                                  break; 
-                                  /* then part of statement 5 */ 
-                                  /****** comment 1570 *****/ 
-                          case 5: strcpy(po, "NO"); 
-                                  printf("PO=NO"); 
-                                  break; 
-                                  /* then part of statement 6 */ 
-                          case 6: strcpy(po, "YES"); 
-                                  printf("PO=PRODUCT ENGINEER\n"); 
-                                  break; 
-                                  /****** comment 1680 ********/ 
+                          switch (sn) 
+                          { 
+                                    /* then part of statement 1 */ 
+                                    /******* comment 1500 *******/ 
+                            case 1: strcpy(po, "NO"); 
+                                    printf("PO=NO\n"); 
+                                    break; 
+                                    /* then part of statement 2 */ 
+                                    /****** comment 1510 ******/ 
+                            case 2: strcpy(qu, "YES"); 
+                                    printf("QU=YES\n"); 
+                                    break; 
+                                    /* then part of statement 3 */ 
+                            case 3: strcpy(po, "YES"); 
+                                    printf("PO=RESEARCH\n"); 
+                                    break; 
+                                    /* then part of statement 4 */ 
+                                    /******** comment 1560 ******/ 
+                            case 4: strcpy(po, "YES"); 
+                                    printf("PO=SERVICE ENGINEER\n"); 
+                                    break; 
+                                    /* then part of statement 5 */ 
+                                    /****** comment 1570 *****/ 
+                            case 5: strcpy(po, "NO"); 
+                                    printf("PO=NO"); 
+                                    break; 
+                                    /* then part of statement 6 */ 
+                            case 6: strcpy(po, "YES"); 
+                                    printf("PO=PRODUCT ENGINEER\n"); 
+                                    break; 
+                                    /****** comment 1680 ********/ 
                           } 
                           /* pop the stack */ 
                           sp=sp+1; 
                           if(sp >= 11) 
                                   /* finished */ 
                                   printf("*** SUCCESS\n"); 
-                          else { 
+                          else 
+                          { 
                                   /* stack is not empty */ 
                                   /* get next clause then continue */ 
                                   clausk[sp] = clausk[sp]+1; 
