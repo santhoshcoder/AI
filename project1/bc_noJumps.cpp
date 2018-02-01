@@ -19,21 +19,22 @@ program to make it better.
 
 /*
   1) Give valid function names                                -- Completed
-  2) Eliminate global variables and rewrite the program
+  2) Eliminate global variables and rewrite the program       
   3) Implement it using classes
   4) Seperate Knowledge Base and Inference Engine
 */
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
-int determine_member_concl_list(int ,char [3],int &);
-void push_on_stack(int &sp,int sn,int statsk[11],int clausk[11]); 
-void instantiate(int &i,char varble[3],char varlt[10][3],int instlt[11],char de[4],char di[4],float ex,float gr);
+int determine_member_concl_list(int &,char [3],int &,char [10][3]);
+void push_on_stack(int &,int &,int [11],int [11]); 
+void instantiate(int &,char [3],char [10][3],int [11],char [4],char [4],float &,float &);
 
-void mappingClause(int &,char [3],int &,int &,int &,int [11],int [11],char [10][3],int [11],char [4],char [4],float ,float); 
-void thenPart(int &,char [4],char [4],int &,int [11],int &,int &,char [3],int [11],int &,char [10][3],int [11],char [4],char [4],float ,float);
-void process(int,int,int [11],int [11],int &,char [3],int &,char [10][3],int [11],char [4],char [4],float ,float);
-void noConclusion(int &,int &,int [11],int [11],int &,char [3],int &,char [10][3],int [11],char [4],char [4],float ,float)
+void mappingClause(int &,char [3],int &,int &,int &,int [11],int [11],char [10][3],int [11],char [4],char [4],float &,float &,char [4],char [4],int &,char [10][3],char [40][3]); 
+void thenPart(int &,char [4],char [4],int &,int [11],int &,int &,char [3],int [11],int &,char [10][3],int [11],char [4],char [4],float &,float &,char [10][3],char [40][3]);
+void process(int &,int &,int [11],int [11],int &,char [3],int &,char [10][3],int [11],char [4],char di[4],float &,float &,char [4],char [4],int &,char [10][3],char [40][3]);
+void noConclusion(int &,int &,int [11],int [11],int &,char [3],int &,char [10][3],int [11],char [4],char [4],float &,float &,char [4],char [4],int &,char [10][3],char [40][3]);
 
 main() 
 { 
@@ -147,32 +148,32 @@ key. */
         /* get conclusion statement number (sn) from the conclusion list 
            (conclt) */ 
         /* first statement starts search */ 
-        process(sp,sn,statsk,clausk,f,varble,i,varlt,instlt,de,di,ex,gr);
+        process(sp,sn,statsk,clausk,f,varble,i,varlt,instlt,de,di,ex,gr,po,qu,s,conclt,clvarlt);
 }
-void process(int &sp,int sn,int statsk[11],int clausk[11],int &f,char varble[3],int &i,char varlt[10][3],int instlt[11],char de[4],char di[4],float ex,float gr)
+void process(int &sp,int &sn,int statsk[11],int clausk[11],int &f,char varble[3],int &i,char varlt[10][3],int instlt[11],char de[4],char di[4],float &ex,float &gr,char po[4],char qu[4],int &s,char conclt[10][3],char clvarlt[40][3])
 {
           f=1;
-          sn = determine_member_concl_list(f,varble,i); 
+          sn = determine_member_concl_list(f,varble,i,conclt); 
           if (sn != 0)
           { 
                   /* if sn = 0 then no conclusion of that name */ 
-                  noConclusion(sp,sn,statsk,clausk,f,varble,i,varlt,instlt,de,di,ex,gr); 
-                  thenPart(sn,po,qu,sp,clausk,f,i,varble,statsk,s,varlt,instlt,de,di,ex,gr); 
+                  noConclusion(sp,sn,statsk,clausk,f,varble,i,varlt,instlt,de,di,ex,gr,po,qu,s,conclt,clvarlt); 
+                  thenPart(sn,po,qu,sp,clausk,f,i,varble,statsk,s,varlt,instlt,de,di,ex,gr,conclt,clvarlt); 
           }
 }
-void noConclusion(int &sp,int &sn,int statsk[11],int clausk[11],int &f,char varble[3],int &i,char varlt[10][3],int instlt[11],char de[4],char di[4],float ex,float gr)
+void noConclusion(int &sp,int &sn,int statsk[11],int clausk[11],int &f,char varble[3],int &i,char varlt[10][3],int instlt[11],char de[4],char di[4],float &ex,float &gr,char po[4],char qu[4],int &s,char conclt[10][3],char clvarlt[40][3])
 {
                 do 
                   /* push statement number (sn) and clause number=1 on 
                   goal stack which is composed of the statement stack (statsk) and clause stack (clausk) */ 
                   { 
                           push_on_stack(sp,sn,statsk,clausk); 
-                          mappingClause(f,varble,i,sp,sn,statsk,clausk,varlt,instlt,de,di,ex,gr); 
+                          mappingClause(f,varble,i,sp,sn,statsk,clausk,varlt,instlt,de,di,ex,gr,po,qu,s,conclt,clvarlt); 
                   } 
                   while((s != 1) && (sn !=0));  /* outer do-while loop */
 }
 
-int determine_member_concl_list(int f,char varble[3],int &i) 
+int determine_member_concl_list(int &f,char varble[3],int &i,char conclt[10][3]) 
 { 
 /* routine to determine if a variable (varble) is a member of the 
    conclusion list (conclt).  if yes return sn != 0. 
@@ -190,7 +191,7 @@ int determine_member_concl_list(int f,char varble[3],int &i)
         return sn; 
 } 
 
-void push_on_stack(int &sp,int sn,int statsk[11],int clausk[11]) 
+void push_on_stack(int &sp,int &sn,int statsk[11],int clausk[11]) 
 /* routine to push statement number (sn) and a clause number of 1 onto the 
 conclusion stack which consists of the statement stack (statsk) and the 
 clause stack (clausk)..to push decrement stack pointer (sp) */ 
@@ -200,7 +201,7 @@ clause stack (clausk)..to push decrement stack pointer (sp) */
         clausk[sp] = 1; 
 } 
 
-void instantiate(int &i,char varble[3],char varlt[10][3],int instlt[11],char de[4],char di[4],float ex,float gr) 
+void instantiate(int &i,char varble[3],char varlt[10][3],int instlt[11],char de[4],char di[4],float &ex,float &gr) 
 /* routine to instantiate a variable (varble) if it isn't already.  the 
 instantiate indication (instlt) is a 0 if not, a 1 if it is.  the 
 variable list (varlt) contains the variable (varble). */ 
@@ -239,7 +240,7 @@ variable list (varlt) contains the variable (varble). */
                    base */ 
         } 
   }
-void mappingClause(int &f,char varble[3],int &i,int &sp,int &sn,int statsk[11],int clausk[11],char varlt[10][3],int instlt[11],char de[4],char di[4],float ex,float gr) 
+void mappingClause(int &f,char varble[3],int &i,int &sp,int &sn,int statsk[11],int clausk[11],char varlt[10][3],int instlt[11],char de[4],char di[4],float &ex,float &gr,char po[4],char qu[4],int &s,char conclt[10][3],char clvarlt[40][3]) 
 {
                           do 
                           { 
@@ -253,13 +254,13 @@ void mappingClause(int &f,char varble[3],int &i,int &sp,int &sn,int statsk[11],i
                             { 
                                     /*is this clause variable a conclusion? */ 
                                     f = 1;
-                                    sn = determine_member_concl_list(f,varble,i); 
+                                    sn = determine_member_concl_list(f,varble,i,conclt); 
                                     if(sn != 0)
-                                            process(sp,sn,statsk,clausk,f,varble,i,varlt,instlt,de,di,ex,gr);
+                                            process(sp,sn,statsk,clausk,f,varble,i,varlt,instlt,de,di,ex,gr,po,qu,s,conclt,clvarlt);
                                             /* it is a conclusion push it */ 
                                             //goto process; 
                                     /* check instantiation of this clause */ 
-                                    instantiate(i,varble,varlt,instlt,de,di,ex,gr) 
+                                    instantiate(i,varble,varlt,instlt,de,di,ex,gr); 
                                     clausk[sp] = clausk[sp] + 1; 
                             } 
                           } 
@@ -313,13 +314,13 @@ void mappingClause(int &f,char varble[3],int &i,int &sp,int &sn,int statsk[11],i
                                   /* search for conclusion starting at the 
                                      next statement number */ 
                                   f = statsk[sp] + 1;
-                                  sn = determine_member_concl_list(f,varble,i); 
+                                  sn = determine_member_concl_list(f,varble,i,conclt); 
                                   sp = sp+1; 
                           } 
                           /* pop old conclusion and put on new one */
 }
 
-void thenPart(int &sn,char po[4],char qu[4],int &sp,int clausk[11],int &f,int &i,char varble[3],int statsk[11],int &s,char varlt[10][3],int instlt[11],char de[4],char di[4],float ex,float gr)
+void thenPart(int &sn,char po[4],char qu[4],int &sp,int clausk[11],int &f,int &i,char varble[3],int statsk[11],int &s,char varlt[10][3],int instlt[11],char de[4],char di[4],float &ex,float &gr,char conclt[10][3],char clvarlt[40][3])
 {
                   if(sn != 0)
                   { 
@@ -361,20 +362,23 @@ void thenPart(int &sn,char po[4],char qu[4],int &sp,int clausk[11],int &f,int &i
                           /* pop the stack */ 
                           sp=sp+1; 
                           if(sp >= 11) 
-                                  /* finished */ 
-                                  printf("*** SUCCESS\n"); 
+                                  /* finished */
+                          {
+                                  printf("*** SUCCESS\n");
+                                  exit(0);
+                          }  
                           else 
                           { 
                                   /* stack is not empty */ 
                                   /* get next clause then continue */ 
                                   clausk[sp] = clausk[sp]+1;
-                                  mappingClause(f,varble,i,sp,sn,statsk,clausk,varlt,instlt,de,di,ex,gr);
+                                  mappingClause(f,varble,i,sp,sn,statsk,clausk,varlt,instlt,de,di,ex,gr,po,qu,s,conclt,clvarlt);
                                   if((s != 1) && (sn !=0))
                                   {
-                                    noConclusion(sp,sn,statsk,clausk,f,varble,i,varlt,instlt,de,di,ex,gr);
+                                    noConclusion(sp,sn,statsk,clausk,f,varble,i,varlt,instlt,de,di,ex,gr,po,qu,s,conclt,clvarlt);
                                   }
                                   else
-                                    thenPart(sn,po,qu,sp,clausk,f,i,varble,statsk,s,varlt,instlt,de,di,ex,gr);
+                                    thenPart(sn,po,qu,sp,clausk,f,i,varble,statsk,s,varlt,instlt,de,di,ex,gr,conclt,clvarlt);
                           } 
                   }
 }
