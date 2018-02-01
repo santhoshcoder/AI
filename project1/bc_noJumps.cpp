@@ -25,34 +25,37 @@ program to make it better.
 */
 #include <stdio.h>
 #include <string.h>
-/*  conclusion list */ 
-char conclt[10][3]; 
-/*  variable list */ 
-char varlt[10][3]; 
-/*  clause vairable list */ 
-char clvarlt[40][3]; 
-char varble[3]; 
-char /* qualify */ qu[4], /* degree*/ de[4]; 
-char /* discovery */ di[4], /* position */ po[4]; 
-char buff[128]; 
 
-/* instantiated list */ 
-int instlt[11]; 
-/* statement stack */ 
-int statsk[11]; 
-int /* clause stack */ clausk[11], sn, f, i, j, s, k, /*stack pointer */ sp; 
+int determine_member_concl_list(int ,char [3],int &);
+void push_on_stack(int &sp,int sn,int statsk[11],int clausk[11]); 
+void instantiate(int &i,char varble[3],char varlt[10][3],int instlt[11],char de[4],char di[4],float ex,float gr);
 
-float /* grade */ gr, /*experience */ ex; 
+void mappingClause(int &,char [3],int &,int &,int &,int [11],int [11],char [10][3],int [11],char [4],char [4],float ,float); 
+void thenPart(int &,char [4],char [4],int &,int [11],int &,int &,char [3],int [11],int &,char [10][3],int [11],char [4],char [4],float ,float);
+void process(int,int,int [11],int [11],int &,char [3],int &,char [10][3],int [11],char [4],char [4],float ,float);
+void noConclusion(int &,int &,int [11],int [11],int &,char [3],int &,char [10][3],int [11],char [4],char [4],float ,float)
 
-void determine_member_concl_list(void); 
-void push_on_stack(void); 
-void instantiate(void); 
-void mappingClause(void);
-void thenPart(void);
-void process(void);
-void noConclusion(void);
 main() 
 { 
+        /*  conclusion list */ 
+        char conclt[10][3]; 
+        /*  variable list */ 
+        char varlt[10][3]; 
+        /*  clause vairable list */ 
+        char clvarlt[40][3]; 
+        char varble[3]; 
+        char /* qualify */ qu[4], /* degree*/ de[4]; 
+        char /* discovery */ di[4], /* position */ po[4]; 
+        char buff[128]; 
+
+        /* instantiated list */ 
+        int instlt[11]; 
+        /* statement stack */ 
+        int statsk[11]; 
+        int /* clause stack */ clausk[11], sn, f, i, j, s, k, /*stack pointer */ sp; 
+
+        float /* grade */ gr, /*experience */ ex;
+
         /***** initialization section ******/ 
         /* stack space is 10 we initially place stack space at 10+1 */ 
         sp=11; 
@@ -144,36 +147,38 @@ key. */
         /* get conclusion statement number (sn) from the conclusion list 
            (conclt) */ 
         /* first statement starts search */ 
-        process();
+        process(sp,sn,statsk,clausk,f,varble,i,varlt,instlt,de,di,ex,gr);
 }
-void process()
+void process(int &sp,int sn,int statsk[11],int clausk[11],int &f,char varble[3],int &i,char varlt[10][3],int instlt[11],char de[4],char di[4],float ex,float gr)
 {
-          f=1; 
-          determine_member_concl_list(); 
+          f=1;
+          sn = determine_member_concl_list(f,varble,i); 
           if (sn != 0)
           { 
                   /* if sn = 0 then no conclusion of that name */ 
-                  noConclusion(); 
-                  thenPart(); 
+                  noConclusion(sp,sn,statsk,clausk,f,varble,i,varlt,instlt,de,di,ex,gr); 
+                  thenPart(sn,po,qu,sp,clausk,f,i,varble,statsk,s,varlt,instlt,de,di,ex,gr); 
           }
 }
-void noConclusion()
+void noConclusion(int &sp,int &sn,int statsk[11],int clausk[11],int &f,char varble[3],int &i,char varlt[10][3],int instlt[11],char de[4],char di[4],float ex,float gr)
 {
                 do 
                   /* push statement number (sn) and clause number=1 on 
                   goal stack which is composed of the statement stack (statsk) and clause stack (clausk) */ 
                   { 
-                          push_on_stack(); 
-                          mappingClause(); 
+                          push_on_stack(sp,sn,statsk,clausk); 
+                          mappingClause(f,varble,i,sp,sn,statsk,clausk,varlt,instlt,de,di,ex,gr); 
                   } 
                   while((s != 1) && (sn !=0));  /* outer do-while loop */
 }
 
-void determine_member_concl_list() { 
+int determine_member_concl_list(int f,char varble[3],int &i) 
+{ 
 /* routine to determine if a variable (varble) is a member of the 
    conclusion list (conclt).  if yes return sn != 0. 
    if not a member sn=0; 
 */ 
+        int sn;
         /* initially set to not a member */ 
         sn = 0; 
         /* member of conclusion list to be searched is f */ 
@@ -181,10 +186,11 @@ void determine_member_concl_list() {
         while((strcmp(varble, conclt[i]) != 0) && (i<8)) 
                 /* test for membership */ 
                 i=i+1; 
-        if (strcmp(varble, conclt[i]) == 0) sn = i;  /* a member */ 
+        if (strcmp(varble, conclt[i]) == 0) sn = i;  /* a member */
+        return sn; 
 } 
 
-void push_on_stack() 
+void push_on_stack(int &sp,int sn,int statsk[11],int clausk[11]) 
 /* routine to push statement number (sn) and a clause number of 1 onto the 
 conclusion stack which consists of the statement stack (statsk) and the 
 clause stack (clausk)..to push decrement stack pointer (sp) */ 
@@ -194,7 +200,7 @@ clause stack (clausk)..to push decrement stack pointer (sp) */
         clausk[sp] = 1; 
 } 
 
-void instantiate() 
+void instantiate(int &i,char varble[3],char varlt[10][3],int instlt[11],char de[4],char di[4],float ex,float gr) 
 /* routine to instantiate a variable (varble) if it isn't already.  the 
 instantiate indication (instlt) is a 0 if not, a 1 if it is.  the 
 variable list (varlt) contains the variable (varble). */ 
@@ -232,8 +238,8 @@ variable list (varlt) contains the variable (varble). */
                 /* end of inputs statements for sample position knowledge 
                    base */ 
         } 
-  } 
-void mappingClause()
+  }
+void mappingClause(int &f,char varble[3],int &i,int &sp,int &sn,int statsk[11],int clausk[11],char varlt[10][3],int instlt[11],char de[4],char di[4],float ex,float gr) 
 {
                           do 
                           { 
@@ -246,14 +252,14 @@ void mappingClause()
                             if(strcmp(varble, "") != 0) 
                             { 
                                     /*is this clause variable a conclusion? */ 
-                                    f = 1; 
-                                    determine_member_concl_list(); 
+                                    f = 1;
+                                    sn = determine_member_concl_list(f,varble,i); 
                                     if(sn != 0)
-                                            process(); 
+                                            process(sp,sn,statsk,clausk,f,varble,i,varlt,instlt,de,di,ex,gr);
                                             /* it is a conclusion push it */ 
                                             //goto process; 
                                     /* check instantiation of this clause */ 
-                                    instantiate(); 
+                                    instantiate(i,varble,varlt,instlt,de,di,ex,gr) 
                                     clausk[sp] = clausk[sp] + 1; 
                             } 
                           } 
@@ -261,6 +267,7 @@ void mappingClause()
                           /*no more clauses check if part of statement */ 
                           sn = statsk[sp]; 
                           s = 0; 
+                          
                           /**** if then statements ****/ 
                           /* sample if parts of if then statements from 
                              the position knowledge base */ 
@@ -305,14 +312,14 @@ void mappingClause()
                                   strcpy(varble, conclt[i]); 
                                   /* search for conclusion starting at the 
                                      next statement number */ 
-                                  f = statsk[sp] + 1; 
-                                  determine_member_concl_list(); 
+                                  f = statsk[sp] + 1;
+                                  sn = determine_member_concl_list(f,varble,i); 
                                   sp = sp+1; 
                           } 
                           /* pop old conclusion and put on new one */
 }
 
-void thenPart()
+void thenPart(int &sn,char po[4],char qu[4],int &sp,int clausk[11],int &f,int &i,char varble[3],int statsk[11],int &s,char varlt[10][3],int instlt[11],char de[4],char di[4],float ex,float gr)
 {
                   if(sn != 0)
                   { 
@@ -361,13 +368,13 @@ void thenPart()
                                   /* stack is not empty */ 
                                   /* get next clause then continue */ 
                                   clausk[sp] = clausk[sp]+1;
-                                  mappingClause();
+                                  mappingClause(f,varble,i,sp,sn,statsk,clausk,varlt,instlt,de,di,ex,gr);
                                   if((s != 1) && (sn !=0))
                                   {
-                                    noConclusion();
+                                    noConclusion(sp,sn,statsk,clausk,f,varble,i,varlt,instlt,de,di,ex,gr);
                                   }
                                   else
-                                    thenPart();
+                                    thenPart(sn,po,qu,sp,clausk,f,i,varble,statsk,s,varlt,instlt,de,di,ex,gr);
                           } 
                   }
 }
