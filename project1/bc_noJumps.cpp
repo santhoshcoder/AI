@@ -19,7 +19,7 @@ program to make it better.
 
 /*
   1) Give valid function names                                -- Completed
-  2) Eliminate global variables and rewrite the program       
+  2) Eliminate global variables and rewrite the program       -- Completed
   3) Implement it using classes
   4) Seperate Knowledge Base and Inference Engine
 */
@@ -240,6 +240,7 @@ variable list (varlt) contains the variable (varble). */
                    base */ 
         } 
   }
+  
 void mappingClause(int &f,char varble[3],int &i,int &sp,int &sn,int statsk[11],int clausk[11],char varlt[10][3],int instlt[11],char de[4],char di[4],float &ex,float &gr,char po[4],char qu[4],int &s,char conclt[10][3],char clvarlt[40][3]) 
 {
                           do 
