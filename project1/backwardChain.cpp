@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <string.h>
+#include <iostream>
+
 using namespace std;
 
 class backwardChain
 {
 	private:
 		/* Variables declared here */
-		char conclt[10][3];
 		char conclt[10][3];  
         char varlt[10][3]; 
         char clvarlt[40][3]; 
@@ -29,13 +30,9 @@ class backwardChain
     	void ifkbase();
     	void thenkbase();
     	void popStack();
-    	void main()
-    	{
-    		initialization();
-    		inferenceSection();
-    		
-    	}
-}
+        void mappingClause();
+        void thenPart();
+};
 void backwardChain::initialization()
 { 
 	// Stack space is 10 we initially place stack space at 10+1
@@ -118,23 +115,24 @@ void backwardChain::inferenceSection()
     cout<<"** ENTER CONCLUSION ? ";
     gets(varble);        
     /* get conclusion statement number (sn) from the conclusion list 
-    (conclt).First statement starts search */ 
+    (conclt).First statement starts search */
     process();
 }
 
 void backwardChain::process()
 {
 	f=1;
-    sn = determine_member_concl_list(f,varble,i,conclt); 
+    determine_member_concl_list(); 
     if (sn != 0)
     { 
         /* if sn = 0 then no conclusion of that name */ 
-        noConclusion(); 
+        noConclusion();
         if(sn != 0)
         {
         	thenkbase();
         	popStack();
         }
+        //thenPart();
     }
 }
 
@@ -152,11 +150,10 @@ void backwardChain::noConclusion()
 
 void backwardChain::determine_member_concl_list()
 {
-/* routine to determine if a variable (varble) is a member of the 
-   conclusion list (conclt).  if yes return sn != 0. 
-   if not a member sn=0; 
-*/ 
-    int sn;
+    /* routine to determine if a variable (varble) is a member of the 
+       conclusion list (conclt).  if yes return sn != 0. 
+       if not a member sn=0; 
+    */
     /* initially set to not a member */ 
     sn = 0; 
     /* member of conclusion list to be searched is f */ 
@@ -165,7 +162,6 @@ void backwardChain::determine_member_concl_list()
         i=i+1; /* test for membership */
     if (strcmp(varble, conclt[i]) == 0) 
     	sn = i;  /* a member */
-    return sn;
 }
 
 void backwardChain::push_on_stack()
@@ -225,11 +221,11 @@ void backwardChain::mappingClause()
         { 
             /*is this clause variable a conclusion? */ 
             f = 1;
-            sn = determine_member_concl_list(f,varble,i,conclt); 
+            determine_member_concl_list(); 
             if(sn != 0)
                 process(); /* it is a conclusion push it */ 
             /* check instantiation of this clause */ 
-            instantiate(i,varble,varlt,instlt,de,di,ex,gr); 
+            instantiate(); 
             clausk[sp] = clausk[sp] + 1; 
         } 
     }
@@ -245,7 +241,7 @@ void backwardChain::mappingClause()
         strcpy(varble, conclt[i]); 
         /* search for conclusion starting at the next statement number */ 
         f = statsk[sp] + 1;
-        sn = determine_member_concl_list(f,varble,i,conclt); 
+        determine_member_concl_list(); 
         sp = sp+1; 
     }
 }
@@ -354,8 +350,85 @@ void backwardChain::popStack()
         {
             noConclusion();
         }
-        else
-            thenPart();
+        else if(sn != 0)
+        {
+            thenkbase();
+            popStack();
+        }
     }
+}
+
+// Extra Function
+void backwardChain::thenPart()
+{
+    if(sn!=0)
+    {
+        switch (sn) 
+        { 
+            /* then part of statement 1 */ 
+            /******* comment 1500 *******/ 
+            case 1: 
+                strcpy(po, "NO"); 
+                printf("PO=NO\n"); 
+            break; 
+            /* then part of statement 2 */ 
+            /****** comment 1510 ******/ 
+            case 2: 
+                strcpy(qu, "YES"); 
+                printf("QU=YES\n"); 
+            break; 
+            /* then part of statement 3 */ 
+            case 3: 
+                strcpy(po, "YES"); 
+                printf("PO=RESEARCH\n"); 
+            break; 
+            /* then part of statement 4 */ 
+            /******** comment 1560 ******/ 
+            case 4: 
+                strcpy(po, "YES"); 
+                printf("PO=SERVICE ENGINEER\n"); 
+            break; 
+            /* then part of statement 5 */ 
+            /****** comment 1570 *****/ 
+            case 5: 
+                strcpy(po, "NO"); 
+                printf("PO=NO"); 
+            break; 
+            /* then part of statement 6 */ 
+            case 6: 
+                strcpy(po, "YES"); 
+                printf("PO=PRODUCT ENGINEER\n"); 
+            break; 
+            /****** comment 1680 ********/ 
+        }
+        /* pop the stack */ 
+        sp=sp+1; 
+        if(sp >= 11) 
+        {
+            // Finished
+            printf("*** SUCCESS\n");
+            exit(0);
+        }  
+        else 
+        { 
+            /* stack is not empty */ 
+            /* get next clause then continue */ 
+            clausk[sp] = clausk[sp]+1;
+            mappingClause();
+            if((s != 1) && (sn !=0))
+            {
+                noConclusion();
+            }
+            else
+                thenPart();
+        }
+    }
+}
+int main()
+{
+    backwardChain chain;
+    chain.initialization();
+    chain.inferenceSection(); 
+    return 0;
 }
 
