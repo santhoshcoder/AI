@@ -18,7 +18,7 @@ program to make it better.
 */
 
 /*
-  1) Give valid function names
+  1) Give valid function names                                -- Completed
   2) Eliminate global variables and rewrite the program
   3) Implement it using classes
   4) Seperate Knowledge Base and Inference Engine
@@ -47,9 +47,9 @@ float /* grade */ gr, /*experience */ ex;
 void determine_member_concl_list(void); 
 void push_on_stack(void); 
 void instantiate(void); 
-void b545(void);
+void mappingClause(void);
 void thenPart(void);
-void b520(void);
+void process(void);
 void noConclusion(void);
 main() 
 { 
@@ -144,9 +144,9 @@ key. */
         /* get conclusion statement number (sn) from the conclusion list 
            (conclt) */ 
         /* first statement starts search */ 
-        b520();
+        process();
 }
-void b520()
+void process()
 {
           f=1; 
           determine_member_concl_list(); 
@@ -164,7 +164,7 @@ void noConclusion()
                   goal stack which is composed of the statement stack (statsk) and clause stack (clausk) */ 
                   { 
                           push_on_stack(); 
-                          b545(); 
+                          mappingClause(); 
                   } 
                   while((s != 1) && (sn !=0));  /* outer do-while loop */
 }
@@ -233,13 +233,13 @@ variable list (varlt) contains the variable (varble). */
                    base */ 
         } 
   } 
-void b545()
+void mappingClause()
 {
                           do 
                           { 
                            /* calculate clause location in clause-variable 
                               list */ 
-                            //b545: 
+                            //mappingClause: 
                             i= (statsk[sp] -1) *4 + clausk[sp]; 
                                       /* clause variable */ 
                                       strcpy(varble, clvarlt[i]); 
@@ -249,9 +249,9 @@ void b545()
                                     f = 1; 
                                     determine_member_concl_list(); 
                                     if(sn != 0)
-                                            b520(); 
+                                            process(); 
                                             /* it is a conclusion push it */ 
-                                            //goto b520; 
+                                            //goto process; 
                                     /* check instantiation of this clause */ 
                                     instantiate(); 
                                     clausk[sp] = clausk[sp] + 1; 
@@ -361,7 +361,7 @@ void thenPart()
                                   /* stack is not empty */ 
                                   /* get next clause then continue */ 
                                   clausk[sp] = clausk[sp]+1;
-                                  b545();
+                                  mappingClause();
                                   if((s != 1) && (sn !=0))
                                   {
                                     noConclusion();
