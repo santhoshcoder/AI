@@ -16,6 +16,13 @@ program to make it better.
    case statement of the main program 
    example strcpy(po,"YES"); 
 */
+
+/*
+  1) Give valid function names
+  2) Eliminate global variables and rewrite the program
+  3) Implement it using classes
+  4) Seperate Knowledge Base and Inference Engine
+*/
 #include <stdio.h>
 #include <string.h>
 /*  conclusion list */ 
