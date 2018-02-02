@@ -1,16 +1,13 @@
 #include <iostream>
 using namespace std;
 #include "knowledge.cpp"
+
 #define size kb.size
 #define clauseSize kb.clauseSize
 #define conclt kb.conclt
 #define varlt kb.varlt
 #define clvarlt kb.clvarlt
 #define varble kb.varble
-#define qu kb.qu
-#define de kb.de
-#define di kb.di
-#define po kb.po
 #define instlt kb.instlt
 #define statsk kb.statsk
 #define clausk kb.clausk
