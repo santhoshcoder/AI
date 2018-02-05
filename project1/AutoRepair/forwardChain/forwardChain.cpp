@@ -10,15 +10,16 @@ S-1. Install your THEN clauses in sequence in the middle
 of the progrram within the second case statement. */
 
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <iostream>
+using namespace std;
 
 int flag;
-char cndvar[11][3], varlt[11][3], /* variable list*/ clvarlt[40][3]; /* clause var list */
-char c[3]/* condition variable */,  v[3]; /*variable */
-int instlt[11];         /* instantiated list*/
-
-char fedint[10], interest[10], stock[10], dollar[10], fedmon[10];
+const int size = 11;
+const int csize = 41;
+string cndvar[size], varlt[size],clvarlt[csize],c,v;
+int instlt[size];/* instantiated list*/
+string fedint,interest,stock,dollar,fedmon;
 int f, i, j, k, s, fp   /* front pointer */;
 int  bp  /* back pointer */,  sn; /* statement number */
 int cn;  /* clause number */
@@ -27,27 +28,32 @@ void search(void);
 void check_instantiation(void);
 void instantiate(void);
 void inference(void);
+void process(void);
+
+void startkbase(void);
 void ifkbase(void);
 void thenkbase(void);
 void instantiatekbase(void);
-void process(void);
 
-main()
+int main()
+{
+    startkbase();
+    inference();
+    process();
+    return 0;
+}
+
+void startkbase()
 {
     /******** INITIALIZATION SECTION ***********/
-    fp=1;
-    bp=1;
-
-    for (i=1;i < 41; i++)
-        strcpy(clvarlt[i], "");
-    
-    for (i=1;i < 11; i++)
+    for (i=1;i < csize; i++)
+        clvarlt[i] = "";
+    for (i=1;i < size; i++)
     {
-        strcpy(cndvar[i], "");
-        strcpy(varlt[i], "");
+        cndvar[i] = "";
+        varlt[i] = "";
         instlt[i] = 0;
     }
-
     /* enter variables which are in the IF part, 1 at a time in
     the exact order that they occur. Up to 3 variables per
     IF statement. Do not duplicate any variable names. Any
@@ -55,47 +61,45 @@ main()
     hit return key */
     /****** comment 367 *************/
 
-    strcpy(varlt[1], "IN");
-    strcpy(varlt[2], "DO");
-    strcpy(varlt[3], "FT");
-    strcpy(varlt[4], "FM");
+    varlt[1] = "IN";
+    varlt[2] = "DO";
+    varlt[3] = "FT";
+    varlt[4] = "FM";
 
-    printf("*** VARIABLE LIST ***\n");
-    for (i=1;i < 11; i++)
-        printf("VARIABLE   %d   %s\n", i, varlt[i]);
-    printf("HIT RETURN TO CONTINUE");
+    cout<<"*** VARIABLE LIST ***"<<endl;
+    for (i=1;i < size; i++)
+        cout<<"VARIABLE "<<i<<" "<<varlt[i]<<endl;
+    cout<<"HIT RETURN TO CONTINUE";
     getchar();
 
     /* enter variables as they appear in the IF clauses, Up to 3 
     variables per IF statement. If no more variables left, just
     hit return key */
     /****** comment 407, 408 *************/
-    strcpy(clvarlt[1], "IN");
-    strcpy(clvarlt[5], "IN");
-    strcpy(clvarlt[9], "DO");
-    strcpy(clvarlt[13], "DO");
-    strcpy(clvarlt[17], "FT");
-    strcpy(clvarlt[18], "FM");
+    clvarlt[1]  = "IN";
+    clvarlt[5]  = "IN";
+    clvarlt[9]  = "DO";
+    clvarlt[13] = "DO";
+    clvarlt[17] = "FT";
+    clvarlt[18] = "FM";
+
     printf("*** CLAUSE-VARIABLE LIST ***\n");
-    for (i = 1; i < 9; i++)
+    for (i = 1; i < (csize-1)/4 ; i++)
     {
         printf("** CLAUSE %d\n", i);
         for (j = 1; j < 5; j++)
         {
             k = 4 * (i - 1) + j;
-            printf("VARIABLE %d  %s\n", j, clvarlt[k]);
+            cout<<"VARIABLE "<<j<< " "<<clvarlt[k]<<endl;
         }
 
         if (i==4)
         {
-            printf("HIT RETURN TO CONTINUE");
+            cout<<"HIT RETURN TO CONTINUE";
             getchar();
         }
     }
-    inference();
-    process();
 }
-
 //==========================================================================
 /* Routine to instantiate a variable (v) if it isn't already.
 The instantiate indication (instlt) is a 0 if not, a 1 if it is.
@@ -105,7 +109,7 @@ void check_instantiation()
     i=1;
 
     /* find variable in the variable list */
-    while ((strcmp(v, varlt[i]) != 0) && (i <= 10))
+    while ((v != varlt[i]) && (i < size))
         i = i+1;
     /* check if already instantiated */
     if (instlt[i] != 1)
@@ -129,17 +133,17 @@ void search()
 {
     flag = 0;
     sn = f;
-    while ((flag == 0) && (sn <= 10))
+    while ((flag == 0) && (sn <= (csize-1)/4))
     {
         cn=1;
         k = (sn-1)*4+cn;
-        while ((strcmp(clvarlt[k], cndvar[fp]) != 0) && (cn < 4))
+        while ((clvarlt[k] != cndvar[fp]) && (cn < 4))
         {
             cn = cn+1;
             k = (sn-1)*4+cn;
         }
 
-        if (strcmp(clvarlt[k], cndvar[fp]) == 0) 
+        if (clvarlt[k] == cndvar[fp]) 
             flag = 1;
         if (flag == 0) 
             sn = sn+1;
@@ -155,7 +159,7 @@ void instantiate()
 {
     i=1;
     /* find varialbe in the varialbe list (varlt) */
-    while ((strcmp(v, varlt[i]) != 0) && (i <= 10)) 
+    while ((v != varlt[i]) && (i < size)) 
         i=i+1;
 
     /* instantiate it */
@@ -163,12 +167,12 @@ void instantiate()
     i = 1;
 
     /* determine if (v) is or already has been on the queue (cndvar) */
-    while ((strcmp(v, cndvar[i]) != 0) && (i <= 10)) 
+    while ((v != cndvar[i]) && (i < size)) 
         i=i+1;
     /* variable has not been on the queue. Store it in the back of the queue */
-    if (strcmp(v, cndvar[i]) != 0)
+    if (v != cndvar[i])
     {
-        strcpy(cndvar[bp], v);
+        cndvar[bp] = v;
         bp=bp+1;
     }
 }
@@ -176,16 +180,19 @@ void instantiate()
 
 void inference()
 {
+    fp=1;
+    bp=1;
     /****** INFERENCE SECTION *****************/
     printf("ENTER CONDITION VARIABLE? ");
-    gets(c);
+    cin>>c;
     /* place condition variable c on condition var queue cndvar */
-    strcpy(cndvar[bp], c);
+    cndvar[bp] = c;
     /* move backpointer (bp) to back */
     bp = bp + 1;
     /* set the condition variable pointer consisting of the 
     statement number (sn) and the clause number (cn) */
-    sn = 1; cn = 1;
+    sn = 1; 
+    cn = 1;
     /* find the next statement number containing the condition variable
     which is in front of the queue (cndvar), this statement number
     is located in the clause variable list (clvarlt) */
@@ -200,27 +207,35 @@ void ifkbase()
     {
             /* statement 1 */
             /***** comment 1500 *****/
-        case 1: if (strcmp(interest, "FALL") == 0) s=1;
+        case 1: 
+            if (interest == "FALL") 
+                s=1;
             break;
             /* statement 2 */
             /***** comment 1510 *****/
-        case 2: if (strcmp(interest, "RISE") == 0) s=1;
+        case 2: 
+            if (interest == "RISE")
+                s=1;
             break;
             /* statement 3 */
             /***** comment 1540 *****/
-        case 3: if (strcmp(dollar, "FALL") == 0) s=1;
+        case 3: 
+            if (dollar == "FALL") 
+                s=1;
             break;
             /* statement 4 */
             /***** comment 1550 *****/
-        case 4: if (strcmp(dollar, "RISE") == 0) s=1;
+        case 4: 
+            if (dollar == "RISE") 
+                s=1;
             break;
             /* statement 5 */
-        case 5: if ((strcmp(fedint, "FALL") == 0) &&
-                    (strcmp(fedmon, "ADD")) == 0) s=1;
+        case 5: 
+            if ((fedint == "FALL") && (fedmon == "ADD")) 
+                s=1;
             break;
             /***** comment 1610 *****/
     }
-
 }
 
 void thenkbase()
@@ -231,40 +246,40 @@ void thenkbase()
         /*********** comment 1500 ***********/
         /* put variable on the conclusion variable queue */
         case 1:
-            strcpy(stock, "RISE");
-            printf("ST=RISE\n");
-            strcpy(v, "ST");
+            stock = "RISE";
+            cout<<"ST=RISE"<<endl;
+            v = "ST";
             instantiate();
             break;
             /*********** comment 1510 ***********/
             /* put variable on the conclusion variable queue */
         case 2:
-            strcpy(stock, "FALL");
-            printf("ST=FALL\n");
-            strcpy(v, "ST");
+            stock = "FALL";
+            cout<<"ST=FALL"<<endl;
+            v = "ST";
             instantiate();
             break;
             /*********** comment 1540 ***********/
             /* put variable on the conclusion variable queue */
         case 3:
-            strcpy(interest, "RISE");
-            printf("IN=RISE\n");
-            strcpy(v, "IN");
+            interest = "RISE";
+            cout<<"IN=RISE"<<endl;
+            v = "IN";
             instantiate();
             break;
             /*********** comment 1550 ***********/
             /* put variable on the conclusion variable queue */
         case 4:
-            strcpy(interest, "FALL");
-            printf("IN=FALL\n");
-            strcpy(v, "IN");
+            interest = "FALL";
+            cout<<"IN=FALL"<<endl;
+            v = "IN";
             instantiate();
             break;
             /* put variable on the conclusion variable queue */
         case 5:
-            strcpy(interest, "FALL");
-            printf("IN=FALL\n");
-            strcpy(v, "IN");
+            interest = "FALL";
+            cout<<"IN=FALL"<<endl;
+            v = "IN";
             instantiate();
             break;
             /*********** comment 1610 ***********/
@@ -277,20 +292,20 @@ void instantiatekbase()
     {
         /* input statements for sample position knowledge base */
         case 1:
-            printf("RISE OR FALL FOR IN? ");
-            gets(interest);
+            cout<<"RISE OR FALL FOR IN? ";
+            cin>>interest;
             break;
         case 2:
-            printf("RISE OR FALL FOR DO? ");
-            gets(dollar);
+            cout<<"RISE OR FALL FOR DO? ";
+            cin>>dollar;
             break;
         case 3:
-            printf("RISE OR FALL FOR FT? ");
-            gets(fedint);
+            cout<<"RISE OR FALL FOR FT? ";
+            cin>>fedint;
             break;
         case 4:
-            printf("ADD OR SUBTRACT FOR FM? ");
-            gets(fedmon);
+            cout<<"ADD OR SUBTRACT FOR FM? ";
+            cin>>fedmon;
             break;
     }
 }
@@ -305,9 +320,9 @@ void process()
         /* locate the clause */
         i = 4 * (sn-1) + cn;
         /* clause variable */
-        strcpy(v, clvarlt[i]);
+        v = clvarlt[i];
         /* are there any more clauses for this statement */
-        while (strcmp(v, ""))
+        while (v != "")
             /* more clauses */
         {
             /* check instantiation of this clause */
@@ -315,7 +330,7 @@ void process()
             cn = cn+1;
             /* check next clause */
             i = 4 * (sn-1) + cn;
-            strcpy(v, clvarlt[i]);
+            v = clvarlt[i];
         }
 
         /* no more clauses - check IF part of statement */
@@ -349,7 +364,7 @@ void process()
         f = 1;
         process();
     }
-    printf("*** Success ***");
-    exit(0);
     /* no more conclusion variables on queue */
+    cout<<"*** Success ***";
+    exit(0);
 }
