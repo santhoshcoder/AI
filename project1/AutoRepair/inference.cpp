@@ -181,6 +181,7 @@ void inference::popStack()
 
 int main()
 {
+    
     inference in;
     in.start();
     return 0;

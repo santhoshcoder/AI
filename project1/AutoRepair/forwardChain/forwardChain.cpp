@@ -11,6 +11,8 @@ of the progrram within the second case statement. */
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+
 int flag;
 char cndvar[11][3], varlt[11][3], /* variable list*/ clvarlt[40][3]; /* clause var list */
 char c[3]/* condition variable */,  v[3]; /*variable */
@@ -24,6 +26,11 @@ int cn;  /* clause number */
 void search(void);
 void check_instantiation(void);
 void instantiate(void);
+void inference(void);
+void ifkbase(void);
+void thenkbase(void);
+void instantiatekbase(void);
+void process(void);
 
 main()
 {
@@ -47,14 +54,6 @@ main()
     name is used only once. If no more variables left, just
     hit return key */
     /****** comment 367 *************/
-    
-    /*
-    strcpy(varlt[1], "DO");
-    strcpy(varlt[2], "FT");
-    strcpy(varlt[3], "FM");
-    strcpy(varlt[4], "IN");
-    strcpy(varlt[5], "ST");
-    */
 
     strcpy(varlt[1], "IN");
     strcpy(varlt[2], "DO");
@@ -93,141 +92,8 @@ main()
             getchar();
         }
     }
-
-    /****** INFERENCE SECTION *****************/
-    printf("ENTER CONDITION VARIABLE? ");
-    gets(c);
-    /* place condition variable c on condition var queue cndvar */
-    strcpy(cndvar[bp], c);
-    /* move backpointer (bp) to back */
-    bp = bp + 1;
-    /* set the condition variable pointer consisting of the 
-    statement number (sn) and the clause number (cn) */
-    sn = 1; cn = 1;
-    /* find the next statement number containing the condition variable
-    which is in front of the queue (cndvar), this statement number
-    is located in the clause variable list (clvarlt) */
-    /* start at the beginning */
-    f=1;
-b496: search();
-    /* point to first clause in statement */
-    cn=1;
-    if (sn != 0)
-        /* more statements */
-    {
-        /* locate the clause */
-        i = 4 * (sn-1) + cn;
-        /* clause variable */
-        strcpy(v, clvarlt[i]);
-        /* are there any more clauses for this statement */
-        while (strcmp(v, ""))
-            /* more clauses */
-        {
-            /* check instantiation of this clause */
-            check_instantiation();
-            cn = cn+1;
-            /* check next clause */
-            i = 4 * (sn-1) + cn;
-            strcpy(v, clvarlt[i]);
-        }
-
-        /* no more clauses - check IF part of statement */
-        s = 0;
-        /* sample IF-THEN statements from the position knowledge base */
-        switch(sn)
-        {
-            /* statement 1 */
-            /***** comment 1500 *****/
-        case 1: if (strcmp(interest, "FALL") == 0) s=1;
-            break;
-            /* statement 2 */
-            /***** comment 1510 *****/
-        case 2: if (strcmp(interest, "RISE") == 0) s=1;
-            break;
-            /* statement 3 */
-            /***** comment 1540 *****/
-        case 3: if (strcmp(dollar, "FALL") == 0) s=1;
-            break;
-            /* statement 4 */
-            /***** comment 1550 *****/
-        case 4: if (strcmp(dollar, "RISE") == 0) s=1;
-            break;
-            /* statement 5 */
-        case 5: if ((strcmp(fedint, "FALL") == 0) &&
-                    (strcmp(fedmon, "ADD")) == 0) s=1;
-            break;
-            /***** comment 1610 *****/
-        }
-
-        /* see if the THEN part should be inovked, i.e., s=1 */
-        if (s != 1)
-        {
-            f = sn + 1;
-            goto b496;
-        }
-
-        /* invoke THEN part */
-        switch (sn)
-        {
-            /*********** comment 1500 ***********/
-            /* put variable on the conclusion variable queue */
-        case 1:
-            strcpy(stock, "RISE");
-            printf("ST=RISE\n");
-            strcpy(v, "ST");
-            instantiate();
-            break;
-            /*********** comment 1510 ***********/
-            /* put variable on the conclusion variable queue */
-        case 2:
-            strcpy(stock, "FALL");
-            printf("ST=FALL\n");
-            strcpy(v, "ST");
-            instantiate();
-            break;
-            /*********** comment 1540 ***********/
-            /* put variable on the conclusion variable queue */
-        case 3:
-            strcpy(interest, "RISE");
-            printf("IN=RISE\n");
-            strcpy(v, "IN");
-            instantiate();
-            break;
-            /*********** comment 1550 ***********/
-            /* put variable on the conclusion variable queue */
-        case 4:
-            strcpy(interest, "FALL");
-            printf("IN=FALL\n");
-            strcpy(v, "IN");
-            instantiate();
-            break;
-            /* put variable on the conclusion variable queue */
-        case 5:
-            strcpy(interest, "FALL");
-            printf("IN=FALL\n");
-            strcpy(v, "IN");
-            instantiate();
-            break;
-            /*********** comment 1610 ***********/
-        }
-        f = sn + 1;
-        goto b496;
-    }
-
-    /* no more clauses in the clause variable list (clvarlt)
-    containing the variable in front of the queue (cndvar(fp))
-    then remove front variable (cndvar(fp)) and replace it by
-    the next variable (cndvar(fp+1)). If no more variables are
-    at the front of the queue, stop. */
-    /* next queue variable */
-    fp=fp+1;
-    if (fp < bp)
-    {
-        /* check out the condition variable */
-        f = 1;
-        goto b496;
-    }
-    /* no more conclusion variables on queue */
+    inference();
+    process();
 }
 
 //==========================================================================
@@ -249,27 +115,7 @@ void check_instantiation()
         /* the designer of this knowledge base places the input
         statements to instantiate the variables in this case
         statement */
-
-        switch (i)
-        {
-            /* input statements for sample position knowledge base */
-        case 1:
-            printf("RISE OR FALL FOR IN? ");
-            gets(interest);
-            break;
-        case 2:
-            printf("RISE OR FALL FOR DO? ");
-            gets(dollar);
-            break;
-        case 3:
-            printf("RISE OR FALL FOR FT? ");
-            gets(fedint);
-            break;
-        case 4:
-            printf("ADD OR SUBTRACT FOR FM? ");
-            gets(fedmon);
-            break;
-        }
+        instantiatekbase();
     }
     /* end of input statements for the position knowledge base */
 }
@@ -309,18 +155,201 @@ void instantiate()
 {
     i=1;
     /* find varialbe in the varialbe list (varlt) */
-    while ((strcmp(v, varlt[i]) != 0) && (i <= 10)) i=i+1;
+    while ((strcmp(v, varlt[i]) != 0) && (i <= 10)) 
+        i=i+1;
 
     /* instantiate it */
     instlt[i] = 1;
     i = 1;
 
     /* determine if (v) is or already has been on the queue (cndvar) */
-    while ((strcmp(v, cndvar[i]) != 0) && (i <= 10)) i=i+1;
+    while ((strcmp(v, cndvar[i]) != 0) && (i <= 10)) 
+        i=i+1;
     /* variable has not been on the queue. Store it in the back of the queue */
     if (strcmp(v, cndvar[i]) != 0)
     {
         strcpy(cndvar[bp], v);
         bp=bp+1;
     }
+}
+
+
+void inference()
+{
+    /****** INFERENCE SECTION *****************/
+    printf("ENTER CONDITION VARIABLE? ");
+    gets(c);
+    /* place condition variable c on condition var queue cndvar */
+    strcpy(cndvar[bp], c);
+    /* move backpointer (bp) to back */
+    bp = bp + 1;
+    /* set the condition variable pointer consisting of the 
+    statement number (sn) and the clause number (cn) */
+    sn = 1; cn = 1;
+    /* find the next statement number containing the condition variable
+    which is in front of the queue (cndvar), this statement number
+    is located in the clause variable list (clvarlt) */
+    /* start at the beginning */
+    f=1;
+}
+
+void ifkbase()
+{
+    /* sample IF-THEN statements from the position knowledge base */
+    switch(sn)
+    {
+            /* statement 1 */
+            /***** comment 1500 *****/
+        case 1: if (strcmp(interest, "FALL") == 0) s=1;
+            break;
+            /* statement 2 */
+            /***** comment 1510 *****/
+        case 2: if (strcmp(interest, "RISE") == 0) s=1;
+            break;
+            /* statement 3 */
+            /***** comment 1540 *****/
+        case 3: if (strcmp(dollar, "FALL") == 0) s=1;
+            break;
+            /* statement 4 */
+            /***** comment 1550 *****/
+        case 4: if (strcmp(dollar, "RISE") == 0) s=1;
+            break;
+            /* statement 5 */
+        case 5: if ((strcmp(fedint, "FALL") == 0) &&
+                    (strcmp(fedmon, "ADD")) == 0) s=1;
+            break;
+            /***** comment 1610 *****/
+    }
+
+}
+
+void thenkbase()
+{
+    /* invoke THEN part */
+    switch (sn)
+    {
+        /*********** comment 1500 ***********/
+        /* put variable on the conclusion variable queue */
+        case 1:
+            strcpy(stock, "RISE");
+            printf("ST=RISE\n");
+            strcpy(v, "ST");
+            instantiate();
+            break;
+            /*********** comment 1510 ***********/
+            /* put variable on the conclusion variable queue */
+        case 2:
+            strcpy(stock, "FALL");
+            printf("ST=FALL\n");
+            strcpy(v, "ST");
+            instantiate();
+            break;
+            /*********** comment 1540 ***********/
+            /* put variable on the conclusion variable queue */
+        case 3:
+            strcpy(interest, "RISE");
+            printf("IN=RISE\n");
+            strcpy(v, "IN");
+            instantiate();
+            break;
+            /*********** comment 1550 ***********/
+            /* put variable on the conclusion variable queue */
+        case 4:
+            strcpy(interest, "FALL");
+            printf("IN=FALL\n");
+            strcpy(v, "IN");
+            instantiate();
+            break;
+            /* put variable on the conclusion variable queue */
+        case 5:
+            strcpy(interest, "FALL");
+            printf("IN=FALL\n");
+            strcpy(v, "IN");
+            instantiate();
+            break;
+            /*********** comment 1610 ***********/
+    }
+}
+
+void instantiatekbase()
+{
+    switch (i)
+    {
+        /* input statements for sample position knowledge base */
+        case 1:
+            printf("RISE OR FALL FOR IN? ");
+            gets(interest);
+            break;
+        case 2:
+            printf("RISE OR FALL FOR DO? ");
+            gets(dollar);
+            break;
+        case 3:
+            printf("RISE OR FALL FOR FT? ");
+            gets(fedint);
+            break;
+        case 4:
+            printf("ADD OR SUBTRACT FOR FM? ");
+            gets(fedmon);
+            break;
+    }
+}
+
+void process()
+{
+    search();
+    /* point to first clause in statement */
+    cn=1;
+    if (sn != 0)/* more statements */
+    {
+        /* locate the clause */
+        i = 4 * (sn-1) + cn;
+        /* clause variable */
+        strcpy(v, clvarlt[i]);
+        /* are there any more clauses for this statement */
+        while (strcmp(v, ""))
+            /* more clauses */
+        {
+            /* check instantiation of this clause */
+            check_instantiation();
+            cn = cn+1;
+            /* check next clause */
+            i = 4 * (sn-1) + cn;
+            strcpy(v, clvarlt[i]);
+        }
+
+        /* no more clauses - check IF part of statement */
+        s = 0;
+
+        ifkbase();
+        
+        /* see if the THEN part should be inovked, i.e., s=1 */
+        if (s != 1)
+        {
+            f = sn + 1;
+            process();
+        }
+
+        thenkbase();
+
+        f = sn + 1;
+        process();
+    }
+
+    /* no more clauses in the clause variable list (clvarlt)
+    containing the variable in front of the queue (cndvar(fp))
+    then remove front variable (cndvar(fp)) and replace it by
+    the next variable (cndvar(fp+1)). If no more variables are
+    at the front of the queue, stop. */
+    /* next queue variable */
+    fp=fp+1;
+    if (fp < bp)
+    {
+        /* check out the condition variable */
+        f = 1;
+        process();
+    }
+    printf("*** Success ***");
+    exit(0);
+    /* no more conclusion variables on queue */
 }
