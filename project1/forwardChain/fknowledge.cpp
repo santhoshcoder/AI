@@ -24,6 +24,7 @@ class fknowledge
 		void thenkbase();
 		void instantiatekbase();
 };
+
 void fknowledge::startkbase()
 {
     /******** INITIALIZATION SECTION ***********/
