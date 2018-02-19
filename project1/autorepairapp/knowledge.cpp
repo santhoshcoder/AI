@@ -46,8 +46,10 @@ void knowledge::initialization()
     // Printing Conclusion list
     cout<<"*** CONCLUSION LIST ***"<<endl;
     for (i=1; i < size; i++)
-    	cout<<"CONCLUSION "<<i<<" "<<conclt[i]<<endl;
-
+    {
+    	if(conclt[i] != "")
+    		cout<<"CONCLUSION "<<i<<" "<<conclt[i]<<endl;
+    }
     cout<<"HIT RETURN TO CONTINUE";
     gets(buff);
 
@@ -556,111 +558,111 @@ void knowledge::thenkbase()
     {
 		case 1:
         	fault="UNEVEN_TYRE";
-			cout<< " FAULT=UNEVEN_TYRE " << endl;
+			cout<<endl<<" FAULT=UNEVEN_TYRE " << endl;
             break;
 		case 2:
 			fault="AIR_CONDITIONER";
-			cout<< " FAULT=AIR_CONDITIONER " << endl;
+			cout<<endl<<" FAULT=AIR_CONDITIONER " << endl;
 			break;
 		case 3:
         	fault="DEFECTIVE_THERMOSTAT";
-			cout<< " FAULT=DEFECTIVE_THERMOSTAT " << endl;
+			cout<<endl<<" FAULT=DEFECTIVE_THERMOSTAT " << endl;
             break;
 		case 4:
         	fault="LACK_OF_LUBRICATION_OIL";
-			cout<< " FAULT=LACK_OF_LUBRICATION_OIL " << endl;
+			cout<<endl<<" FAULT=LACK_OF_LUBRICATION_OIL " << endl;
          	break;
 		case 5:
 	      	fault="DAMAGED_BREAK_PADS";
-			cout<< " FAULT=DAMAGED_BREAK_PADS " << endl;
+			cout<<endl<<" FAULT=DAMAGED_BREAK_PADS " << endl;
 	        break;
 		case 6:
 		   	fault="BOOSTER_FAILURE";
-			cout<< " FAULT=BOOSTER_FAILURE " << endl;
+			cout<<endl<<" FAULT=BOOSTER_FAILURE " << endl;
 		    break;
 		case 7:
 		   	fault="LOW_BREAK_FLUID";
-			cout<< " FAULT=LOW_BREAK_FLUID " << endl;
+			cout<<endl<<" FAULT=LOW_BREAK_FLUID " << endl;
 		    break;
 		case 8:
 		   	fault="SPARK_PLUG";
-			cout<< " FAULT=SPARK_PLUG " << endl;
+			cout<<endl<<" FAULT=SPARK_PLUG " << endl;
 		    break;
 		case 9:
 		 	fault="FAILING_HEADLIGHT_SWITCH";
-			cout<< " FAULT=FAILING_HEADLIGHT_SWITCH " << endl;
+			cout<<endl<<" FAULT=FAILING_HEADLIGHT_SWITCH " << endl;
 		    break;
 		case 10:
 		   	fault="FAILING_HEADLIGHT_SWITCH";
-			cout<< " FAULT=FAILING_HEADLIGHT_SWITCH " << endl;
+			cout<<endl<<" FAULT=FAILING_HEADLIGHT_SWITCH " << endl;
 		    break;
 		case 11:
 		   	fault="FAILING_HEADLIGHT_SWITCH";
-			cout<< " FAULT=FAILING_HEADLIGHT_SWITCH " << endl;
+			cout<<endl<<" FAULT=FAILING_HEADLIGHT_SWITCH " << endl;
 		    break;
 		case 12:
 		   	fault="FAILING_FUEL_RETURN_HOSE";
-			cout<< " FAULT=FAILING_FUEL_RETURN_HOSE " << endl;
+			cout<<endl<<" FAULT=FAILING_FUEL_RETURN_HOSE " << endl;
 		    break;
 		case 13:
 		  	fault="FAILING_FUEL_RETURN_HOSE";
-			cout<< " FAULT=FAILING_FUEL_RETURN_HOSE " << endl;
+			cout<<endl<<" FAULT=FAILING_FUEL_RETURN_HOSE " << endl;
 		    break;
 		case 14:
 		   	fault="RADIATOR_LEAK";
-			cout<< " FAULT=RADIATOR_LEAK " << endl;
+			cout<<endl<<" FAULT=RADIATOR_LEAK " << endl;
 		    break;
 		case 15:
 		   	fault="FAILING_WHEEL_SPEED_SENSOR";
-			cout<< " FAULT=FAILING_WHEEL_SPEED_SENSOR " << endl;
+			cout<<endl<<" FAULT=FAILING_WHEEL_SPEED_SENSOR " << endl;
 		    break;
 		case 16:
 		   	fault="FAILING_WHEEL_SPEED_SENSOR";
-			cout<< " FAULT=FAILING_WHEEL_SPEED_SENSOR " << endl;
+			cout<<endl<<" FAULT=FAILING_WHEEL_SPEED_SENSOR " << endl;
 		    break;
 		case 17:
 		   	fault="WINDSHIELD_WIPERS";
-			cout<< " FAULT=WINDSHIELD_WIPERS " << endl;
+			cout<<endl<<" FAULT=WINDSHIELD_WIPERS " << endl;
 			break;
 		case 18:
 		   	fault="WINDSHIELD_WIPER_MOTOR";
-			cout<< " FAULT=WINDSHIELD_WIPER_MOTOR " << endl;
+			cout<<endl<<" FAULT=WINDSHIELD_WIPER_MOTOR " << endl;
 		    break;
 		case 19:
 		   	fault="FAULTY_FUSE";
-			cout<< " FAULT=FAULTY_FUSE " << endl;
+			cout<<endl<<" FAULT=FAULTY_FUSE " << endl;
 		    break;
 		case 20:
 		   	fault="DANGLING_EXHAUST_PIPE";
-			cout<< " FAULT=DANGLING_EXHAUST_PIPE " << endl;
+			cout<<endl<<" FAULT=DANGLING_EXHAUST_PIPE " << endl;
 		    break;
 		case 21:
 		  	fault="OLD_BATTERY";
-			cout<< " FAULT=OLD_BATTERY " << endl;
+			cout<<endl<<" FAULT=OLD_BATTERY " << endl;
 		    break;
 		case 22:
 		  	fault="FAILING_DOOR_LOCK_ACTUATOR";
-			cout<< " FAULT=FAILING_DOOR_LOCK_ACTUATOR " << endl;
+			cout<<endl<<" FAULT=FAILING_DOOR_LOCK_ACTUATOR " << endl;
 		    break;
 		case 23:
 		   	fault="ISSUE_ANTENNA_CONNECTION";
-			cout<< " FAULT=ISSUE_ANTENNA_CONNECTION " << endl;
+			cout<<endl<<" FAULT=ISSUE_ANTENNA_CONNECTION " << endl;
 		    break;
 		case 24:
 		  	fault="DEFECTIVE_CCC";
-			cout<< " FAULT=DEFECTIVE_CCC " << endl;
+			cout<<endl<<" FAULT=DEFECTIVE_CCC " << endl;
 		    break;
 		case 25:
 		  	fault="DEFECTIVE_CCC";
-			cout<< " FAULT=DEFECTIVE_CCC " << endl;
+			cout<<endl<<" FAULT=DEFECTIVE_CCC " << endl;
 		    break;
 		case 26:
 		   	fault="GEAR_PROBLEM";
-			cout<< " FAULT=GEAR_PROBLEM " << endl;
+			cout<<endl<<" FAULT=GEAR_PROBLEM " << endl;
 		    break;
 		case 27:
 		   	fault="GEAR_PROBLEM";
-			cout<< " FAULT=GEAR_PROBLEM " << endl;
+			cout<<endl<<" FAULT=GEAR_PROBLEM " << endl;
 		    break;
     }
 }

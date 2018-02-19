@@ -31,7 +31,35 @@ class inference
     	void popStack();
         void mappingClause();
         string getfault();
+        void display();
 };
+
+void inference::display()
+{
+    cout<<endl<<"**************************"<<endl;
+    cout<<"Printing Conclusion Stack";
+    cout<<endl<<"**************************"<<endl;
+    bool flag = true;
+    for(int i1 = 1; i1 < kb.size; i1++)
+    {
+        if(kb.statsk[i1] != 0)
+        {
+            cout<<"| " << kb.statsk[i1] <<" |";
+            cout<<" "  << kb.clausk[i1] <<" |";
+            flag = false;
+            cout<<endl;
+        }
+    }
+    if(flag)
+    {
+        cout<<"No elements in Conclusion Stack";
+        cout<<endl<<"**************************"<<endl;
+    }
+    else
+    {
+        cout<<endl<<"**************************"<<endl;  
+    }
+}
 
 string inference::getfault()
 {
@@ -57,6 +85,7 @@ void inference::process()
         noConclusion();
         if(kb.sn != 0)
         {
+            cin.ignore();
         	kb.thenkbase();
         	popStack();
         }
@@ -74,6 +103,7 @@ void inference::noConclusion()
         mappingClause();
     }
     while((kb.s != 1) && (kb.sn !=0));
+    //display();
 }
 
 void inference::determine_member_concl_list()
@@ -161,7 +191,7 @@ void inference::popStack()
     if(kb.sp >= kb.size)
    	{
    		// Finished
-        cout<<"*** SUCCESS ***"<<endl;
+        //cout<<"*** SUCCESS ***"<<endl;
         return;
     }
     else
@@ -187,6 +217,7 @@ int main()
     string answer;
     cout<<"Is there any abnormality (YES or NO):";
     cin>>answer;
+    cin.ignore (); 
     if(answer == "NO" || answer == "no")
     {
         cout<<"Thank you."<<endl;

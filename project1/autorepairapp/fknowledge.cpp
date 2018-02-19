@@ -28,6 +28,7 @@ class fknowledge
 		/* clause number */
 		int cn;
 
+        char buff[256];
 		//Functions
 		void startkbase();
 		void ifkbase();
@@ -61,9 +62,13 @@ void fknowledge::startkbase()
 
     cout<<"*** VARIABLE LIST ***"<<endl;
     for (i=1;i < size; i++)
+    {
         cout<<"VARIABLE "<<i<<" "<<varlt[i]<<endl;
+    }
     cout<<endl;
     
+    cout<<"HIT RETURN TO CONTINUE";
+    gets(buff);
     /* enter variables as they appear in the IF clauses, Up to 3
     variables per IF statement. If no more variables left, just
     hit return key */
@@ -93,10 +98,10 @@ void fknowledge::startkbase()
             cout<<"VARIABLE "<<j<< " "<<clvarlt[k]<<endl;
         }
 
-        if (i==4)
+        if (i==10)
         {
             cout<<"HIT RETURN TO CONTINUE";
-            getchar();
+            gets(buff);
         }
     }
     cout<<endl;
@@ -213,7 +218,7 @@ void fknowledge::thenkbase()
         /* put variable on the conclusion variable queue */
         case 1:
             repair = "GET_A_WHEEL_ALIGNMENT";
-            cout<<"RP=GET_A_WHEEL_ALIGNMENT"<<endl;
+            cout<<"REPAIR = GET_A_WHEEL_ALIGNMENT"<<endl;
             v = "FT";
             inst = true;
             break;
@@ -221,7 +226,7 @@ void fknowledge::thenkbase()
             /* put variable on the conclusion variable queue */
         case 2:
             repair = "LEAK_SEALANT";
-            cout<<"RP=LEAK_SEALANT"<<endl;
+            cout<<"REPAIR = LEAK_SEALANT"<<endl;
             v = "FT";
             inst = true;
             break;
@@ -229,7 +234,7 @@ void fknowledge::thenkbase()
             /* put variable on the conclusion variable queue */
         case 3:
             repair = "THERMOSTAT_REPLACEMENT";
-            cout<<"RP=THERMOSTAT_REPLACEMENT"<<endl;
+            cout<<"REPAIR = THERMOSTAT_REPLACEMENT"<<endl;
             v = "FT";
             inst = true;
             break;
@@ -237,21 +242,21 @@ void fknowledge::thenkbase()
             /* put variable on the conclusion variable queue */
         case 4:
             repair = "CHANGE_OIL";
-            cout<<"RP=CHANGE_OIL"<<endl;
+            cout<<"REPAIR = CHANGE_OIL"<<endl;
             v = "FT";
             inst = true;
             break;
             /* put variable on the conclusion variable queue */
         case 5:
             repair = "CHANGE_BREAKPADS";
-            cout<<"RP=CHANGE_BREAKPADS"<<endl;
+            cout<<"REPAIR = CHANGE_BREAKPADS"<<endl;
             v = "FT";
             inst = true;
             break;
             /*********** comment 1610 ***********/
 		case 6:
             repair = "REPLACE_BRAKE_BOOSTER";
-            cout<<"RP=REPLACE_BRAKE_BOOSTER"<<endl;
+            cout<<"REPAIR = REPLACE_BRAKE_BOOSTER"<<endl;
             v = "FT";
             inst = true;
             break;
@@ -259,7 +264,7 @@ void fknowledge::thenkbase()
             /* put variable on the conclusion variable queue */
         case 7:
             repair = "FILL_BRAKE_FLUID";
-            cout<<"RP=FILL_BRAKE_FLUID"<<endl;
+            cout<<"REPAIR = FILL_BRAKE_FLUID"<<endl;
             v = "FT";
             inst = true;
             break;
@@ -267,7 +272,7 @@ void fknowledge::thenkbase()
             /* put variable on the conclusion variable queue */
         case 8:
             repair = "REPLACE_SPARKPLUG";
-            cout<<"RP=REPLACE_SPARKPLUG"<<endl;
+            cout<<"REPAIR = REPLACE_SPARKPLUG"<<endl;
             v = "FT";
             inst = true;
             break;
@@ -275,20 +280,20 @@ void fknowledge::thenkbase()
             /* put variable on the conclusion variable queue */
         case 9:
             repair = "REPLACE_HEADLIGHT_SWITCH";
-            cout<<"RP=REPLACE_HEADLIGHT_SWITCH"<<endl;
+            cout<<"REPAIR = REPLACE_HEADLIGHT_SWITCH"<<endl;
             v = "FT";
             inst = true;
             break;
             /* put variable on the conclusion variable queue */
         case 10:
             repair = "REPLACE_FUEL_RETURN_HOSE";
-            cout<<"RP=REPLACE_FUEL_RETURN_HOSE"<<endl;
+            cout<<"REPAIR = REPLACE_FUEL_RETURN_HOSE"<<endl;
             v = "FT";
             inst = true;
             break;
 		case 11:
             repair = "USE_LEAK_SEALANT";
-            cout<<"RP=USE_LEAK_SEALANT"<<endl;
+            cout<<"REPAIR = USE_LEAK_SEALANT"<<endl;
             v = "FT";
             inst = true;
             break;
@@ -296,7 +301,7 @@ void fknowledge::thenkbase()
             /* put variable on the conclusion variable queue */
         case 12:
             repair = "REPLACE_WHEEL_SPEED_SENSOR";
-            cout<<"RP=REPLACE_WHEEL_SPEED_SENSOR"<<endl;
+            cout<<"REPAIR = REPLACE_WHEEL_SPEED_SENSOR"<<endl;
             v = "FT";
             inst = true;
             break;
@@ -304,7 +309,7 @@ void fknowledge::thenkbase()
             /* put variable on the conclusion variable queue */
         case 13:
             repair = "CHANGE_RUBBER";
-            cout<<"RP=CHANGE_RUBBER"<<endl;
+            cout<<"REPAIR = CHANGE_RUBBER"<<endl;
             v = "FT";
             inst = true;
             break;
@@ -312,52 +317,52 @@ void fknowledge::thenkbase()
             /* put variable on the conclusion variable queue */
         case 14:
             repair = "INSTALL_NEW_MOTORS";
-            cout<<"RP=INSTALL_NEW_MOTORS"<<endl;
+            cout<<"REPAIR = INSTALL_NEW_MOTORS"<<endl;
             v = "FT";
             inst = true;
             break;
             /* put variable on the conclusion variable queue */
         case 15:
             repair = "CHANGE_FUSE";
-            cout<<"RP=CHANGE_FUSE"<<endl;
+            cout<<"REPAIR = CHANGE_FUSE"<<endl;
             v = "FT";
             inst = true;
             break;
 		case 16:
             repair = "WELD_EXHAUST_PIPE";
-            cout<<"RP=WELD_EXHAUST_PIPE"<<endl;
+            cout<<"REPAIR = WELD_EXHAUST_PIPE"<<endl;
             v = "FT";
             inst = true;
             break;
             /* put variable on the conclusion variable queue */
         case 17:
             repair = "CHANGE_BATTERY";
-            cout<<"RP=CHANGE_BATTERY"<<endl;
+            cout<<"REPAIR = CHANGE_BATTERY"<<endl;
             v = "FT";
             inst = true;
             break;
 		case 18:
             repair = "REPLACE_DOOR_LOCK_ACTUATOR";
-            cout<<"RP=REPLACE_DOOR_LOCK_ACTUATOR"<<endl;
+            cout<<"REPAIR = REPLACE_DOOR_LOCK_ACTUATOR"<<endl;
             v = "FT";
             inst = true;
             break;
             /* put variable on the conclusion variable queue */
         case 19:
             repair = "RETRACT_ANTENNA";
-            cout<<"RP=RETRACT_ANTENNA"<<endl;
+            cout<<"REPAIR = RETRACT_ANTENNA"<<endl;
             v = "FT";
             inst = true;
             break;
 		case 20:
             repair = "REPLACE_CAR_NAVI_SYSTEM";
-            cout<<"RP=REPLACE_CAR_NAVI_SYSTEM"<<endl;
+            cout<<"REPAIR = REPLACE_CAR_NAVI_SYSTEM"<<endl;
             v = "FT";
             inst = true;
             break;
 		case 21:
             repair = "GET_CLUTCH_INSPECTED";
-            cout<<"RP=GET_CLUTCH_INSPECTED"<<endl;
+            cout<<"REPAIR = GET_CLUTCH_INSPECTED"<<endl;
             v = "FT";
             inst = true;
             break;

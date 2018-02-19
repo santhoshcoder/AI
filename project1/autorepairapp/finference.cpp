@@ -31,11 +31,40 @@ class finference
 		void inference(string);
 		void process();
         void start(string);
+        void display();
 };
+
+void finference::display()
+{
+    cout<<endl<<"**************************"<<endl;
+    cout<<"Printing Conclusion Variable Queue";
+    cout<<endl<<"**************************"<<endl;
+    bool flag = true;
+    for(int i1 = 1; i1 < 2; i1++)
+    {
+        if(fk.cndvar[i1] != "")
+        {
+            cout<<"| "<<fk.cndvar[i1]<<" |";
+            flag = false;
+            cout<<endl;
+        }
+    }
+    if(flag)
+    {
+        cout<<"No elements in Conclusion Variable Queue";
+        cout<<endl<<"**************************"<<endl;
+    }
+    else
+    {
+        cout<<endl<<"**************************"<<endl;  
+    }
+}
+
 void finference::start(string t)
 {
     fk.startkbase();
     inference(t);
+    //display();
     process();
 }
 void finference::check_instantiation()
@@ -80,7 +109,8 @@ void finference::instantiate()
 
 void finference::inference(string ft)
 {
-    cout<<"Inference called with value:"<<ft<<endl;
+    //cout<<"Inference called with value:"<<ft<<endl;
+    cout<<endl;
     fk.fp=1;
     fk.bp=1;
     /****** INFERENCE SECTION *****************/
@@ -165,7 +195,7 @@ void finference::process()
         process();
     }
     /* no more conclusion variables on queue */
-    cout<<"*** Success ***";
+    cout<<"*** Success ***"<<endl;
     exit(0);
 }
 
