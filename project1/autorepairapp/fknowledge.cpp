@@ -142,7 +142,7 @@ void fknowledge::ifkbase()
 				s=1;
 			break;
 		case 7:
-			if (fault == "LOW_BRAKE_FLUID")
+			if (fault == "LOW_BREAK_FLUID")
 				s=1;
 			break;
 		case 8:

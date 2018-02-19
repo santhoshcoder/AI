@@ -71,7 +71,7 @@ void knowledge::initialization()
 	varlt[17]="Trouble_Car_Start";
 	varlt[18]="Fuel_Consp_High";
 	varlt[19]="Lack_Of_Acceleration";
-	varlt[20]="Issue_Switching_Headights";
+	varlt[20]="Issue_Switching_Headlights";
 	varlt[21]="Issue_Operating_High_beam";
 	varlt[22]="Lights_No_Turnon";
 	varlt[23]="Fuel_odor";
@@ -80,7 +80,7 @@ void knowledge::initialization()
 	varlt[26]="Eng_Stalling";
 	varlt[27]="Freq_Eng_Heating";
 	varlt[28]="Large_Drop_Coolant_Levels";
-	varlt[29]="ABS_Light_on_Dashoard";
+	varlt[29]="ABS_Light_on_Dashboard";
 	varlt[30]="Traction_Ctrl_Light";
 	varlt[31]="Front_Tyre_Locks_on_Break_Application";
 	varlt[32]="Wiper_Rubber_Wornout";
@@ -165,7 +165,7 @@ void knowledge::initialization()
 	clvarlt[54]= "Large_Drop_Coolant_Levels";
 	clvarlt[55]="";
 	clvarlt[56]="";
-	clvarlt[57]= "ABS_Light_on_Dashoard";
+	clvarlt[57]= "ABS_Light_on_Dashboard";
 	clvarlt[58]= "Traction_Ctrl_Light";
 	clvarlt[59]="";
 	clvarlt[60]="";
@@ -235,6 +235,123 @@ void knowledge::initialization()
                 gets(buff);
             }
         }
+}
+
+void knowledge::ifkbase()
+{
+    switch (sn)
+    {
+        /* if part of statement 1 */
+        /****** comment 1500 ****/
+        case 1:
+        	if(Odd_Vibrations=="YES" && Stearing_Vibrations=="YES" && Reduced_grip=="YES")
+        		s = 1;
+            break;
+        case 2:
+        	if(No_Cool_Air=="YES" && Freon_Leakage=="YES" )
+        		s = 1;
+            break;
+				case 3:
+        	if(Bonnet_Smoke=="YES" && Eng_Temp_Gauge_High=="YES" && Eng_Overheat=="YES" )
+        		s = 1;
+          break;
+        case 4:
+        	if(Less_Efficient_Engine=="YES"&& Eng_Components_Wear_Out=="YES" )
+        		s =1;
+            break;
+        case 5:
+        	if(Squealing_Sound=="YES"&& Car_Stop_Delay=="YES" && Rust_On_Break_Lining=="YES")
+        		s = 1;
+            break;
+        case 6:
+        	if(No_Car_Stop_On_Break=="YES" && Pedal_to_floor=="YES" && Fluid_level_ok=="YES" )
+        		s = 1;
+            break;
+        case 7:
+        	if(No_Car_Stop_On_Break=="YES" && Pedal_to_floor=="YES" && Fluid_level_ok=="NO")
+        		s = 1;
+        	break;
+		case 8:
+			if(Trouble_Car_Start=="YES" && Fuel_Consp_High=="YES" && Lack_Of_Acceleration=="YES" )
+				s=1;
+			break;
+		case 9:
+			if(Issue_Switching_Headlights=="YES" )
+				s=1;
+			break;
+		case 10:
+			if(Issue_Switching_Headlights=="NO" && Issue_Operating_High_beam=="YES" )
+				s=1;
+			break;
+		case 11:
+			if(Issue_Switching_Headlights=="NO" && Lights_No_Turnon=="YES" )
+				s=1;
+			break;
+		case 12:
+			if(Fuel_odor=="YES" && Eng_Misfires=="YES" )
+				s=1;
+			break;
+		case 13:
+			if(Fuel_odor=="YES" && Carburetor_Floods=="YES" && Eng_Stalling=="YES" )
+				s=1;
+			break;
+		case 14:
+			if(Freq_Eng_Heating=="YES" && Large_Drop_Coolant_Levels=="YES" )
+				s=1;
+			break;
+		case 15:
+			if(ABS_Light_on_Dashboard=="YES" && Traction_Ctrl_Light=="YES" )
+				s=1;
+			break;
+		case 16:
+			if(Front_Tyre_Locks_on_Break_Application=="YES" )
+				s=1;
+			break;
+		case 17:
+			if(Wiper_Rubber_Wornout=="YES" )
+				s=1;
+			break;
+		case 18:
+			if(Wiper_Rubber_Wornout=="NO" && Wipers_Not_Moving=="YES" && Fuse_OK=="YES")
+				s=1;
+			break;
+		case 19:
+			if(Wiper_Rubber_Wornout=="NO" && Wipers_Not_Moving=="YES" && Fuse_OK=="NO" )
+				s=1;
+			break;
+		case 20:
+			if(Noises_from_back_of_car=="YES" && Broken_hangers=="YES" )
+				s=1;
+			break;
+		case 21:
+			if(Low_battery_fluid=="YES" && Slow_Eng_Crank=="YES")
+				s=1;
+			break;
+		case 22:
+			if(Unusual_noise_inside_Door=="YES" && Erratic_Behave_Power_Doors=="YES" )
+				s=1;
+			break;
+		case 23:
+			if(No_Signal_Radio=="YES" && Antenna_retracted=="NO")
+				s=1;
+			break;
+		case 24:
+			if(Navigation_ScreenFlickering=="YES")
+				s=1;
+			break;
+		case 25:
+			if(Navigation_ScreenFlickering=="NO" && Navigation_Sys_Keeps_Restarting=="YES")
+				s=1;
+			break;
+		case 26:
+			if(Car_jumping_on_Acceleration=="YES" && Burnt_Smell_Under_Hood=="YES" && Screeching_Sound == "YES")
+				s=1;
+			break;
+		case 27:
+			if(Car_jumping_on_Acceleration=="YES" && Burnt_Smell_Under_Hood=="NO" && Transmission_Fluid_Foul_Smelling == "YES")
+				s=1;
+			break;
+    }
 }
 
 void knowledge::initkbase()
@@ -429,123 +546,6 @@ void knowledge::initkbase()
 		case 47:
 			cout<<" does your transmission fluid smells foul ?";
 			cin>>Transmission_Fluid_Foul_Smelling;
-			break;
-    }
-}
-
-void knowledge::ifkbase()
-{
-    switch (sn)
-    {
-        /* if part of statement 1 */
-        /****** comment 1500 ****/
-        case 1:
-        	if(Odd_Vibrations=="YES" && Stearing_Vibrations=="YES" && Reduced_grip=="YES")
-        		s = 1;
-            break;
-        case 2:
-        	if(No_Cool_Air=="YES" && Freon_Leakage=="YES" )
-        		s = 1;
-            break;
-				case 3:
-        	if(Bonnet_Smoke=="YES" && Eng_Temp_Gauge_High=="YES" && Eng_Overheat=="YES" )
-        		s = 1;
-          break;
-        case 4:
-        	if(Less_Efficient_Engine=="YES"&& Eng_Components_Wear_Out=="YES" )
-        		s =1;
-            break;
-        case 5:
-        	if(Squealing_Sound=="YES"&& Car_Stop_Delay=="YES" && Rust_On_Break_Lining=="YES")
-        		s = 1;
-            break;
-        case 6:
-        	if(No_Car_Stop_On_Break=="YES" && Pedal_to_floor=="YES" && Fluid_level_ok=="YES" )
-        		s = 1;
-            break;
-        case 7:
-        	if(No_Car_Stop_On_Break=="YES" && Pedal_to_floor=="YES" && Fluid_level_ok=="NO")
-        		s = 1;
-        	break;
-		case 8:
-			if(Trouble_Car_Start=="YES" && Fuel_Consp_High=="YES" && Lack_Of_Acceleration=="YES" )
-				s=1;
-			break;
-		case 9:
-			if(Issue_Switching_Headlights=="YES" )
-				s=1;
-			break;
-		case 10:
-			if(Issue_Switching_Headlights=="NO" && Issue_Operating_High_beam=="YES" )
-				s=1;
-			break;
-		case 11:
-			if(Issue_Switching_Headlights=="NO" && Lights_No_Turnon=="YES" )
-				s=1;
-			break;
-		case 12:
-			if(Fuel_odor=="YES" && Eng_Misfires=="YES" )
-				s=1;
-			break;
-		case 13:
-			if(Fuel_odor=="YES" && Carburetor_Floods=="YES" && Eng_Stalling=="YES" )
-				s=1;
-			break;
-		case 14:
-			if(Freq_Eng_Heating=="YES" && Large_Drop_Coolant_Levels=="YES" )
-				s=1;
-			break;
-		case 15:
-			if(ABS_Light_on_Dashboard=="YES" && Traction_Ctrl_Light=="YES" )
-				s=1;
-			break;
-		case 16:
-			if(Front_Tyre_Locks_on_Break_Application=="YES" )
-				s=1;
-			break;
-		case 17:
-			if(Wiper_Rubber_Wornout=="YES" )
-				s=1;
-			break;
-		case 18:
-			if(Wiper_Rubber_Wornout=="NO" && Wipers_Not_Moving=="YES" && Fuse_OK=="YES")
-				s=1;
-			break;
-		case 19:
-			if(Wiper_Rubber_Wornout=="NO" && Wipers_Not_Moving=="YES" && Fuse_OK=="NO" )
-				s=1;
-			break;
-		case 20:
-			if(Noises_from_back_of_car=="YES" && Broken_hangers=="YES" )
-				s=1;
-			break;
-		case 21:
-			if(Low_battery_fluid=="YES" && Slow_Eng_Crank=="YES")
-				s=1;
-			break;
-		case 22:
-			if(Unusual_noise_inside_Door=="YES" && Erratic_Behave_Power_Doors=="YES" )
-				s=1;
-			break;
-		case 23:
-			if(No_Signal_Radio=="YES" && Antenna_retracted=="NO")
-				s=1;
-			break;
-		case 24:
-			if(Navigation_ScreenFlickering=="YES")
-				s=1;
-			break;
-		case 25:
-			if(Navigation_ScreenFlickering=="NO" && Navigation_Sys_Keeps_Restarting=="YES")
-				s=1;
-			break;
-		case 26:
-			if(Car_jumping_on_Acceleration=="YES" && Burnt_Smell_Under_Hood=="YES" )
-				s=1;
-			break;
-		case 27:
-			if(Car_jumping_on_Acceleration=="YES" && Burnt_Smell_Under_Hood=="NO" )
-				s=1;
 			break;
     }
 }
