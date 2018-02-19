@@ -1,23 +1,21 @@
 #include <iostream>
 using namespace std;
 #include "knowledge.cpp"
-
-#define size kb.size
-#define clauseSize kb.clauseSize
-#define conclt kb.conclt
-#define varlt kb.varlt
-#define clvarlt kb.clvarlt
-#define varble kb.varble
-#define instlt kb.instlt
-#define statsk kb.statsk
-#define clausk kb.clausk
-#define sn kb.sn
-#define f kb.f
-#define i kb.i
-#define j kb.j
-#define s kb.s
-#define k kb.s
-#define sp kb.sp
+#include "finference.cpp"
+//#define clauseSize kb.clauseSize
+//#define conclt kb.conclt
+//#define varlt kb.varlt
+//#define clvarlt kb.clvarlt
+//#define varble kb.varble
+//#define instlt kb.instlt
+//#define statsk kb.statsk
+//#define clausk kb.clausk
+//#define sn kb.sn
+//#define f kb.f
+//#define i kb.i
+//#define s kb.s
+//#define sp kb.sp
+//#define fault kb.fault
 
 class inference
 {
@@ -32,13 +30,18 @@ class inference
     	void instantiate();
     	void popStack();
         void mappingClause();
+        string getfault();
 };
 
+string inference::getfault()
+{
+    return kb.fault;
+}
 void inference::start()
 {
 	kb.initialization();
     cout<<"** ENTER CONCLUSION ? ";
-    cin>>varble;
+    cin>>kb.varble;
     /* get conclusion statement number (sn) from the conclusion list
     (conclt).First statement starts search */
     process();
@@ -46,13 +49,13 @@ void inference::start()
 
 void inference::process()
 {
-	f=1;
+	kb.f=1;
     determine_member_concl_list();
-    if (sn != 0)
+    if (kb.sn != 0)
     {
         /* if sn = 0 then no conclusion of that name */
         noConclusion();
-        if(sn != 0)
+        if(kb.sn != 0)
         {
         	kb.thenkbase();
         	popStack();
@@ -70,7 +73,7 @@ void inference::noConclusion()
         push_on_stack();
         mappingClause();
     }
-    while((s != 1) && (sn !=0));
+    while((kb.s != 1) && (kb.sn !=0));
 }
 
 void inference::determine_member_concl_list()
@@ -80,33 +83,33 @@ void inference::determine_member_concl_list()
        if not a member sn=0;
     */
     /* initially set to not a member */
-    sn = 0;
+    kb.sn = 0;
     /* member of conclusion list to be searched is f */
-    i = f;
-    while((varble!=conclt[i]) && (i<8))
-        i=i+1; /* test for membership */
-    if (varble == conclt[i])
-    	sn = i;  /* a member */
+    kb.i = kb.f;
+    while((kb.varble!= kb.conclt[kb.i]) && (kb.i<8))
+        kb.i=kb.i+1; /* test for membership */
+    if (kb.varble == kb.conclt[kb.i])
+    	kb.sn = kb.i;  /* a member */
 }
 
 void inference::push_on_stack()
 {
-    sp=sp-1;
-    statsk[sp] = sn;
-    clausk[sp] = 1;
+    kb.sp=kb.sp-1;
+    kb.statsk[kb.sp] = kb.sn;
+    kb.clausk[kb.sp] = 1;
 }
 
 void inference::instantiate()
 {
-    i=1;
+    kb.i=1;
     /* find variable in the list */
-    while (varble != varlt[i] && i<10)
-    	i=i+1;
-    if (varble == varlt[i] && instlt[i] != 1)
+    while (kb.varble != kb.varlt[kb.i] && kb.i<10)
+    	kb.i = kb.i+1;
+    if (kb.varble == kb.varlt[kb.i] && kb.instlt[kb.i] != 1)
     {
       	/*found variable and not already instantiated */
       	/*mark instantiated */
-        instlt[i]=1;
+        kb.instlt[kb.i]=1;
     	/* the designer of the knowledge base places the input statements to
         instantiate the variables below in the case statement */
         kb.initkbase();
@@ -119,59 +122,59 @@ void inference::mappingClause()
     {
         /* calculate clause location in clause-variable list */
         //mappingClause:
-        i= (statsk[sp] -1) *4 + clausk[sp];
+        kb.i= (kb.statsk[kb.sp] -1) *4 + kb.clausk[kb.sp];
         /* clause variable */
-        varble = clvarlt[i];
-        if(varble != "")
+        kb.varble = kb.clvarlt[kb.i];
+        if(kb.varble != "")
         {
             /*is this clause variable a conclusion? */
-            f = 1;
+            kb.f = 1;
             determine_member_concl_list();
-            if(sn != 0)
+            if(kb.sn != 0)
                 process(); /* it is a conclusion push it */
             /* check instantiation of this clause */
             instantiate();
-            clausk[sp] = clausk[sp] + 1;
+            kb.clausk[kb.sp] = kb.clausk[kb.sp] + 1;
         }
     }
-    while(varble != "");
-    sn = statsk[sp];
-    s = 0;
+    while(kb.varble != "");
+    kb.sn = kb.statsk[kb.sp];
+    kb.s = 0;
     kb.ifkbase();
-    if( s != 1)
+    if( kb.s != 1)
     {
         /* failed..search rest of statements for same conclusion */
         /* get conclusion */
-        i = statsk[sp];
-        varble = conclt[i];
+        kb.i = kb.statsk[kb.sp];
+        kb.varble = kb.conclt[kb.i];
         /* search for conclusion starting at the next statement number */
-        f = statsk[sp] + 1;
+        kb.f = kb.statsk[kb.sp] + 1;
         determine_member_concl_list();
-        sp = sp+1;
+        kb.sp = kb.sp+1;
     }
 }
 
 void inference::popStack()
 {
     /* pop the stack */
-    sp = sp+1;
-    if(sp >= size)
+    kb.sp = kb.sp+1;
+    if(kb.sp >= kb.size)
    	{
    		// Finished
         cout<<"*** SUCCESS ***"<<endl;
-        exit(0);
+        return;
     }
     else
     {
         /* stack is not empty */
         /* get next clause then continue */
-        clausk[sp] = clausk[sp]+1;
+        kb.clausk[kb.sp] = kb.clausk[kb.sp]+1;
         mappingClause();
-        if((s != 1) && (sn !=0))
+        if((kb.s != 1) && (kb.sn !=0))
         {
             noConclusion();
         }
-        else if(sn != 0)
+        else if(kb.sn != 0)
         {
             kb.thenkbase();
             popStack();
@@ -181,8 +184,14 @@ void inference::popStack()
 
 int main()
 {
-
     inference in;
     in.start();
+    
+    cout<<endl<<"*************************************"<<endl;
+    cout<<"Starting forward Chaining"<<endl;
+    cout<<endl<<"*************************************"<<endl;
+    string ft = in.getfault();
+    finference fir;
+    fir.start(ft);
     return 0;
 }

@@ -2,30 +2,24 @@
 using namespace std;
 #include "fknowledge.cpp"
 
-#define inst fk.inst
-#define flag fk.flag
-#define size fk.size
-#define csize fk.csize
-#define cndvar fk.cndvar
-#define varlt fk.varlt
-#define clvarlt fk.clvarlt
-#define c fk.c
-#define v fk.v
-#define instlt fk.instlt
-#define fedint fk.fedint
-#define interest fk.interest
-#define stock fk.stock
-#define dollar fk.dollar
-#define fedmon fk.fedmon
-#define f fk.f
-#define i fk.i
-#define j fk.j
-#define k fk.k
-#define s fk.s
-#define fp fk.fp
-#define bp fk.bp
-#define sn fk.sn
-#define cn fk.cn
+//#define inst fk.inst
+//#define flag fk.flag
+//#define size fk.size
+//#define csize fk.csize
+//#define cndvar fk.cndvar
+//#define varlt fk.varlt
+//#define clvarlt fk.clvarlt
+//#define c fk.c
+//#define v fk.v
+//#define instlt fk.instlt
+//#define f fk.f
+//#define i fk.i
+//#define k fk.k
+//#define s fk.s
+//#define fp fk.fp
+//#define bp fk.bp
+//#define sn fk.sn
+//#define cn fk.cn
 
 class finference
 {
@@ -34,27 +28,27 @@ class finference
         void search();
 		void check_instantiation();
 		void instantiate();
-		void inference();
+		void inference(string);
 		void process();
-        void start();
+        void start(string);
 };
-void finference::start()
+void finference::start(string t)
 {
     fk.startkbase();
-    inference();
+    inference(t);
     process();
 }
 void finference::check_instantiation()
 {
-    i=1;
+    fk.i=1;
     /* find variable in the variable list */
-    while ((v != varlt[i]) && (i < size))
-        i = i+1;
+    while ((fk.v != fk.varlt[fk.i]) && (fk.i < fk.size))
+        fk.i = fk.i+1;
     /* check if already instantiated */
-    if (instlt[i] != 1)
+    if (fk.instlt[fk.i] != 1)
     {
         /* mark instantiated */
-        instlt[i] = 1;
+        fk.instlt[fk.i] = 1;
         /* the designer of this knowledge base places the input
         statements to instantiate the variables in this case
         statement */
@@ -64,90 +58,94 @@ void finference::check_instantiation()
 
 void finference::instantiate()
 {
-    i=1;
+    fk.i=1;
     /* find varialbe in the varialbe list (varlt) */
-    while ((v != varlt[i]) && (i < size))
-        i=i+1;
+    while ((fk.v != fk.varlt[fk.i]) && (fk.i < fk.size))
+        fk.i=fk.i+1;
 
     /* instantiate it */
-    instlt[i] = 1;
-    i = 1;
+    fk.instlt[fk.i] = 1;
+    fk.i = 1;
 
     /* determine if (v) is or already has been on the queue (cndvar) */
-    while ((v != cndvar[i]) && (i < size))
-        i=i+1;
+    while ((fk.v != fk.cndvar[fk.i]) && (fk.i < fk.size))
+        fk.i=fk.i+1;
     /* variable has not been on the queue. Store it in the back of the queue */
-    if (v != cndvar[i])
+    if (fk.v != fk.cndvar[fk.i])
     {
-        cndvar[bp] = v;
-        bp=bp+1;
+        fk.cndvar[fk.bp] = fk.v;
+        fk.bp=fk.bp+1;
     }
 }
 
-void finference::inference()
+void finference::inference(string ft)
 {
-    fp=1;
-    bp=1;
+    cout<<"Inference called with value:"<<ft<<endl;
+    fk.fp=1;
+    fk.bp=1;
     /****** INFERENCE SECTION *****************/
+    /*
     printf("ENTER CONDITION VARIABLE? ");
     cin>>c;
+    */
+    fk.c = ft;
     /* place condition variable c on condition var queue cndvar */
-    cndvar[bp] = c;
+    fk.cndvar[fk.bp] = fk.c;
     /* move backpointer (bp) to back */
-    bp = bp + 1;
+    fk.bp = fk.bp + 1;
     /* set the condition variable pointer consisting of the
     statement number (sn) and the clause number (cn) */
-    sn = 1;
-    cn = 1;
+    fk.sn = 1;
+    fk.cn = 1;
     /* find the next statement number containing the condition variable
     which is in front of the queue (cndvar), this statement number
     is located in the clause variable list (clvarlt) */
     /* start at the beginning */
-    f=1;
+    fk.f=1;
 }
 
 void finference::process()
 {
     search();
     /* point to first clause in statement */
-    cn=1;
-    if (sn != 0)/* more statements */
+    fk.cn=1;
+    if (fk.sn != 0)/* more statements */
     {
         /* locate the clause */
-        i = 4 * (sn-1) + cn;
+        fk.i = 4 * (fk.sn-1) + fk.cn;
         /* clause variable */
-        v = clvarlt[i];
+        fk.v = fk.clvarlt[fk.i];
         /* are there any more clauses for this statement */
-        while (v != "")
+        while (fk.v != "")
             /* more clauses */
         {
             /* check instantiation of this clause */
             check_instantiation();
-            cn = cn+1;
+            fk.cn = fk.cn+1;
             /* check next clause */
-            i = 4 * (sn-1) + cn;
-            v = clvarlt[i];
+            fk.i = 4 * (fk.sn-1) + fk.cn;
+            fk.v = fk.clvarlt[fk.i];
         }
 
         /* no more clauses - check IF part of statement */
-        s = 0;
+        fk.s = 0;
 
         fk.ifkbase();
 
         /* see if the THEN part should be inovked, i.e., s=1 */
-        if (s != 1)
+        if (fk.s != 1)
         {
-            f = sn + 1;
+            fk.f = fk.sn + 1;
             process();
         }
 
         fk.thenkbase();
-        if(inst)
+        if(fk.inst)
         {
             instantiate();
-            inst = false;
+            fk.inst = false;
         }
-        f = sn + 1;
+        fk.f = fk.sn + 1;
         process();
     }
 
@@ -157,11 +155,11 @@ void finference::process()
     the next variable (cndvar(fp+1)). If no more variables are
     at the front of the queue, stop. */
     /* next queue variable */
-    fp=fp+1;
-    if (fp < bp)
+    fk.fp=fk.fp+1;
+    if (fk.fp < fk.bp)
     {
         /* check out the condition variable */
-        f = 1;
+        fk.f = 1;
         process();
     }
     /* no more conclusion variables on queue */
@@ -171,29 +169,24 @@ void finference::process()
 
 void finference::search()
 {
-    flag = 0;
-    sn = f;
-    while ((flag == 0) && (sn <= (csize-1)/4))
+    fk.flag = 0;
+    fk.sn = fk.f;
+    while ((fk.flag == 0) && (fk.sn <= (fk.csize-1)/4))
     {
-        cn=1;
-        k = (sn-1)*4+cn;
-        while ((clvarlt[k] != cndvar[fp]) && (cn < 4))
+        fk.cn=1;
+        fk.k = (fk.sn-1)*4+fk.cn;
+        while ((fk.clvarlt[fk.k] != fk.cndvar[fk.fp]) && (fk.cn < 4))
         {
-            cn = cn+1;
-            k = (sn-1)*4+cn;
+            fk.cn = fk.cn+1;
+            fk.k = (fk.sn-1)*4+fk.cn;
         }
 
-        if (clvarlt[k] == cndvar[fp])
-            flag = 1;
-        if (flag == 0)
-            sn = sn+1;
+        if (fk.clvarlt[fk.k] == fk.cndvar[fk.fp])
+            fk.flag = 1;
+        if (fk.flag == 0)
+            fk.sn = fk.sn+1;
     }
-    if (flag == 0)
-        sn=0;
+    if (fk.flag == 0)
+        fk.sn=0;
 }
-int main()
-{
-    finference fir;
-    fir.start();
-    return 0;
-}
+
