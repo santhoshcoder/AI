@@ -88,7 +88,9 @@ void finference::inference(string ft)
     printf("ENTER CONDITION VARIABLE? ");
     cin>>c;
     */
-    fk.c = ft;
+    fk.c = "FT";
+    fk.fault = ft;
+    fk.instlt[1] = 1;
     /* place condition variable c on condition var queue cndvar */
     fk.cndvar[fk.bp] = fk.c;
     /* move backpointer (bp) to back */

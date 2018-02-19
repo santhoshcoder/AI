@@ -62,9 +62,8 @@ void fknowledge::startkbase()
     cout<<"*** VARIABLE LIST ***"<<endl;
     for (i=1;i < size; i++)
         cout<<"VARIABLE "<<i<<" "<<varlt[i]<<endl;
-    cout<<"HIT RETURN TO CONTINUE";
-    getchar();
-
+    cout<<endl;
+    
     /* enter variables as they appear in the IF clauses, Up to 3
     variables per IF statement. If no more variables left, just
     hit return key */
@@ -100,6 +99,7 @@ void fknowledge::startkbase()
             getchar();
         }
     }
+    cout<<endl;
 }
 
 void fknowledge::ifkbase()

@@ -10,7 +10,7 @@ class knowledge
         string conclt[size], varlt[size], clvarlt[clauseSize];
         string varble, Odd_Vibrations, Stearing_Vibrations, Reduced_grip, No_Cool_Air, Freon_Leakage, Bonnet_Smoke, Eng_Temp_Gauge_High, Eng_Overheat, Less_Efficient_Engine, Eng_Components_Wear_Out, Squealing_Sound, Car_Stop_Delay, Rust_On_Break_Lining, No_Car_Stop_On_Break, Pedal_to_floor, Fluid_level_ok, Trouble_Car_Start, Fuel_Consp_High, Lack_Of_Acceleration, Issue_Switching_Headlights, Issue_Operating_High_beam, Lights_No_Turnon, Fuel_odor, Eng_Misfires, Carburetor_Floods, Eng_Stalling;//variable list
 		string Freq_Eng_Heating, Large_Drop_Coolant_Levels, ABS_Light_on_Dashboard, Traction_Ctrl_Light, Front_Tyre_Locks_on_Break_Application, Wiper_Rubber_Wornout, Wipers_Not_Moving, Fuse_OK, Noises_from_back_of_car, Broken_hangers, Low_battery_fluid, Slow_Eng_Crank, Unusual_noise_inside_Door, Erratic_Behave_Power_Doors, No_Signal_Radio, Antenna_retracted, Navigation_ScreenFlickering, Navigation_Sys_Keeps_Restarting, Car_jumping_on_Acceleration, Burnt_Smell_Under_Hood, Screeching_Sound, Transmission_Fluid_Foul_Smelling;//variable list
-		string fault;
+		string fault = "";
         char buff[256];
         int instlt[size];
         int statsk[size], clausk[size], sn, f, i, j, s, k, sp;

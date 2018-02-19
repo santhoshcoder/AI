@@ -86,7 +86,7 @@ void inference::determine_member_concl_list()
     kb.sn = 0;
     /* member of conclusion list to be searched is f */
     kb.i = kb.f;
-    while((kb.varble!= kb.conclt[kb.i]) && (kb.i<8))
+    while((kb.varble!= kb.conclt[kb.i]) && (kb.i< 28))
         kb.i=kb.i+1; /* test for membership */
     if (kb.varble == kb.conclt[kb.i])
     	kb.sn = kb.i;  /* a member */
@@ -103,7 +103,7 @@ void inference::instantiate()
 {
     kb.i=1;
     /* find variable in the list */
-    while (kb.varble != kb.varlt[kb.i] && kb.i<10)
+    while (kb.varble != kb.varlt[kb.i] && kb.i< kb.size)
     	kb.i = kb.i+1;
     if (kb.varble == kb.varlt[kb.i] && kb.instlt[kb.i] != 1)
     {
@@ -184,14 +184,24 @@ void inference::popStack()
 
 int main()
 {
+    string answer;
+    cout<<"Is there any abnormality (YES or NO):";
+    cin>>answer;
+    if(answer == "NO" || answer == "no")
+    {
+        cout<<"Thank you."<<endl;
+        exit(0);
+    }
     inference in;
     in.start();
-    
-    cout<<endl<<"*************************************"<<endl;
-    cout<<"Starting forward Chaining"<<endl;
-    cout<<endl<<"*************************************"<<endl;
     string ft = in.getfault();
-    finference fir;
-    fir.start(ft);
+    if(ft != "")
+    {
+        cout<<endl<<"*************************************"<<endl;
+        cout<<"Starting forward Chaining"<<endl;
+        cout<<endl<<"*************************************"<<endl;
+        finference fir;
+        fir.start(ft);
+    }
     return 0;
 }
