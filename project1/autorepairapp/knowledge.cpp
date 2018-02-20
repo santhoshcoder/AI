@@ -366,187 +366,187 @@ void knowledge::initkbase()
             cin>>Odd_Vibrations;
             break;
         case 2:
-            cout<<"Any stearing vibrations in the car?";
+            cout<<"Is your stearing wheel vibrating? ";
             cin>>Stearing_Vibrations;
             break;
         case 3:
-            cout<<"Your car grip reduced on road? ";
+            cout<<"Does your car have reduced grip on road? ";
             cin>>Reduced_grip;
             break;
         case 4:
-            cout<<"Is'nt cool air blowing from AC?";
+            cout<<"Is your A/C blowing warm air? ";
             cin>>No_Cool_Air;
             break;
 		case 5:
-	        cout<<"Is there any freon lekage in your car?";
+	        cout<<"Is there any freon lekage in your car? ";
 		    cin>>Freon_Leakage;
 		    break;
 		case 6:
-		    cout<<"Is there smoke from BOnnet of your car?";
+		    cout<<"Do you see any smoke coming out of your Bonnet? ";
 		    cin>>Bonnet_Smoke;
 		    break;
 		case 7:
-			cout<<"Is the temperature of the engine gone high?";
+			cout<<"Temperature guage go high? ";
 			cin>>Eng_Temp_Gauge_High;
 			break;
 		case 8:
-			cout<<"Is your engine over heating?";
+			cout<<"Is your engine over heating? ";
 			cin>>Eng_Overheat;
 			break;
 		case 9:
-			cout<<"Is your engine efficiency getting low?";
+			cout<<"Is your engine efficiency getting low? ";
 			cin>>Less_Efficient_Engine;
 			break;
 		case 10:
-			cout<<"Is your engine components weared off?";
+			cout<<"Is your engine components weared off? ";
 			cin>>Eng_Components_Wear_Out;
 			break;
 		case 11:
-			cout<<"Is your car makes sqealing sound?";
+			cout<<"Does your car make sqealing sound? ";
 			cin>>Squealing_Sound;
 			break;
 		case 12:
-			cout<<"Is your car stops lately after brake application?";
+			cout<<"Does your car takes time to stop? ";
 			cin>>Car_Stop_Delay;
 			break;
 		case 13:
-			cout<<"Is there any rust on the break lining area?";
+			cout<<"Is there any rust on the break lining area? ";
 			cin>>Rust_On_Break_Lining;
 			break;
 		case 14:
-			cout<<"Is your car dont stop on brake application?";
+			cout<<"Does your car stop immediately when brakes are applied? ";
 			cin>>No_Car_Stop_On_Break;
 			break;
 		case 15:
-			cout<<"are you applying the brake all the way down?";
+			cout<<"Does your brake pedal goes to the floor? ";
 			cin>>Pedal_to_floor;
 			break;
 		case 16:
-			cout<<"is your fluid level upto mark?";
+			cout<<"Is your fluid level ok? ";
 			cin>>Fluid_level_ok;
 			break;
 		case 17:
-			cout<<"is there any trouble starting your car?";
+			cout<<"Are you having trouble starting your car? ";
 			cin>>Trouble_Car_Start;
 			break;
 		case 18:
-			cout<<"is your car consuming more fuel?";
+			cout<<"Is your car consuming more fuel? ";
 			cin>>Fuel_Consp_High;
 			break;
 		case 19:
-			cout<<"do your car lack the acceleration?";
+			cout<<"Does your car has trouble accelerating? ";
 			cin>>Lack_Of_Acceleration;
 			break;
 		case 20:
-			cout<<"is there any problem in switching headlights?";
+			cout<<"Do you have trouble switching headlights? ";
 			cin>>Issue_Switching_Headlights;
 			break;
 		case 21:
-			cout<<"Any problem with operating high beams?";
+			cout<<"Trouble switching to high beam? ";
 			cin>>Issue_Operating_High_beam;
 			break;
 		case 22:
-			cout<<"are your car lights are not turning on at all?";
+			cout<<"Can you switch the lights on in your car? ";
 			cin>>Lights_No_Turnon;
 			break;
 		case 23:
-			cout<<" is there any odor of fuel coming from your car?";
+			cout<<"Smell gas fumes while driving or immeditely after driving? ";
 			cin>>Fuel_odor;
 			break;
 		case 24:
-			cout<<" does your engine of the car misfires?";
+			cout<<"Does your car engine misfires? ";
 			cin>>Eng_Misfires;
 			break;
 		case 25:
-			cout<<" does your carburetor floods?";
+			cout<<"Is your carburetor flooded? ";
 			cin>>Carburetor_Floods;
 			break;
 		case 26:
-			cout<<" does your engine keep on stops ?";
+			cout<<"Does your car engine abruptly ceases operating and stops turning? ";
 			cin>>Eng_Stalling;
 			break;
 		case 27:
-			cout<<" Frequent engine heating of the car ?";
+			cout<<"Frequent engine heating of the car? ";
 			cin>>Freq_Eng_Heating;
 			break;
 		case 28:
-			cout<<" does your coolant levels drop on large scale?";
+			cout<<"Does your coolant level drops very quickly after refilling? ";
 			cin>>Large_Drop_Coolant_Levels;
 			break;
 		case 29:
-			cout<<" is there the ABS light switched on the dashboard?";
+			cout<<"Is your ABS warning light on? ";
 			cin>>ABS_Light_on_Dashboard;
 			break;
 		case 30:
-			cout<<" is there the Traction control light switched on the dashboard?";
+			cout<<" Is your Traction control warning light on? ";
 			cin>>Traction_Ctrl_Light;
 			break;
 		case 31:
-			cout<<" does your front tyres strat locking up on the application of brakes?";
+			cout<<"Does your fronk tyre locks when brakes are applied? ";
 			cin>>Front_Tyre_Locks_on_Break_Application;
 			break;
 		case 32:
-			cout<<" does your windshield wipers worn out?";
+			cout<<"Is your windshield wipers worn out? ";
 			cin>>Wiper_Rubber_Wornout;
 			break;
 		case 33:
-			cout<<" does your windshield wipers not moving?";
+			cout<<"Is your windshield wipers not moving? ";
 			cin>>Wipers_Not_Moving;
 			break;
 		case 34:
-			cout<<" is the FUSE okay?";
+			cout<<"Is the FUSE okay? ";
 			cin>>Fuse_OK;
 			break;
 		case 35:
-			cout<<" is there any noises from the back of the car?";
+			cout<<"Do you hear any unusual noise coming from the back of the car? ";
 			cin>>Noises_from_back_of_car;
 			break;
 		case 36:
-			cout<<" are your exhaust pipe hangers broken?";
+			cout<<"Is your exhaust pipe hanger broken? ";
 			cin>>Broken_hangers;
 			break;
 		case 37:
-			cout<<" does your car battery fluid low?";
+			cout<<"Are you running low on car's battery fluid? ";
 			cin>>Low_battery_fluid;
 			break;
 		case 38:
-			cout<<" is there any engine cranks?";
+			cout<<"Does your engine cranks but doesn't start? ";
 			cin>>Slow_Eng_Crank;
 			break;
 		case 39:
-			cout<<" is there any noise coming from the door?";
+			cout<<"Do you hear any unusual noise coming from your door? ";
 			cin>>Unusual_noise_inside_Door;
 			break;
 		case 40:
-			cout<<" does your power door have any abnornmal behavior?";
+			cout<<"Does your power doors have any abnornmalities? ";
 			cin>>Erratic_Behave_Power_Doors;
 			break;
 		case 41:
-			cout<<" does the radio shows no signal?";
+			cout<<"Are you getting any signal on your radio? ";
 			cin>>No_Signal_Radio;
 			break;
 		case 42:
-			cout<<" is your navigation screen flickering?";
+			cout<<"Is your navigation screen flickering? ";
 			cin>>Navigation_ScreenFlickering;
 			break;
 		case 43:
-			cout<<" is your navigation system keeps restarting?";
+			cout<<"Is your navigation system keeps booting continuously? ";
 			cin>>Navigation_Sys_Keeps_Restarting;
 			break;
 		case 44:
-			cout<<" does your car jumping on acceleration ?";
+			cout<<"Does your car jumps on acceleration? ";
 			cin>>Car_jumping_on_Acceleration;
 			break;
 		case 45:
-			cout<<" do you smell any burning smell under your car hood ?";
+			cout<<"Do you smell any burning smell from your car hood? ";
 			cin>>Burnt_Smell_Under_Hood;
 			break;
 		case 46:
-			cout<<"does your car makes screeching sound ?";
+			cout<<"Does your car makes screeching sound? ";
 			cin>>Screeching_Sound;
 			break;
 		case 47:
-			cout<<" does your transmission fluid smells foul ?";
+			cout<<"Does your transmission fluid have foul smell? ";
 			cin>>Transmission_Fluid_Foul_Smelling;
 			break;
     }
