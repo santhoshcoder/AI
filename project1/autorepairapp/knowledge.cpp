@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 class knowledge
@@ -50,58 +51,18 @@ void knowledge::initialization()
     	if(conclt[i] != "")
     		cout<<"CONCLUSION "<<i<<" "<<conclt[i]<<endl;
     }
+
     cout<<"HIT RETURN TO CONTINUE";
     gets(buff);
 
 	// variable list in the VARLT array
-	varlt[1]="Odd_Vibrations";
-	varlt[2]="Stearing_Vibrations";
-	varlt[3]="Reduced_grip";
-	varlt[4]="No_Cool_Air";
-	varlt[5]="Freon_Leakage";
-	varlt[6]="Bonnet_Smoke";
-	varlt[7]="Eng_Temp_Gauge_High";
-	varlt[8]="Eng_Overheat";
-	varlt[9]="Less_Efficient_Engine";
-	varlt[10]="Eng_Components_Wear_Out";
-	varlt[11]="Squealing_Sound";
-	varlt[12]="Car_Stop_Delay";
-	varlt[13]="Rust_On_Break_Lining";
-	varlt[14]="No_Car_Stop_On_Break";
-	varlt[15]="Pedal_to_floor";
-	varlt[16]="Fluid_level_ok";
-	varlt[17]="Trouble_Car_Start";
-	varlt[18]="Fuel_Consp_High";
-	varlt[19]="Lack_Of_Acceleration";
-	varlt[20]="Issue_Switching_Headlights";
-	varlt[21]="Issue_Operating_High_beam";
-	varlt[22]="Lights_No_Turnon";
-	varlt[23]="Fuel_odor";
-	varlt[24]="Eng_Misfires";
-	varlt[25]="Carburetor_Floods";
-	varlt[26]="Eng_Stalling";
-	varlt[27]="Freq_Eng_Heating";
-	varlt[28]="Large_Drop_Coolant_Levels";
-	varlt[29]="ABS_Light_on_Dashboard";
-	varlt[30]="Traction_Ctrl_Light";
-	varlt[31]="Front_Tyre_Locks_on_Break_Application";
-	varlt[32]="Wiper_Rubber_Wornout";
-	varlt[33]="Wipers_Not_Moving";
-	varlt[34]="Fuse_OK";
-	varlt[35]="Noises_from_back_of_car";
-	varlt[36]="Broken_hangers";
-	varlt[37]="Low_battery_fluid";
-	varlt[38]="Slow_Eng_Crank";
-	varlt[39]="Unusual_noise_inside_Door";
-	varlt[40]="Erratic_Behave_Power_Doors";
-	varlt[41]="No_Signal_Radio";
-	varlt[42]="Navigation_ScreenFlickering";
-	varlt[43]="Navigation_Sys_Keeps_Restarting";
-	varlt[44]="Car_jumping_on_Acceleration";
-	varlt[45]="Burnt_Smell_Under_Hood";
-	varlt[46]="Screeching_Sound";
-	varlt[47]="Transmission_Fluid_Foul_Smelling";
-
+    ifstream fin;
+	fin.open("varlt.txt");
+	for(int i=1;i<size;i++)
+	{
+		fin >> varlt[i];
+	}
+	fin.close();
     // Printing Variable List
     cout<<"*** VARIABLE LIST ***"<<endl;
     for(i=1; i < size; i++)
@@ -111,116 +72,19 @@ void knowledge::initialization()
     gets(buff);
 
 	// clause variable list in clvarlt
-	clvarlt[1]=	"Odd_Vibrations";
-	clvarlt[2]= "Stearing_Vibrations";
-	clvarlt[3]= "Reduced_grip";
-	clvarlt[4]= "";
-	clvarlt[5]= "No_Cool_Air";
-	clvarlt[6]= "Freon_Leakage";
-	clvarlt[7]="";
-	clvarlt[8]="";
-	clvarlt[9]= "Bonnet_Smoke";
-	clvarlt[10]= "Eng_Temp_Gauge_High";
-	clvarlt[11]= "Eng_Overheat";
-	clvarlt[12]="";
-	clvarlt[13]= "Less_Efficient_Engine";
-	clvarlt[14]= "Eng_Components_Wear_Out";
-	clvarlt[15]="";
-	clvarlt[16]="";
-	clvarlt[17]= "Squealing_Sound";
-	clvarlt[18]= "Car_Stop_Delay";
-	clvarlt[19]= "Rust_On_Break_Lining";
-	clvarlt[20]="";
-	clvarlt[21]= "No_Car_Stop_On_Break";
-	clvarlt[22]= "Pedal_to_floor";
-	clvarlt[23]= "Fluid_level_ok";
-	clvarlt[24]="";
-	clvarlt[25]= "No_Car_Stop_On_Break";
-	clvarlt[26]= "Pedal_to_floor";
-	clvarlt[27]= "Fluid_level_ok";
-	clvarlt[28]="";
-	clvarlt[29]= "Trouble_Car_Start";
-	clvarlt[30]= "Fuel_Consp_High";
-	clvarlt[31]= "Lack_Of_Acceleration";
-	clvarlt[32]="";
-	clvarlt[33]= "Issue_Switching_Headlights";
-	clvarlt[34]="";
-	clvarlt[35]="";
-	clvarlt[36]="";
-	clvarlt[37]= "Issue_Switching_Headlights";
-	clvarlt[38]= "Issue_Operating_High_beam";
-	clvarlt[39]="";
-	clvarlt[40]="";
-	clvarlt[41]= "Issue_Switching_Headlights";
-	clvarlt[42]= "Lights_No_Turnon";
-	clvarlt[43]="";
-	clvarlt[44]="";
-	clvarlt[45]= "Fuel_odor";
-	clvarlt[46]= "Eng_Misfires";
-	clvarlt[47]="";
-	clvarlt[48]="";
-	clvarlt[49]= "Fuel_odor";
-	clvarlt[50]= "Carburetor_Floods";
-	clvarlt[51]= "Eng_Stalling";
-	clvarlt[52]="";
-	clvarlt[53]= "Freq_Eng_Heating";
-	clvarlt[54]= "Large_Drop_Coolant_Levels";
-	clvarlt[55]="";
-	clvarlt[56]="";
-	clvarlt[57]= "ABS_Light_on_Dashboard";
-	clvarlt[58]= "Traction_Ctrl_Light";
-	clvarlt[59]="";
-	clvarlt[60]="";
-	clvarlt[61]= "Front_Tyre_Locks_on_Break_Application";
-	clvarlt[62]="";
-	clvarlt[63]="";
-	clvarlt[64]="";
-	clvarlt[65]= "Wiper_Rubber_Wornout";
-	clvarlt[66]="";
-	clvarlt[67]="";
-	clvarlt[68]="";
-	clvarlt[69]= "Wiper_Rubber_Wornout";
-	clvarlt[70]= "Wipers_Not_Moving";
-	clvarlt[71]= "Fuse_OK";
-	clvarlt[72]="";
-	clvarlt[73]= "Wiper_Rubber_Wornout";
-	clvarlt[74]= "Wipers_Not_Moving";
-	clvarlt[75]= "Fuse_OK";
-	clvarlt[76]="";
-	clvarlt[77]= "Noises_from_back_of_car";
-	clvarlt[78]= "Broken_hangers";
-	clvarlt[79]="";
-	clvarlt[80]="";
-	clvarlt[81]= "Low_battery_fluid";
-	clvarlt[82]= "Slow_Eng_Crank";
-	clvarlt[83]="";
-	clvarlt[84]="";
-	clvarlt[85]= "Unusual_noise_inside_Door";
-	clvarlt[86]= "Erratic_Behave_Power_Doors";
-	clvarlt[87]="";
-	clvarlt[88]="";
-	clvarlt[89]= "No_Signal_Radio";
-	clvarlt[90]="";
-	clvarlt[91]="";
-	clvarlt[92]="";
-	clvarlt[93]= "Navigation_ScreenFlickering";
-	clvarlt[94]="";
-	clvarlt[95]="";
-	clvarlt[96]="";
-	clvarlt[97]= "Navigation_ScreenFlickering";
-	clvarlt[98]= "Navigation_Sys_Keeps_Restarting";
-	clvarlt[99]="";
-	clvarlt[100]="";
-	clvarlt[101]= "Car_jumping_on_Acceleration";
-	clvarlt[102]= "Burnt_Smell_Under_Hood";
-	clvarlt[103]= "Screeching_Sound";
-	clvarlt[104]="";
-	clvarlt[105]= "Car_jumping_on_Acceleration";
-	clvarlt[106]= "Burnt_Smell_Under_Hood";
-	clvarlt[107]= "Transmission_Fluid_Foul_Smelling";
-	clvarlt[108]="";
-
-
+	fin.open("clvarlt.txt");
+	for(int i=1;i<clauseSize;i++)
+	{
+		string temp;
+		fin>>temp;
+		if(temp == "s")
+		{
+			clvarlt[i] = "";
+		}
+		else
+			clvarlt[i] = temp;
+	}
+	fin.close();
     //Printing Clause Variable List
     cout<<"*** CLAUSE VARIABLE LIST ***"<<endl;
     for(i=1; i < noofcases; i++)
