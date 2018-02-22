@@ -2,20 +2,6 @@
 using namespace std;
 #include "knowledge.cpp"
 #include "finference.cpp"
-//#define clauseSize kb.clauseSize
-//#define conclt kb.conclt
-//#define varlt kb.varlt
-//#define clvarlt kb.clvarlt
-//#define varble kb.varble
-//#define instlt kb.instlt
-//#define statsk kb.statsk
-//#define clausk kb.clausk
-//#define sn kb.sn
-//#define f kb.f
-//#define i kb.i
-//#define s kb.s
-//#define sp kb.sp
-//#define fault kb.fault
 
 class inference
 {
@@ -116,7 +102,7 @@ void inference::determine_member_concl_list()
     kb.sn = 0;
     /* member of conclusion list to be searched is f */
     kb.i = kb.f;
-    while((kb.varble!= kb.conclt[kb.i]) && (kb.i< 28))
+    while((kb.varble!= kb.conclt[kb.i]) && (kb.i< kb.noofcases))
         kb.i=kb.i+1; /* test for membership */
     if (kb.varble == kb.conclt[kb.i])
     	kb.sn = kb.i;  /* a member */
@@ -214,6 +200,7 @@ void inference::popStack()
 
 int main()
 {
+    char buff[256];
     string answer;
     cout<<"Is there any abnormality (YES or NO):";
     cin>>answer;
@@ -228,6 +215,9 @@ int main()
     string ft = in.getfault();
     if(ft != "")
     {
+        cout<<endl;
+        cout<<"HIT RETURN TO START FORWARD CHAINING";
+        gets(buff);
         cout<<endl<<"*************************************"<<endl;
         cout<<"Starting forward Chaining"<<endl;
         cout<<endl<<"*************************************"<<endl;
