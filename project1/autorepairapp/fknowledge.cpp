@@ -57,9 +57,13 @@ void fknowledge::startkbase()
     //varlt[2] = "DO";
     //varlt[3] = "FT";
     //varlt[4] = "FM";
-
-    varlt[1] = "FT"; //FT = FAULT
-
+    ifstream fin;
+    fin.open("fvarlt.txt");
+    for(int i=1;i<size;i++)
+    {
+        fin>>varlt[i];
+    }
+    fin.close();
     cout<<"*** VARIABLE LIST ***"<<endl;
     for (i=1;i < size; i++)
     {
@@ -74,17 +78,18 @@ void fknowledge::startkbase()
     hit return key */
     /****** comment 407, 408 *************/
 
-    /*clvarlt[1]  = "IN";
-    clvarlt[5]  = "IN";
-    clvarlt[9]  = "DO";
-    clvarlt[13] = "DO";
-    clvarlt[17] = "FT";
-    clvarlt[18] = "FM";*/
-
     //Initializing clause variable list
-    for(int i = 1; i < csize; i+=4)
+    fin.open("fclvarlt.txt");
+    for(int i = 1; i < csize; i++)
     {
-        clvarlt[i] = "FT";
+        string temp;
+        fin>>temp;
+        if(temp == "s")
+        {
+            clvarlt[i] = "";
+        }
+        else
+            clvarlt[i] = temp;
     }
 
 

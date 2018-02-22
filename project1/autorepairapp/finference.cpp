@@ -40,7 +40,7 @@ void finference::display()
     cout<<"Printing Conclusion Variable Queue";
     cout<<endl<<"**************************"<<endl;
     bool flag = true;
-    for(int i1 = 1; i1 < 2; i1++)
+    for(int i1 = 1; i1 < fk.size; i1++)
     {
         if(fk.cndvar[i1] != "")
         {
