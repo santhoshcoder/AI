@@ -2,25 +2,6 @@
 using namespace std;
 #include "fknowledge.cpp"
 
-//#define inst fk.inst
-//#define flag fk.flag
-//#define size fk.size
-//#define csize fk.csize
-//#define cndvar fk.cndvar
-//#define varlt fk.varlt
-//#define clvarlt fk.clvarlt
-//#define c fk.c
-//#define v fk.v
-//#define instlt fk.instlt
-//#define f fk.f
-//#define i fk.i
-//#define k fk.k
-//#define s fk.s
-//#define fp fk.fp
-//#define bp fk.bp
-//#define sn fk.sn
-//#define cn fk.cn
-
 class finference
 {
 	public:
@@ -203,7 +184,8 @@ void finference::search()
 {
     fk.flag = 0;
     fk.sn = fk.f;
-    while ((fk.flag == 0) && (fk.sn <= (fk.csize-1)/4))
+    //while ((fk.flag == 0) && (fk.sn <= (fk.csize-1)/4))
+    while ((fk.flag == 0) && (fk.sn < fk.noofcases))
     {
         fk.cn=1;
         fk.k = (fk.sn-1)*4+fk.cn;

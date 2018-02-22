@@ -108,7 +108,6 @@ void knowledge::ifkbase()
     switch (sn)
     {
         /* if part of statement 1 */
-        /****** comment 1500 ****/
         case 1:
         	if(Odd_Vibrations=="YES" && Stearing_Vibrations=="YES" && Reduced_grip=="YES")
         		s = 1;
