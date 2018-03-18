@@ -7,13 +7,16 @@ using namespace std;
 //Function Definitions Start************************************
 void alpha_beta_search(Node n,char [][3]); // change so that it returns a 2-D array which
 								// is the choosen action
-int max_value(Node n, int alpha, int beta);
-int min_value(Node n, int alpha, int beta);
+int max_value(Node &n, int alpha, int beta);
+int min_value(Node &n, int alpha, int beta);
 //Function Definitions End**************************************
 
 void alpha_beta_search(Node n,char array2D[][3]) {
 	n.v = max_value(n,-5, 5);
+	cout<<"n.v is "<<n.v<<endl;
+	cout<<"n.childs.size() is "<<n.childs.size()<<endl;
 	for (int i = 0; i < n.childs.size(); i++) {
+		cout<<"n.childs["<<i<<"].v is "<<n.childs[i].v<<endl;
 		if (n.childs[i].v == n.v) {
 			// found store it into a 2-D array and return the array
 			cout<<"Found"<<endl;
@@ -28,7 +31,7 @@ void alpha_beta_search(Node n,char array2D[][3]) {
 		}
 	}
 }
-int max_value(Node n,int alpha,int beta)
+int max_value(Node &n,int alpha,int beta)
 {
 	//cout<<"Called Max Function"<<endl;
 	//cout<<"Checking win returned"<<n.checkingWin()<<endl;
@@ -47,7 +50,7 @@ int max_value(Node n,int alpha,int beta)
 	}
 	return n.v;
 }
-int min_value(Node n,int alpha,int beta)
+int min_value(Node &n,int alpha,int beta)
 {
 	if(n.checkingWin())
 		return n.utility();

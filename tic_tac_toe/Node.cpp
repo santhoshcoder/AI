@@ -62,65 +62,51 @@ void Node::displayBoard() {
 	}
 	cout << endl << "***************" << endl;
 }
-bool Node::checkingWin() {
-	if (board[0][0] == board[0][1] && board[0][1] == board[0][2] && board[0][0] != '_') {
-		if (board[0][0] == 'X')
-			cout << "X win";
-		else if (board[0][0] == 'O')
-			cout << "O win";
+bool Node::checkingWin() 
+{
+	if (board[0][0] == board[0][1] && board[0][1] == board[0][2] && board[0][0] != '_') 
+	{
 		return true;
-	} else if (board[1][0] == board[1][1] && board[1][1] == board[1][2]  && board[1][0] != '_') {
-		if (board[1][0] == 'X')
-			cout << "X win";
-		else if (board[1][0] == 'O')
-			cout << "O win";
+	} 
+	else if (board[1][0] == board[1][1] && board[1][1] == board[1][2]  && board[1][0] != '_') 
+	{
 		return true;
-	} else if (board[2][0] == board[2][1] && board[2][1] == board[2][2]  && board[2][0] != '_') {
-		if (board[2][0] == 'X')
-			cout << "X win";
-		else if (board[2][0] == 'O')
-			cout << "O win";
+	} 
+	else if (board[2][0] == board[2][1] && board[2][1] == board[2][2]  && board[2][0] != '_') 
+	{
 		return true;
-	} else if (board[0][0] == board[1][1] && board[1][1] == board[2][2]  && board[0][0] != '_') {
-		if (board[0][0] == 'X')
-			cout << "X win";
-		else if (board[0][0] == 'O')
-			cout << "O win";
+	} 
+	else if (board[0][0] == board[1][1] && board[1][1] == board[2][2]  && board[0][0] != '_') 
+	{
 		return true;
-	} else if (board[0][2] == board[1][1] && board[1][1] == board[2][0]  && board[0][2] != '_') {
-		if (board[0][2] == 'X')
-			cout << "X win";
-		else if (board[0][2] == 'O')
-			cout << "O win";
+	} 
+	else if (board[0][2] == board[1][1] && board[1][1] == board[2][0]  && board[0][2] != '_') 
+	{
 		return true;
-	} else if (board[0][0] == board[1][0] && board[1][0] == board[2][0]  && board[0][0] != '_') {
-		if (board[0][0] == 'X')
-			cout << "X win";
-		else if (board[0][0] == 'O')
-			cout << "O win";
+	} 
+	else if (board[0][0] == board[1][0] && board[1][0] == board[2][0]  && board[0][0] != '_') 
+	{
 		return true;
-	} else if (board[0][1] == board[1][1] && board[1][1] == board[2][1]  && board[0][1] != '_') {
-		if (board[0][1] == 'X')
-			cout << "X win";
-		else if (board[0][1] == 'O')
-			cout << "O win";
+	} 
+	else if (board[0][1] == board[1][1] && board[1][1] == board[2][1]  && board[0][1] != '_') 
+	{
 		return true;
-	} else if (board[0][2] == board[1][2] && board[1][2] == board[2][2]  && board[0][2] != '_') {
-		if (board[0][2] == 'X')
-			cout << "X win";
-		else if (board[0][2] == 'O')
-			cout << "O win";
+	} 
+	else if (board[0][2] == board[1][2] && board[1][2] == board[2][2]  && board[0][2] != '_') 
+	{
 		return true;
 	}
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
+	for (int i = 0; i < 3; i++) 
+	{
+		for (int j = 0; j < 3; j++) 
+		{
 			if (board[i][j] == '_')
 				return false;
 		}
 	}
-	cout << "Tie";
-	return true;
+	return true; //Game Ties
 }
+
 int Node::utility() {
 	if (board[0][0] == board[0][1] && board[0][1] == board[0][2]) {
 		if (board[0][0] == 'X')
