@@ -26,18 +26,37 @@ void printBoard(char array2D[][3])
 	cout << endl << "***************" << endl;
 }
 
-void alpha_beta_search(Node n,char array2D[][3]) {
+void alpha_beta_search(Node n,char array2D[][3]) 
+{
 	n.v = max_value(n,-5, 5);
-	cout<<"n.v is "<<n.v<<endl;
-	cout<<"n.childs.size() is "<<n.childs.size()<<endl;
+	//cout<<"n.v is "<<n.v<<endl;
+	//cout<<"n.childs.size() is "<<n.childs.size()<<endl;
+	/*
 	for (int i = 0; i < n.childs.size(); i++)
 	{
 		cout<<"n.childs["<<i<<"].v is "<<n.childs[i].v<<endl;
 	}
-	for (int i = 0; i < n.childs.size(); i++) {
-		if (n.childs[i].v == n.v) {
+	*/
+	for(int i = 0; i < n.childs.size();i++)
+	{
+		if(n.childs[i].childs.size() == 0 && n.childs[i].utility() != 0)
+		{
+			for(int h = 0; h < 3 ;h++)
+			{
+				for(int w = 0; w < 3; w++)
+				{
+					array2D[h][w] = n.childs[i].board[h][w];
+				}
+			}
+			return ;
+		}
+	}
+	for (int i = 0; i < n.childs.size(); i++) 
+	{
+		if (n.childs[i].v == n.v) 
+		{
 			// found store it into a 2-D array and return the array
-			cout<<"Found"<<endl;
+			//cout<<"Found"<<endl;
 			for(int h = 0; h < 3 ;h++)
 			{
 				for(int w = 0; w < 3; w++)
@@ -109,6 +128,23 @@ int main()
 		alpha_beta_search(temp,array2D);
 		cout<<"After Computer Turn board is:"<<endl;
 		printBoard(array2D);
+		//Check result after computer turn
+		Node test;
+		test.setBoard(array2D);
+		if(test.checkingWin())
+		{
+			int w = test.utility();
+			if(w == 1)
+			{
+				cout<<"Computer Won the game"<<endl;
+				exit(0);
+			}
+			else if(w == 0)
+			{
+				cout<<"Game Tie"<<endl;
+				exit(0);
+			}
+		}
 		cout << "Your Turn"<<endl;
 		do
 		{
@@ -125,5 +161,21 @@ int main()
 		array2D[row][column] = 'O';
 		cout<<"After Your Turn board is:"<<endl;
 		printBoard(array2D);
+		//Check result after user turn
+		test.setBoard(array2D);
+		if(test.checkingWin())
+		{
+			int w = test.utility();
+			if(w == -1)
+			{
+				cout<<"User Won the game"<<endl;
+				exit(0);
+			}
+			else if(w == 0)
+			{
+				cout<<"Game Tie"<<endl;
+				exit(0);
+			}
+		}
 	}
 }
