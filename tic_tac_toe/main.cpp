@@ -9,14 +9,32 @@ void alpha_beta_search(Node n,char [][3]); // change so that it returns a 2-D ar
 								// is the choosen action
 int max_value(Node &n, int alpha, int beta);
 int min_value(Node &n, int alpha, int beta);
+void printBoard(char s[][3]);
 //Function Definitions End**************************************
+
+void printBoard(char array2D[][3])
+{
+	cout << endl << "***************" << endl;
+	for(int i = 0;i < 3; i++)
+	{
+		for(int j = 0;j < 3;j++)
+		{
+			cout<<array2D[i][j]<<" ";
+		}
+		cout<<endl;
+	}
+	cout << endl << "***************" << endl;
+}
 
 void alpha_beta_search(Node n,char array2D[][3]) {
 	n.v = max_value(n,-5, 5);
 	cout<<"n.v is "<<n.v<<endl;
 	cout<<"n.childs.size() is "<<n.childs.size()<<endl;
-	for (int i = 0; i < n.childs.size(); i++) {
+	for (int i = 0; i < n.childs.size(); i++)
+	{
 		cout<<"n.childs["<<i<<"].v is "<<n.childs[i].v<<endl;
+	}
+	for (int i = 0; i < n.childs.size(); i++) {
 		if (n.childs[i].v == n.v) {
 			// found store it into a 2-D array and return the array
 			cout<<"Found"<<endl;
@@ -67,26 +85,39 @@ int min_value(Node &n,int alpha,int beta)
 	return n.v;
 }
 
-int main() {
+int main() 
+{
 	char player = 'X';
-	char initial[3][3] = {{'_', '_', '_'}, {'_', '_', '_'}, {'_', '_', '_'}};
+	int row,column;
+	char flag;
+	bool flag2 = true;
+	char array2D[3][3] = {{'_', '_', '_'}, {'_', '_', '_'}, {'_', '_', '_'}};
+
+	//Print Initial Stage of the board
 	
-	Node n;
-	n.setBoard(initial);
-	n.setplayer(player);
-	cout << "Initial Board State is:" << endl;
-	n.displayBoard();
-	char array2D[3][3] = {{'I', 'I', 'I'}, {'I', 'I', 'I'}, {'I', 'I', 'I'}};
-	alpha_beta_search(n,array2D);
-	cout<<"After Computer Turn board is:"<<endl;
-	cout << endl << "***************" << endl;
-	for(int i = 0;i < 3; i++)
+	while(flag2) //Need some condition on when to stop
 	{
-		for(int j = 0;j < 3;j++)
+		Node temp;
+		temp.setBoard(array2D);
+		temp.setplayer(player);
+		alpha_beta_search(temp,array2D);
+		cout<<"After Computer Turn board is:"<<endl;
+		printBoard(array2D);
+		cout << "Your Turn"<<endl;
+		do
 		{
-			cout<<array2D[i][j]<<" ";
-		}
-		cout<<endl;
+			cout << "Choose a Row (0-2): ";
+			cin >> row;
+			cout << "Choose a Column (0-2): "<<endl;
+			cin >> column;
+			if(array2D[row][column] != '_')
+			{
+				cout<<"It's already filled"<<endl;
+				row = 3;
+			}
+		}while(!((row >=0 && row <=2) && (column >=0 && column <=2)));
+		array2D[row][column] = 'O';
+		cout<<"After Your Turn board is:"<<endl;
+		printBoard(array2D);
 	}
-	cout << endl << "***************" << endl;
 }
