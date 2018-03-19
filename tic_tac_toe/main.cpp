@@ -54,7 +54,10 @@ int max_value(Node &n,int alpha,int beta)
 	//cout<<"Called Max Function"<<endl;
 	//cout<<"Checking win returned"<<n.checkingWin()<<endl;
 	if(n.checkingWin() == true)
+	{
+		n.v = n.utility();
 		return n.utility();
+	}
 	n.v = -5;
 	//Create actions
 	//cout<<"Generating childs in max_value"<<endl;
@@ -71,7 +74,10 @@ int max_value(Node &n,int alpha,int beta)
 int min_value(Node &n,int alpha,int beta)
 {
 	if(n.checkingWin())
+	{
+		n.v = n.utility();
 		return n.utility();
+	}
 	n.v = 5;
 	//Create actions 
 	n.actions();
