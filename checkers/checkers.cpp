@@ -6,7 +6,19 @@ bool checkLeft(char board[][8],int row,int col,char player);
 bool checkRight(char board[][8],int row,int col,char player);
 int main() 
 {
-	char board[8][8];
+	//char board[8][8];
+	char board[8][8] = 
+	{
+		{'_','_','_','_','_','_','_','_'},
+		{'_','_','_','_','_','_','_','_'},
+		{'_','_','_','_','_','_','_','_'},
+		{'_','_','_','_','_','_','_','_'},
+		{'_','_','_','_','_','_','_','_'},
+		{'_','_','_','_','_','_','_','_'},
+		{'_','_','_','_','_','Y','_','_'},
+		{'_','_','_','_','_','_','P','_'}
+	};
+	/*
 	for(int i = 0;i < 8;i++)
 	{
 		for(int j = 0;j < 8;j++)
@@ -47,9 +59,10 @@ int main()
 			}
 		}
 	}
+	*/
 	printboard(board);
 	cout<<"Printing actions "<<endl;
-	actions(board,'O');
+	actions(board,'X');
 	//cout << "Hello World!\n";
 }
 void printboard(char board[][8])
@@ -93,8 +106,9 @@ void actions(char board[][8],char player)
 		{
 			if(board[i][j] != '_')
 			{
-				if(player == 'X')//Computer normal player
+				if(player == 'X' && board[i][j] == 'X')//Computer normal player
 				{
+					cout<<"Computer Normal player"<<endl;
 					char newboard[8][8];
 					copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					
@@ -125,8 +139,9 @@ void actions(char board[][8],char player)
 					//Check jumps
 					
 				}
-				else if(player == 'O') //user normal player
+				else if(player == 'O' && board[i][j] == 'X') //user normal player
 				{
+					cout<<"User Normal player"<<endl;
 					char newboard[8][8];
 					copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					
@@ -159,6 +174,7 @@ void actions(char board[][8],char player)
 				}
 				if(player == 'X' && board[i][j] == 'Y') //Computer player turned king
 				{
+					cout<<"Computer player turned king"<<endl;
 					char newboard[8][8];
 					copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					//Check left diagnoal 'X'
@@ -193,6 +209,49 @@ void actions(char board[][8],char player)
 					{
 						//I can move right
 						newboard[i-1][j+1] = 'Y';
+						newboard[i][j] = '_';
+						printboard(newboard);
+						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
+					}		
+					//Check jumps			
+				}
+				if(player == 'O' && board[i][j] == 'P') //User player turned king
+				{
+					cout<<"User player turned king"<<endl;
+					char newboard[8][8];
+					copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
+					//Check left diagnoal 'X'
+					if(checkLeft(board,i,j,'X'))
+					{
+						//I can move left
+						newboard[i+1][j-1] = 'P';
+						newboard[i][j] = '_';
+						printboard(newboard);
+						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
+					}
+					//Check right diagnoal 'X'
+					if(checkRight(board,i,j,'X'))
+					{
+						//I can move right
+						newboard[i+1][j+1] = 'p';
+						newboard[i][j] = '_';
+						printboard(newboard);
+						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
+					}
+					//Check left diagnoal 'O';
+					if(checkLeft(board,i,j,'O'))
+					{
+						//I can move left
+						newboard[i-1][j-1] = 'P';
+						newboard[i][j] = '_';
+						printboard(newboard);
+						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
+					}
+					//Check right diagnoal 'O'
+					if(checkRight(board,i,j,'O'))
+					{
+						//I can move right
+						newboard[i-1][j+1] = 'P';
 						newboard[i][j] = '_';
 						printboard(newboard);
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
