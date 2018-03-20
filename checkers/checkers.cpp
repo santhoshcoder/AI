@@ -1,9 +1,14 @@
 #include <iostream>
 using namespace std;
+
 void printboard(char [][8]);
 void actions(char board[][8],char player);
 bool checkLeft(char board[][8],int row,int col,char player);
 bool checkRight(char board[][8],int row,int col,char player);
+void jump(char board[][8],int row,int col,char player);
+void jumpleft(char newboard[][8],int row,int col,char player);
+void jumpright(char newboard[][8],int row,int col,char player);
+
 int main() 
 {
 	//char board[8][8];
@@ -261,6 +266,137 @@ void actions(char board[][8],char player)
 			}
 		}
 	}
+}
+bool compareMatrix(char s[][8],char d[][8])
+{
+	for(int i = 0;i < 8;i++)
+	{
+		for(int j = 0;j < 8;j++)
+		{
+			if(s[i][j] != d[i][j])
+				return false;
+		}
+	}
+	return true;
+}
+void jump(char board[][8],int row,int col,char player)
+{
+	//create a copy of board
+	char newboard[8][8];
+	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
+	jumpleft(newboard,row,col,player);
+	//Check if the newboard is changed --- compare newboard with board
+	//If changed then it is an action print it and copy back board in newboard
+	//and call jumpright else call jumpight
+	if(!compareMatrix(board,newboard))
+	{
+		//board changed.It's an Action
+		printboard(newboard);
+		copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
+	}
+	jumpright(newboard,row,col,player);
+	if(!compareMatrix(board,newboard))
+	{
+		//board changed.It's an Action
+		printboard(newboard);
+		copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
+	}
+}
+void jumpleft(char newboard[][8],int row,int col,char player)
+{
+	int nrow,ncol;
+	if(player == 'X')
+	{
+		nrow = row + 2;
+		ncol = col - 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+			if(newboard[nrow-1][ncol+1] == 'O' || newboard[nrow-1][ncol+1] == 'P')
+			{
+				//Then i can make a left jump
+				newboard[nrow-1][ncol+1] = '_'; //remove opponent coin
+				newboard[row][col] = '_'; //remove current coin
+				//Checking if the new position will make the current player a king or not
+				if(checkKing(nrow,player))
+					newboard[nrow][ncol] = 'Y';
+				else
+				{
+					newboard[nrow][ncol] = 'X';
+					jump(newboard,nrow,ncol,player);
+				}
+			}
+		}
+	}
+	else if(player == 'O')
+	{
+		nrow = row - 2;
+		ncol = col - 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+			if(newboard[nrow+1][ncol+1] == 'X' || newboard[nrow+1][ncol+1] == 'Y')
+			{
+				//Then i can make a left jump
+				newboard[nrow+1][ncol+1] = '_'; //remove opponent coin
+				newboard[row][col] = '_'; //remove current coin
+				//Checking if the new position will make the current player a king or not
+				if(checkKing(nrow,player))
+					newboard[nrow][ncol] = 'P';
+				else
+				{
+					newboard[nrow][ncol] = 'O';
+					jump(newboard,nrow,ncol,player);
+				}
+			}
+		}	
+	}
+}
+void jumpright(char newboard[][8],int row,int col,char player)
+{
+	int nrow,ncol;
+	if(player == 'X')
+	{
+		nrow = row + 2;
+		ncol = col + 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+			if(newboard[nrow-1][ncol-1] == 'O' || newboard[nrow-1][ncol-1] == 'P')
+			{
+				//Then i can make a left jump
+				newboard[nrow-1][ncol-1] = '_'; //remove opponent coin
+				newboard[row][col] = '_'; //remove current coin
+				//Checking if the new position will make the current player a king or not
+				if(checkKing(nrow,player))
+					newboard[nrow][ncol] = 'Y';
+				else
+				{
+					newboard[nrow][ncol] = 'X';
+					jump(newboard,nrow,ncol,player);
+				}
+			}
+		}
+	}
+	else if(player == 'O')
+	{
+		nrow = row - 2;
+		ncol = col + 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+			if(newboard[nrow+1][ncol-1] == 'X' || newboard[nrow+1][ncol-1] == 'Y')
+			{
+				//Then i can make a left jump
+				newboard[nrow+1][ncol-1] = '_'; //remove opponent coin
+				newboard[row][col] = '_'; //remove current coin
+				//Checking if the new position will make the current player a king or not
+				if(checkKing(nrow,player))
+					newboard[nrow][ncol] = 'P';
+				else
+				{
+					newboard[nrow][ncol] = 'O';
+					jump(newboard,nrow,ncol,player);
+				}
+			}
+		}	
+	}	
 }
 bool checkLeft(char board[][8],int row,int col,char player)
 {
