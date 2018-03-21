@@ -16,14 +16,14 @@ int main()
 	//char board[8][8];
 	char board[8][8] = 
 	{
-		{'_','_','_','_','_','P','_','_'},
-		{'_','_','_','_','_','_','X','_'},
 		{'_','_','_','_','_','_','_','_'},
+		{'_','_','_','X','_','_','_','_'},
+		{'_','_','O','_','O','_','_','_'},
 		{'_','_','_','_','_','_','_','_'},
+		{'_','_','O','_','O','_','O','_'},
 		{'_','_','_','_','_','_','_','_'},
-		{'_','O','_','_','_','_','_','_'},
-		{'_','_','_','_','_','_','_','_'},
-		{'_','_','_','_','Y','_','_','_'}
+		{'_','_','_','_','O','_','O','_'},
+		{'_','_','_','_','_','_','_','_'}
 	};
 	/*
 	for(int i = 0;i < 8;i++)
@@ -384,8 +384,8 @@ void jump(char board[][8],int row,int col,char player)
 		cout<<"Right End is: "<<rightEnd(newboard,crow,ccol,player)<<endl;
 		*/
 		printboard(newboard);
-		copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 	}
+	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 	jumpright(newboard,row,col,player,crow,ccol);
 	if(!compareMatrix(board,newboard) && leftEnd(newboard,crow,ccol,player) && rightEnd(newboard,crow,ccol,player))
 	//add more conditions that the board cannot have any more jumps (left and right)
@@ -399,8 +399,8 @@ void jump(char board[][8],int row,int col,char player)
 		cout<<"Right End is: "<<rightEnd(newboard,row,col,player)<<endl;
 		*/
 		printboard(newboard);
-		copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 	}
+	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 }
 void jumpleft(char newboard[][8],int row,int col,char player,int &crow,int &ccol)
 {
