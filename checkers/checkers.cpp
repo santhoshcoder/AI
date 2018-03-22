@@ -6,23 +6,32 @@ void actions(char board[][8],char player);
 bool checkLeft(char board[][8],int row,int col,char player);
 bool checkRight(char board[][8],int row,int col,char player);
 void jump(char board[][8],int row,int col,char player);
+void kjump(char board[][8],int row,int col,char player);
 void jumpleft(char newboard[][8],int row,int col,char player,int &,int &);
 void jumpright(char newboard[][8],int row,int col,char player,int &,int &);
 bool leftEnd(char board[][8],int row,int col,char player);
 bool rightEnd(char board[][8],int row,int col,char player);
+void kjumpleft(char newboard[][8],int row,int col,char player,int &crow,int &ccol);
+void kjumpright(char newboard[][8],int row,int col,char player,int &crow,int &ccol);
+void ktopleft(char newboard[][8],int row,int col,char player,int &crow,int &ccol);
+void ktopright(char newboard[][8],int row,int col,char player,int &crow,int &ccol);
+bool kleftend(char board[][8],int row,int col,char player);
+bool krightend(char board[][8],int row,int col,char player);
+bool ktopleftend(char board[][8],int row,int col,char player);
+bool ktoprightend(char board[][8],int row,int col,char player);
 
 int main() 
 {
 	//char board[8][8];
 	char board[8][8] = 
 	{
+		{'_','_','_','Y','_','_','_','_'},
+		{'_','_','P','_','O','_','_','_'},
 		{'_','_','_','_','_','_','_','_'},
-		{'_','_','_','X','_','_','_','_'},
-		{'_','_','O','_','O','_','_','_'},
+		{'_','_','O','_','O','_','P','_'},
 		{'_','_','_','_','_','_','_','_'},
-		{'_','_','O','_','O','_','O','_'},
+		{'_','_','P','_','_','_','_','_'},
 		{'_','_','_','_','_','_','_','_'},
-		{'_','_','_','_','O','_','O','_'},
 		{'_','_','_','_','_','_','_','_'}
 	};
 	/*
@@ -298,7 +307,9 @@ void actions(char board[][8],char player)
 						printboard(newboard);
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}		
-					//Check jumps			
+					//Check jumps
+					cout<<"Calling kjump"<<endl;
+					kjump(board,i,j,player);		
 				}
 				if(player == 'O' && board[i][j] == 'P') //User player turned king
 				{
@@ -358,6 +369,206 @@ bool compareMatrix(char s[][8],char d[][8])
 		}
 	}
 	return true;
+}
+void kjump(char board[][8],int row,int col,char player)
+{
+	int crow,ccol;
+	crow = row;
+	ccol = col;
+	char newboard[8][8];
+	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
+
+	kjumpleft(newboard,row,col,player,crow,ccol);
+	if(!compareMatrix(board,newboard) && kleftend(newboard,crow,ccol,player) && krightend(newboard,crow,ccol,player) && ktopleftend(newboard,crow,ccol,player) && ktoprightend(newboard,crow,ccol,player)) 
+	{
+		printboard(newboard);
+	}
+	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
+	
+	kjumpright(newboard,row,col,player,crow,ccol);
+	if(!compareMatrix(board,newboard) && kleftend(newboard,crow,ccol,player) && krightend(newboard,crow,ccol,player) && ktopleftend(newboard,crow,ccol,player) && ktoprightend(newboard,crow,ccol,player))
+	{
+		printboard(newboard);
+	}
+	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
+	
+	ktopleft(newboard,row,col,player,crow,ccol);
+	if(!compareMatrix(board,newboard)  && kleftend(newboard,crow,ccol,player) && krightend(newboard,crow,ccol,player) && ktopleftend(newboard,crow,ccol,player) && ktoprightend(newboard,crow,ccol,player))
+	{
+		printboard(newboard);
+	}
+	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
+
+	ktopright(newboard,row,col,player,crow,ccol);
+	if(!compareMatrix(board,newboard)  && kleftend(newboard,crow,ccol,player) && krightend(newboard,crow,ccol,player) && ktopleftend(newboard,crow,ccol,player) && ktoprightend(newboard,crow,ccol,player))
+	{
+		printboard(newboard);
+	}
+	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
+}
+bool kleftend(char newboard[][8],int row,int col,char player)
+{
+	//cout<<"In kleftend"<<endl;
+	int nrow,ncol;
+	if(player == 'X')
+	{
+		nrow = row + 2;
+		ncol = col - 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+				if(newboard[nrow-1][ncol+1] == 'O' || newboard[nrow-1][ncol+1] == 'P')
+				{
+					return false;
+				}
+		}
+	}
+	return true;
+}
+void kjumpleft(char newboard[][8],int row,int col,char player,int &crow,int &ccol)
+{
+	//cout<<"In kjumpleft"<<endl;
+	int nrow,ncol;
+	if(player == 'X')
+	{
+		nrow = row + 2;
+		ncol = col - 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+			if(newboard[nrow-1][ncol+1] == 'O' || newboard[nrow-1][ncol+1] == 'P')
+			{
+				newboard[nrow-1][ncol+1] = '_'; //remove opponent coin
+				newboard[row][col] = '_'; //remove current coin
+				crow = nrow;
+				ccol = ncol;
+				newboard[nrow][ncol] = 'Y';
+				kjump(newboard,nrow,ncol,player);
+			}
+		}
+	}
+}
+bool krightend(char newboard[][8],int row,int col,char player)
+{
+	//cout<<"In krightend"<<endl;
+	int nrow,ncol;
+	if(player == 'X')
+	{
+		nrow = row + 2;
+		ncol = col + 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+			if(newboard[nrow-1][ncol-1] == 'O' || newboard[nrow-1][ncol-1] == 'P')
+			{
+				return false;
+			}
+		}
+	}
+	return true;	
+}
+void kjumpright(char newboard[][8],int row,int col,char player,int &crow,int &ccol)
+{
+	//cout<<"In kjumpright"<<endl;
+	int nrow,ncol;
+	if(player == 'X')
+	{
+		nrow = row + 2;
+		ncol = col + 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+			if(newboard[nrow-1][ncol-1] == 'O' || newboard[nrow-1][ncol-1] == 'P')
+			{
+				newboard[nrow-1][ncol-1] = '_'; //remove opponent coin
+				newboard[row][col] = '_'; //remove current coin
+				crow = nrow;
+				ccol = ncol;
+				newboard[nrow][ncol] = 'Y';
+				kjump(newboard,nrow,ncol,player);
+			}
+		}
+	}
+}
+bool ktopleftend(char newboard[][8],int row,int col,char player)
+{
+	//cout<<"In ktopleftend"<<endl;
+	int nrow,ncol;
+	if(player == 'X')
+	{
+		nrow = row - 2;
+		ncol = col - 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+			if(newboard[nrow+1][ncol+1] == 'O' || newboard[nrow+1][ncol+1] == 'P')
+			{
+				return false;
+			}
+		}
+	}
+	return true;		
+}
+void ktopleft(char newboard[][8],int row,int col,char player,int &crow,int &ccol)
+{
+	//cout<<"In ktopleft"<<endl;
+	int nrow,ncol;
+	if(player == 'X')
+	{
+		nrow = row - 2;
+		ncol = col - 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+			//cout<<"Program stopped here"<<endl;
+			//cout<<"nrow is:"<<nrow<<endl;
+			//cout<<"ncol is:"<<ncol<<endl;
+			if(newboard[nrow+1][ncol+1] == 'O' || newboard[nrow+1][ncol+1] == 'P')
+			{
+				newboard[nrow+1][ncol+1] = '_'; //remove opponent coin
+				newboard[row][col] = '_'; //remove current coin
+				crow = nrow;
+				ccol = ncol;
+				newboard[nrow][ncol] = 'Y';
+				kjump(newboard,nrow,ncol,player);
+			}
+			//cout<<"Yes here"<<endl;
+		}
+	}
+}
+bool ktoprightend(char newboard[][8],int row,int col,char player)
+{
+	//cout<<"In ktoprightend"<<endl;
+	int nrow,ncol;
+	if(player == 'X')
+	{
+		nrow = row - 2;
+		ncol = col + 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+			if(newboard[nrow+1][ncol-1] == 'O' || newboard[nrow+1][ncol-1] == 'P')
+			{
+				return false;
+			}
+		}
+	}
+	return true;		
+}
+void ktopright(char newboard[][8],int row,int col,char player,int &crow,int &ccol)
+{
+	//cout<<"In ktopright"<<endl;
+	int nrow,ncol;
+	if(player == 'X')
+	{
+		nrow = row - 2;
+		ncol = col + 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+			if(newboard[nrow+1][ncol-1] == 'O' || newboard[nrow+1][ncol-1] == 'P')
+			{
+				newboard[nrow+1][ncol-1] = '_'; //remove opponent coin
+				newboard[row][col] = '_'; //remove current coin
+				crow = nrow;
+				ccol = ncol;
+				newboard[nrow][ncol] = 'Y';
+				kjump(newboard,nrow,ncol,player);
+			}
+		}
+	}
 }
 void jump(char board[][8],int row,int col,char player)
 {
