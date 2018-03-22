@@ -25,13 +25,13 @@ int main()
 	//char board[8][8];
 	char board[8][8] = 
 	{
-		{'_','_','_','Y','_','_','_','_'},
-		{'_','_','P','_','O','_','_','_'},
 		{'_','_','_','_','_','_','_','_'},
-		{'_','_','O','_','O','_','P','_'},
 		{'_','_','_','_','_','_','_','_'},
-		{'_','_','P','_','_','_','_','_'},
+		{'_','_','X','_','X','_','_','_'},
+		{'_','_','_','_','_','P','_','_'},
+		{'_','_','Y','_','X','_','_','_'},
 		{'_','_','_','_','_','_','_','_'},
+		{'_','_','_','_','X','_','_','_'},
 		{'_','_','_','_','_','_','_','_'}
 	};
 	/*
@@ -78,8 +78,7 @@ int main()
 	*/
 	printboard(board);
 	cout<<"Printing actions "<<endl;
-	actions(board,'X');
-	//cout << "Hello World!\n";
+	actions(board,'O');
 }
 void printboard(char board[][8])
 {
@@ -352,7 +351,9 @@ void actions(char board[][8],char player)
 						printboard(newboard);
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}		
-					//Check jumps			
+					//Check jumps
+					cout<<"Calling kjump in user player turned king"<<endl;
+					kjump(board,i,j,player);		
 				}
 			}
 		}
@@ -422,6 +423,18 @@ bool kleftend(char newboard[][8],int row,int col,char player)
 				}
 		}
 	}
+	else if(player == 'O')
+	{
+		nrow = row + 2;
+		ncol = col - 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+			if(newboard[nrow-1][ncol+1] == 'X' || newboard[nrow-1][ncol+1] == 'Y')
+			{
+				return false;
+			}
+		}
+	}
 	return true;
 }
 void kjumpleft(char newboard[][8],int row,int col,char player,int &crow,int &ccol)
@@ -445,6 +458,24 @@ void kjumpleft(char newboard[][8],int row,int col,char player,int &crow,int &cco
 			}
 		}
 	}
+	else if(player == 'O')
+	{
+		nrow = row + 2;
+		ncol = col - 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+			if(newboard[nrow-1][ncol+1] == 'X' || newboard[nrow-1][ncol+1] == 'Y')
+			{
+				//Then i can make a left jump
+				newboard[nrow-1][ncol+1] = '_'; //remove opponent coin
+				newboard[row][col] = '_'; //remove current coin
+				crow = nrow;
+				ccol = ncol;
+				newboard[nrow][ncol] = 'P';
+				kjump(newboard,nrow,ncol,player);
+			}
+		}
+	}
 }
 bool krightend(char newboard[][8],int row,int col,char player)
 {
@@ -457,6 +488,18 @@ bool krightend(char newboard[][8],int row,int col,char player)
 		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow-1][ncol-1] == 'O' || newboard[nrow-1][ncol-1] == 'P')
+			{
+				return false;
+			}
+		}
+	}
+	else if(player == 'O')
+	{
+		nrow = row + 2;
+		ncol = col + 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+			if(newboard[nrow-1][ncol-1] == 'X' || newboard[nrow-1][ncol-1] == 'Y')
 			{
 				return false;
 			}
@@ -485,6 +528,24 @@ void kjumpright(char newboard[][8],int row,int col,char player,int &crow,int &cc
 			}
 		}
 	}
+	else if(player == 'O')
+	{
+		nrow = row + 2;
+		ncol = col + 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+			if(newboard[nrow-1][ncol-1] == 'X' || newboard[nrow-1][ncol-1] == 'Y')
+			{
+				//Then i can make a left jump
+				newboard[nrow-1][ncol-1] = '_'; //remove opponent coin
+				newboard[row][col] = '_'; //remove current coin
+				crow = nrow;
+				ccol = ncol;
+				newboard[nrow][ncol] = 'P';
+				kjump(newboard,nrow,ncol,player);
+			}
+		}
+	}
 }
 bool ktopleftend(char newboard[][8],int row,int col,char player)
 {
@@ -501,6 +562,18 @@ bool ktopleftend(char newboard[][8],int row,int col,char player)
 				return false;
 			}
 		}
+	}
+	else if(player == 'O')
+	{
+		nrow = row - 2;
+		ncol = col - 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+			if(newboard[nrow+1][ncol+1] == 'X' || newboard[nrow+1][ncol+1] == 'Y')
+			{
+				return false;
+			}
+		}	
 	}
 	return true;		
 }
@@ -529,6 +602,24 @@ void ktopleft(char newboard[][8],int row,int col,char player,int &crow,int &ccol
 			//cout<<"Yes here"<<endl;
 		}
 	}
+	else if(player == 'O')
+	{
+		nrow = row - 2;
+		ncol = col - 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+			if(newboard[nrow+1][ncol+1] == 'X' || newboard[nrow+1][ncol+1] == 'Y')
+			{
+				//Then i can make a left jump
+				newboard[nrow+1][ncol+1] = '_'; //remove opponent coin
+				newboard[row][col] = '_'; //remove current coin
+				crow = nrow;
+				ccol = ncol;
+				newboard[nrow][ncol] = 'P';
+				kjump(newboard,nrow,ncol,player);
+			}
+		}	
+	}
 }
 bool ktoprightend(char newboard[][8],int row,int col,char player)
 {
@@ -541,6 +632,18 @@ bool ktoprightend(char newboard[][8],int row,int col,char player)
 		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow+1][ncol-1] == 'O' || newboard[nrow+1][ncol-1] == 'P')
+			{
+				return false;
+			}
+		}
+	}
+	else if(player == 'O')
+	{
+		nrow = row - 2;
+		ncol = col + 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+			if(newboard[nrow+1][ncol-1] == 'X' || newboard[nrow+1][ncol-1] == 'Y')
 			{
 				return false;
 			}
@@ -565,6 +668,24 @@ void ktopright(char newboard[][8],int row,int col,char player,int &crow,int &cco
 				crow = nrow;
 				ccol = ncol;
 				newboard[nrow][ncol] = 'Y';
+				kjump(newboard,nrow,ncol,player);
+			}
+		}
+	}
+	else if(player == 'O')
+	{
+		nrow = row - 2;
+		ncol = col + 2;
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		{
+			if(newboard[nrow+1][ncol-1] == 'X' || newboard[nrow+1][ncol-1] == 'Y')
+			{
+				//Then i can make a left jump
+				newboard[nrow+1][ncol-1] = '_'; //remove opponent coin
+				newboard[row][col] = '_'; //remove current coin
+				crow = nrow;
+				ccol = ncol;
+				newboard[nrow][ncol] = 'P';
 				kjump(newboard,nrow,ncol,player);
 			}
 		}
