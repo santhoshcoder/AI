@@ -8,6 +8,7 @@ public:
 	char board[8][8],player;
 	vector<Node>childs;
 	int v;
+	int move;
 	void setBoard(char b[][8]);
 	void displayBoard();
 	void setPlayer(char);
@@ -47,7 +48,7 @@ int Node::utility()
 		else
 			return 1;
 	}
-	else if(moveCount >= 200)
+	else if(move >= 30)
 	{
 		//Game Tie
 		return 0;
@@ -59,7 +60,7 @@ bool Node::terminal()
 	//If there are no actions then return true
 	if(childs.size() == 0)
 		return true;
-	if(moveCount >= 200)
+	if(move >= 30)
 	{
 		return true;
 	}
@@ -71,7 +72,7 @@ void Node::printActions()
 {
 	if(childs.size() == 0)
 	{
-		cout<<"No Actions for the current Node"<<endl;
+		//cout<<"No Actions for the current Node"<<endl;
 	}
 	else
 	{
@@ -238,6 +239,7 @@ void Node::actions()
 						child1.setBoard(newboard);
 						char newplayer = (player == 'X')?'O':'X';
 						child1.setPlayer(newplayer);
+						child1.move = move+1;
 						childs.push_back(child1);
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
@@ -256,6 +258,7 @@ void Node::actions()
 						child1.setBoard(newboard);
 						char newplayer = (player == 'X')?'O':'X';
 						child1.setPlayer(newplayer);
+						child1.move = move+1;
 						childs.push_back(child1);
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
@@ -283,6 +286,7 @@ void Node::actions()
 						child1.setBoard(newboard);
 						char newplayer = (player == 'X')?'O':'X';
 						child1.setPlayer(newplayer);
+						child1.move = move+1;
 						childs.push_back(child1);
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
@@ -301,6 +305,7 @@ void Node::actions()
 						child1.setBoard(newboard);
 						char newplayer = (player == 'X')?'O':'X';
 						child1.setPlayer(newplayer);
+						child1.move = move+1;
 						childs.push_back(child1);
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
@@ -324,6 +329,7 @@ void Node::actions()
 						child1.setBoard(newboard);
 						char newplayer = (player == 'X')?'O':'X';
 						child1.setPlayer(newplayer);
+						child1.move = move+1;
 						childs.push_back(child1);
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
@@ -339,6 +345,7 @@ void Node::actions()
 						child1.setBoard(newboard);
 						char newplayer = (player == 'X')?'O':'X';
 						child1.setPlayer(newplayer);
+						child1.move = move+1;
 						childs.push_back(child1);
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
@@ -354,6 +361,7 @@ void Node::actions()
 						child1.setBoard(newboard);
 						char newplayer = (player == 'X')?'O':'X';
 						child1.setPlayer(newplayer);
+						child1.move = move+1;
 						childs.push_back(child1);
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
@@ -369,6 +377,7 @@ void Node::actions()
 						child1.setBoard(newboard);
 						char newplayer = (player == 'X')?'O':'X';
 						child1.setPlayer(newplayer);
+						child1.move = move+1;
 						childs.push_back(child1);
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}		
@@ -393,6 +402,7 @@ void Node::actions()
 						child1.setBoard(newboard);
 						char newplayer = (player == 'X')?'O':'X';
 						child1.setPlayer(newplayer);
+						child1.move = move+1;
 						childs.push_back(child1);
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
@@ -408,6 +418,7 @@ void Node::actions()
 						child1.setBoard(newboard);
 						char newplayer = (player == 'X')?'O':'X';
 						child1.setPlayer(newplayer);
+						child1.move = move+1;
 						childs.push_back(child1);
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
@@ -423,6 +434,7 @@ void Node::actions()
 						child1.setBoard(newboard);
 						char newplayer = (player == 'X')?'O':'X';
 						child1.setPlayer(newplayer);
+						child1.move = move+1;
 						childs.push_back(child1);
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
@@ -438,6 +450,7 @@ void Node::actions()
 						child1.setBoard(newboard);
 						char newplayer = (player == 'X')?'O':'X';
 						child1.setPlayer(newplayer);
+						child1.move = move+1;
 						childs.push_back(child1);
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}		
@@ -478,6 +491,7 @@ void Node::kjump(char board[][8],int row,int col,char player)
 		child1.setBoard(newboard);
 		char newplayer = (player == 'X')?'O':'X';
 		child1.setPlayer(newplayer);
+		child1.move = move+1;
 		childs.push_back(child1);
 	}
 	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
@@ -491,6 +505,7 @@ void Node::kjump(char board[][8],int row,int col,char player)
 		child1.setBoard(newboard);
 		char newplayer = (player == 'X')?'O':'X';
 		child1.setPlayer(newplayer);
+		child1.move = move+1;
 		childs.push_back(child1);
 	}
 	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
@@ -504,6 +519,7 @@ void Node::kjump(char board[][8],int row,int col,char player)
 		child1.setBoard(newboard);
 		char newplayer = (player == 'X')?'O':'X';
 		child1.setPlayer(newplayer);
+		child1.move = move+1;
 		childs.push_back(child1);
 	}
 	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
@@ -517,6 +533,7 @@ void Node::kjump(char board[][8],int row,int col,char player)
 		child1.setBoard(newboard);
 		char newplayer = (player == 'X')?'O':'X';
 		child1.setPlayer(newplayer);
+		child1.move = move+1;
 		childs.push_back(child1);
 	}
 	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
@@ -828,6 +845,7 @@ void Node::jump(char board[][8],int row,int col,char player)
 		child1.setBoard(newboard);
 		char newplayer = (player == 'X')?'O':'X';
 		child1.setPlayer(newplayer);
+		child1.move = move+1;
 		childs.push_back(child1);
 	}
 	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
@@ -842,6 +860,7 @@ void Node::jump(char board[][8],int row,int col,char player)
 		child1.setBoard(newboard);
 		char newplayer = (player == 'X')?'O':'X';
 		child1.setPlayer(newplayer);
+		child1.move = move+1;
 		childs.push_back(child1);
 	}
 	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
@@ -1019,11 +1038,11 @@ void printBoard(char array2D[][8])
 void alpha_beta_search(Node n,char array2D[][8]) 
 {
 	n.v = max_value(n,-5, 5);
-	cout<<"Selected v value in alpha_beta_search is:"<<n.v<<endl;
-	cout<<"No of Chils for this node are: "<<n.childs.size()<<endl;
+	//cout<<"Selected v value in alpha_beta_search is:"<<n.v<<endl;
+	//cout<<"No of Chils for this node are: "<<n.childs.size()<<endl;
 	for(int i = 0; i < n.childs.size();i++)
 	{
-		cout<<"Action "<<(i+1)<<"Utility value is: "<<n.childs[i].utility()<<endl;
+		//cout<<"Action "<<(i+1)<<"Utility value is: "<<n.childs[i].utility()<<endl;
 		if(n.childs[i].childs.size() == 0 && n.childs[i].utility() != 0)
 		{
 			for(int h = 0; h < 8;h++)
@@ -1073,7 +1092,7 @@ int max_value(Node &n,int alpha,int beta)
 	//cout<<"Childs size is:"<<<<endl;
 	//n.displayBoard();
 	//cout<<"For loop Started"<<endl;
-	cout<<"MoveCount is:"<<moveCount<<endl;
+	//cout<<"MoveCount is:"<<moveCount<<endl;
 	for(int i = 0; i < n.childs.size(); i++)
 	{
 		n.v = max(n.v,min_value(n.childs[i],alpha,beta));
@@ -1134,6 +1153,8 @@ int main()
 	int row,column,nrow,ncolumn;
 	char flag = false;
 	bool flag2 = true;
+	char newboard[8][8];
+	int  count = 0;
 	char board[8][8] = 
 	{
 		{'_','X','_','X','_','X','_','X'},
@@ -1151,19 +1172,22 @@ int main()
 		Node test;
 		test.setBoard(board);
 		test.setPlayer('X');
+		test.move = count;
+		count++;
 		alpha_beta_search(test,board);
 		cout<<"After Computer Turn board is:"<<endl;
 		//moveCount++;
 		printBoard(board);
-
 		Node test1;
 		test1.setBoard(board);
 		test1.setPlayer('O');
+		test1.move = count;
+		count++;
 		test1.actions();
-		if(moveCount >=200)
-		{
-			moveCount = 0;
-		}
+		//if(moveCount >=200)
+		//{
+		//moveCount = 0;
+		//}
 		if(test1.terminal())
 		{
 			int w = test1.utility();
@@ -1184,51 +1208,69 @@ int main()
 			}
 		}
 		cout << "Your Turn"<<endl;
+		//Create a copy of board and store it in newboard and do the following changed on new board
+		for(int i=0;i<8;i++)
+		{
+			for(int j=0;j<8;j++)
+			{
+				newboard[i][j] = board[i][j];
+			}
+		}
 		do
 		{
-			cout << "Choose a Row to move from(0-7): ";
-			cin >> row;
-			cout << "Choose a Column to move from(0-7): "<<endl;
-			cin >> column;
-			cout <<"Choose a Row to make a move to that position(0-7): ";
-			cin>>nrow;
-			cout<<"Choose a Column to make a move to that position(0-7): ";
-			cin>>ncolumn;
-			//Both the columns should match and that move should be valid
-			if(!((row >=0 && row <=7) && (column >=0 && column <=7) && (nrow >=0 && nrow <=7) && (ncolumn >=0 && ncolumn <=7)))
+			do
 			{
-				cout<<"Invalid row and Column Selected"<<endl;
-				flag = true;
-			}
+				cout << "Choose a Row to move from(0-7): ";
+				cin >> row;
+				cout << "Choose a Column to move from(0-7): "<<endl;
+				cin >> column;
+				cout <<"Choose a Row to make a move to that position(0-7): ";
+				cin>>nrow;
+				cout<<"Choose a Column to make a move to that position(0-7): ";
+				cin>>ncolumn;
+				//Both the columns should match and that move should be valid
+				if(!((row >=0 && row <=7) && (column >=0 && column <=7) && (nrow >=0 && nrow <=7) && (ncolumn >=0 && ncolumn <=7)))
+				{
+					cout<<"Invalid row and Column Selected"<<endl;
+					flag = true;
+				}
+				else
+				{
+					flag = false;
+				}
+			}while(flag);
+			if(flag)
+				cout<<"True"<<endl;
 			else
-			{
-				flag = false;
-			}
+				cout<<"False"<<endl;
 			Node test2;
-			test2.setBoard(board);
+			test2.setBoard(newboard);
 			test2.setPlayer('O');
+			test2.move = count;
+			count++;
 			test2.actions();
 			//The move can make the player coin a king
 			if(nrow == 0)
 			{
-				board[nrow][ncolumn] = 'P';
+				newboard[nrow][ncolumn] = 'P';
 			}
 			else
 			{
-				board[nrow][ncolumn] = 'O';
+				newboard[nrow][ncolumn] = 'O';
 			}
-			board[row][column] = '_';
+			newboard[row][column] = '_';
 			//To make sure that the move is valid derive the actions of the board(test object) after the computer move and check if the user
 			//move can be allowed
 			int count = 0;
 			for(int i=0;i<test2.childs.size();i++)
 			{
-				if(checkPlayersEquality(board,test2.childs[i].board))
+				if(checkPlayersEquality(newboard,test2.childs[i].board))
 				{
 					//copy the action into board
-					for(int j=0;i<8;i++)
+					cout<<"Action Found"<<endl;
+					for(int j=0;j<8;j++)
 					{
-						for(int k=0;j<8;j++)
+						for(int k=0;k<8;k++)
 							board[j][k] = test2.childs[i].board[j][k];
 					}
 					count++;
@@ -1240,6 +1282,13 @@ int main()
 				//Action cannot be made
 				flag = true;
 				cout<<"Action Cannot be made.Choose a Valid Action"<<endl;
+				for(int i=0;i<8;i++)
+				{
+					for(int j=0;j<8;j++)
+					{
+						newboard[i][j] = board[i][j];
+					}
+				}
 			}
 			else
 			{
@@ -1253,11 +1302,13 @@ int main()
 		Node test3;
 		test3.setBoard(board);
 		test3.setPlayer('X');
+		test3.move = count;
+		count++;
 		test3.actions();
-		if(moveCount >=200)
-		{
-			moveCount = 0;
-		}
+		//if(moveCount >=200)
+		//{
+		//moveCount = 0;
+		//}
 		if(test3.terminal())
 		{
 			int w = test3.utility();
