@@ -1,18 +1,19 @@
 #include <iostream>
 #include <vector>
 using namespace std;
+int moveCount = 0;
 class Node
 {
-private:
+public:
 	char board[8][8],player;
 	vector<Node>childs;
-	int value;
-public:
+	int v;
 	void setBoard(char b[][8]);
 	void displayBoard();
 	void setPlayer(char);
 	void printActions();
 	void actions();
+	int  utility();
 	bool checkKing(int row,char player);
 	bool leftEnd(char board[][8],int row,int col,char player);
 	bool rightEnd(char board[][8],int row,int col,char player);
@@ -31,7 +32,41 @@ public:
 	bool krightend(char board[][8],int row,int col,char player);
 	bool ktopleftend(char board[][8],int row,int col,char player);
 	bool ktoprightend(char board[][8],int row,int col,char player);
+	bool terminal();
 };
+void alpha_beta_search(Node n,char [][8]);
+int max_value(Node &n, int alpha, int beta);
+int min_value(Node &n, int alpha, int beta);
+void printBoard(char s[][8]);
+int Node::utility()
+{
+	if(childs.size() == 0)
+	{
+		if(player == 'X')
+			return -1;
+		else
+			return 1;
+	}
+	else if(moveCount >= 200)
+	{
+		//Game Tie
+		return 0;
+	}
+	//Need to add more functions to check if it's a Tie or if there are more no of moves
+}
+bool Node::terminal()
+{
+	//If there are no actions then return true
+	if(childs.size() == 0)
+		return true;
+	if(moveCount >= 200)
+	{
+		return true;
+	}
+	return false;
+	//There can be many more conditions
+	//1) The game contines and cannot stop i.e in like 100 steps or something like that
+}
 void Node::printActions()
 {
 	if(childs.size() == 0)
@@ -175,6 +210,7 @@ position (row,col) else false
 }
 void Node::actions()
 {
+	moveCount++;
 	for(int i = 0;i < 8;i++)
 	{
 		for(int j = 0;j < 8;j++)
@@ -183,7 +219,7 @@ void Node::actions()
 			{
 				if(player == 'X' && board[i][j] == 'X')//Computer normal player
 				{
-					cout<<"Computer Normal player"<<endl;
+					//cout<<"Computer Normal player"<<endl;
 					char newboard[8][8];
 					copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					
@@ -228,7 +264,7 @@ void Node::actions()
 				}
 				else if(player == 'O' && board[i][j] == 'O') //user normal player
 				{
-					cout<<"User Normal player"<<endl;
+					//cout<<"User Normal player"<<endl;
 					char newboard[8][8];
 					copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					
@@ -273,7 +309,7 @@ void Node::actions()
 				}
 				if(player == 'X' && board[i][j] == 'Y') //Computer player turned king
 				{
-					cout<<"Computer player turned king"<<endl;
+					//cout<<"Computer player turned king"<<endl;
 					char newboard[8][8];
 					copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					//Check left diagnoal 'X'
@@ -337,12 +373,12 @@ void Node::actions()
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}		
 					//Check jumps
-					cout<<"Calling kjump"<<endl;
+					//cout<<"Calling kjump"<<endl;
 					kjump(board,i,j,player);		
 				}
 				if(player == 'O' && board[i][j] == 'P') //User player turned king
 				{
-					cout<<"User player turned king"<<endl;
+					//cout<<"User player turned king"<<endl;
 					char newboard[8][8];
 					copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					//Check left diagnoal 'X'
@@ -406,7 +442,7 @@ void Node::actions()
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}		
 					//Check jumps
-					cout<<"Calling kjump in user player turned king"<<endl;
+					//cout<<"Calling kjump in user player turned king"<<endl;
 					kjump(board,i,j,player);		
 				}
 			}
@@ -957,26 +993,289 @@ Returns true if you can move right from the current position
 	return true;		
 }
 
+/* Main Functions Alpha-Beta-Search */
+void printBoard(char array2D[][8])
+{
+	cout << endl << "***************" << endl;
+	for(int i = 0;i < 8; i++)
+	{
+		if(i == 0)
+		{
+			cout<<"-------------------"<<endl;
+			cout<<"R/C 0 1 2 3 4 5 6 7"<<endl;
+			cout<<"-------------------";
+			cout<<endl;
+		}
+		cout<<" |"<<i<<"|";
+		for(int j = 0;j < 8;j++)
+		{
+			cout<<array2D[i][j]<<" ";
+		}
+		cout<<endl;
+	}
+	cout << endl << "***************" << endl;
+}
+
+void alpha_beta_search(Node n,char array2D[][8]) 
+{
+	n.v = max_value(n,-5, 5);
+	cout<<"Selected v value in alpha_beta_search is:"<<n.v<<endl;
+	cout<<"No of Chils for this node are: "<<n.childs.size()<<endl;
+	for(int i = 0; i < n.childs.size();i++)
+	{
+		cout<<"Action "<<(i+1)<<"Utility value is: "<<n.childs[i].utility()<<endl;
+		if(n.childs[i].childs.size() == 0 && n.childs[i].utility() != 0)
+		{
+			for(int h = 0; h < 8;h++)
+			{
+				for(int w = 0; w < 8; w++)
+				{
+					array2D[h][w] = n.childs[i].board[h][w];
+				}
+			}
+			return ;
+		}
+	}
+	for (int i = 0; i < n.childs.size(); i++) 
+	{
+		if (n.childs[i].v == n.v) 
+		{
+			// found store it into a 2-D array and return the array
+			//cout<<"Found"<<endl;
+			for(int h = 0; h < 8 ;h++)
+			{
+				for(int w = 0; w < 8; w++)
+				{
+					array2D[h][w] = n.childs[i].board[h][w];
+				}
+			}
+			return ;
+		}
+	}
+}
+int max_value(Node &n,int alpha,int beta)
+{
+	//cout<<"Max Start"<<endl;
+	//cout<<"Called Max Function"<<endl;
+	//cout<<"Checking win returned"<<n.checkingWin()<<endl;
+	//cout<<"Action Start"<<endl;
+	n.actions();
+	//cout<<"Actions End"<<endl;
+	//cout<<"If Called"<<endl;
+	if(n.terminal() == true)
+	{
+		n.v = n.utility();
+		//cout<<"Max End"<<endl;
+		return n.utility();
+	}
+	//cout<<"If End"<<endl;
+	n.v = -5;
+	//cout<<"Childs size is:"<<<<endl;
+	//n.displayBoard();
+	//cout<<"For loop Started"<<endl;
+	cout<<"MoveCount is:"<<moveCount<<endl;
+	for(int i = 0; i < n.childs.size(); i++)
+	{
+		n.v = max(n.v,min_value(n.childs[i],alpha,beta));
+		//cout<<"Called Max Again"<<endl;
+		if (n.v >= beta)
+		{
+			//cout<<"Max End"<<endl;
+			return n.v;
+		}
+		alpha = max(alpha,n.v);
+	}
+	//cout<<"For Loop End"<<endl;
+	//cout<<"Max End"<<endl;
+	return n.v;
+}
+int min_value(Node &n,int alpha,int beta)
+{
+	//cout<<"Min Start"<<endl;
+	n.actions();
+	if(n.terminal())
+	{
+		n.v = n.utility();
+		//cout<<"Min End"<<endl;
+		return n.utility();
+	}
+	n.v = 5;
+	for(int i = 0; i < n.childs.size(); i++)
+	{
+		n.v = min(n.v,max_value(n.childs[i],alpha,beta));
+		if (n.v <= alpha)
+		{
+			//cout<<"Min End"<<endl;
+			return n.v;
+		}
+		beta = min(beta,n.v);
+	}
+	//cout<<"Min End"<<endl;
+	return n.v;
+}
+bool checkPlayersEquality(char u[][8],char a[][8])
+{
+	//Check if the 'O' or 'P' in u are in the same exact position in a
+	for(int i=0;i<8;i++)
+	{
+		for(int j=0;j<8;j++)
+		{
+			if((u[i][j] == 'O' || u[i][j] == 'P') && (u[i][j] != a[i][j]))
+			{
+				 return false;
+			}
+		}
+	}
+	return true;
+}
 int main()
 {
+	char player = 'X';
+	int row,column,nrow,ncolumn;
+	char flag = false;
+	bool flag2 = true;
 	char board[8][8] = 
 	{
+		{'_','X','_','X','_','X','_','X'},
+		{'X','_','X','_','X','_','X','_'},
+		{'_','X','_','X','_','X','_','X'},
 		{'_','_','_','_','_','_','_','_'},
 		{'_','_','_','_','_','_','_','_'},
-		{'_','_','_','_','_','_','_','_'},
-		{'_','_','_','_','_','_','_','_'},
-		{'_','_','_','_','_','_','_','_'},
-		{'_','_','_','_','_','_','_','_'},
-		{'_','X','_','_','_','_','_','_'},
-		{'O','_','O','_','_','_','_','_'}
+		{'O','_','O','_','O','_','O','_'},
+		{'_','O','_','O','_','O','_','O'},
+		{'O','_','O','_','O','_','O','_'}
 	};
-	Node *test = new Node();
-	test->setBoard(board);
-	test->setPlayer('X');
-	test->actions();
-	cout<<endl<<"*******************************************"<<endl;
-	cout<<"Board Initial Stage is:";
-	cout<<endl<<"*******************************************"<<endl;
-	test->displayBoard();
-	test->printActions();
+
+	while(flag2)
+	{
+		Node test;
+		test.setBoard(board);
+		test.setPlayer('X');
+		alpha_beta_search(test,board);
+		cout<<"After Computer Turn board is:"<<endl;
+		//moveCount++;
+		printBoard(board);
+
+		Node test1;
+		test1.setBoard(board);
+		test1.setPlayer('O');
+		test1.actions();
+		if(moveCount >=200)
+		{
+			moveCount = 0;
+		}
+		if(test1.terminal())
+		{
+			int w = test1.utility();
+			if(w == 1)
+			{
+				cout<<"Computer Won the game"<<endl;
+				exit(0);
+			}
+			else if(w == -1)
+			{
+				cout<<"You Won the game"<<endl;
+				exit(0);
+			}
+			else
+			{
+				cout<<"Game Tie"<<endl;
+				exit(0);
+			}
+		}
+		cout << "Your Turn"<<endl;
+		do
+		{
+			cout << "Choose a Row to move from(0-7): ";
+			cin >> row;
+			cout << "Choose a Column to move from(0-7): "<<endl;
+			cin >> column;
+			cout <<"Choose a Row to make a move to that position(0-7): ";
+			cin>>nrow;
+			cout<<"Choose a Column to make a move to that position(0-7): ";
+			cin>>ncolumn;
+			//Both the columns should match and that move should be valid
+			if(!((row >=0 && row <=7) && (column >=0 && column <=7) && (nrow >=0 && nrow <=7) && (ncolumn >=0 && ncolumn <=7)))
+			{
+				cout<<"Invalid row and Column Selected"<<endl;
+				flag = true;
+			}
+			else
+			{
+				flag = false;
+			}
+			Node test2;
+			test2.setBoard(board);
+			test2.setPlayer('O');
+			test2.actions();
+			//The move can make the player coin a king
+			if(nrow == 0)
+			{
+				board[nrow][ncolumn] = 'P';
+			}
+			else
+			{
+				board[nrow][ncolumn] = 'O';
+			}
+			board[row][column] = '_';
+			//To make sure that the move is valid derive the actions of the board(test object) after the computer move and check if the user
+			//move can be allowed
+			int count = 0;
+			for(int i=0;i<test2.childs.size();i++)
+			{
+				if(checkPlayersEquality(board,test2.childs[i].board))
+				{
+					//copy the action into board
+					for(int j=0;i<8;i++)
+					{
+						for(int k=0;j<8;j++)
+							board[j][k] = test2.childs[i].board[j][k];
+					}
+					count++;
+					break;
+				}
+			}
+			if(count == 0)
+			{
+				//Action cannot be made
+				flag = true;
+				cout<<"Action Cannot be made.Choose a Valid Action"<<endl;
+			}
+			else
+			{
+				//Action can be made
+				flag = false;
+			}
+		}while(flag);
+		cout<<"After Your Turn board is:"<<endl;
+		//moveCount++;
+		printBoard(board);
+		Node test3;
+		test3.setBoard(board);
+		test3.setPlayer('X');
+		test3.actions();
+		if(moveCount >=200)
+		{
+			moveCount = 0;
+		}
+		if(test3.terminal())
+		{
+			int w = test3.utility();
+			if(w == 1)
+			{
+				cout<<"Computer Won the game"<<endl;
+				exit(0);
+			}
+			else if(w == -1)
+			{
+				cout<<"You Won the game"<<endl;
+				exit(0);
+			}
+			else
+			{
+				cout<<"Game Tie"<<endl;
+				exit(0);
+			}	
+		}
+	}
 }
