@@ -2,6 +2,7 @@
 #include <vector>
 using namespace std;
 int moveCount = 0;
+int utilityCount(char b[8][8]);
 class Node
 {
 public:
@@ -44,15 +45,12 @@ int Node::utility()
 	if(childs.size() == 0)
 	{
 		if(player == 'X')
-			return -1;
+			return -20;
 		else
-			return 1;
+			return 20;
 	}
-	else if(move >= 30)
-	{
-		//Game Tie
-		return 0;
-	}
+	//else if(move >= 10)
+	return utilityCount(board);
 	//Need to add more functions to check if it's a Tie or if there are more no of moves
 }
 bool Node::terminal()
@@ -60,7 +58,7 @@ bool Node::terminal()
 	//If there are no actions then return true
 	if(childs.size() == 0)
 		return true;
-	if(move >= 30)
+	if(move >= 10)
 	{
 		return true;
 	}
@@ -410,7 +408,7 @@ void Node::actions()
 					if(checkRight(board,i,j,'X'))
 					{
 						//I can move right
-						newboard[i+1][j+1] = 'p';
+						newboard[i+1][j+1] = 'P';
 						newboard[i][j] = '_';
 						//printboard(newboard);
 						//Action
@@ -1037,7 +1035,7 @@ void printBoard(char array2D[][8])
 
 void alpha_beta_search(Node n,char array2D[][8]) 
 {
-	n.v = max_value(n,-5, 5);
+	n.v = max_value(n,-100,100);
 	//cout<<"Selected v value in alpha_beta_search is:"<<n.v<<endl;
 	//cout<<"No of Chils for this node are: "<<n.childs.size()<<endl;
 	for(int i = 0; i < n.childs.size();i++)
@@ -1141,11 +1139,28 @@ bool checkPlayersEquality(char u[][8],char a[][8])
 		{
 			if((u[i][j] == 'O' || u[i][j] == 'P') && (u[i][j] != a[i][j]))
 			{
-				 return false;
+				//cout<<"u[i][j]: "<<u[i][j]<<endl;
+				//cout<<"a[i][j]: "<<a[i][j]<<endl;
+				return false;
 			}
 		}
 	}
 	return true;
+}
+int utilityCount(char b[8][8])
+{
+	int xcount = 0,ocount = 0;
+	for(int i=0;i<8;i++)
+	{
+		for(int j=0;j<8;j++)
+		{
+			if(b[i][j] == 'X' || b[i][j] == 'Y')
+				xcount++;
+			else if(b[i][j] == 'O' || b[i][j] == 'P')
+				ocount++;
+		}
+	}
+	return xcount - ocount;
 }
 int main()
 {
@@ -1172,7 +1187,8 @@ int main()
 		Node test;
 		test.setBoard(board);
 		test.setPlayer('X');
-		test.move = count;
+		//test.move = count;
+		test.move = 0;
 		count++;
 		alpha_beta_search(test,board);
 		cout<<"After Computer Turn board is:"<<endl;
@@ -1181,7 +1197,8 @@ int main()
 		Node test1;
 		test1.setBoard(board);
 		test1.setPlayer('O');
-		test1.move = count;
+		//test1.move = count;
+		test1.move = 0;
 		count++;
 		test1.actions();
 		//if(moveCount >=200)
@@ -1246,9 +1263,11 @@ int main()
 			Node test2;
 			test2.setBoard(newboard);
 			test2.setPlayer('O');
-			test2.move = count;
+			test2.move = 0;
 			count++;
 			test2.actions();
+			//cout<<"Printing Actions"<<endl;
+			//test2.printActions();
 			//The move can make the player coin a king
 			if(nrow == 0)
 			{
@@ -1256,9 +1275,10 @@ int main()
 			}
 			else
 			{
-				newboard[nrow][ncolumn] = 'O';
+				newboard[nrow][ncolumn] = newboard[row][column];
 			}
 			newboard[row][column] = '_';
+			//printBoard(newboard);
 			//To make sure that the move is valid derive the actions of the board(test object) after the computer move and check if the user
 			//move can be allowed
 			int count = 0;
@@ -1267,7 +1287,7 @@ int main()
 				if(checkPlayersEquality(newboard,test2.childs[i].board))
 				{
 					//copy the action into board
-					cout<<"Action Found"<<endl;
+					//cout<<"Action Found"<<endl;
 					for(int j=0;j<8;j++)
 					{
 						for(int k=0;k<8;k++)
@@ -1302,7 +1322,7 @@ int main()
 		Node test3;
 		test3.setBoard(board);
 		test3.setPlayer('X');
-		test3.move = count;
+		test3.move = 0;
 		count++;
 		test3.actions();
 		//if(moveCount >=200)
