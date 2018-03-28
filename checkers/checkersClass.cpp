@@ -2,6 +2,7 @@
 #include <vector>
 using namespace std;
 int moveCount = 0;
+int options;
 int utilityCount(char b[8][8]);
 class Node
 {
@@ -42,16 +43,27 @@ int min_value(Node &n, int alpha, int beta);
 void printBoard(char s[][8]);
 int Node::utility()
 {
-	if(childs.size() == 0)
+	if(options == 1)
 	{
-		if(player == 'X')
-			return -20;
-		else
-			return 20;
+		if(childs.size() == 0)
+		{
+			if(player == 'X')
+				return -20;
+			else
+				return 20;
+		}
 	}
-	//else if(move >= 10)
+	else if(options == 2)
+	{
+		if(childs.size() == 0)
+		{
+			if(player == 'X')
+				return 20;
+			else
+				return -20;
+		}
+	}
 	return utilityCount(board);
-	//Need to add more functions to check if it's a Tie or if there are more no of moves
 }
 bool Node::terminal()
 {
@@ -544,7 +556,7 @@ bool Node::kleftend(char newboard[][8],int row,int col,char player)
 	{
 		nrow = row + 2;
 		ncol = col - 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 				if(newboard[nrow-1][ncol+1] == 'O' || newboard[nrow-1][ncol+1] == 'P')
 				{
@@ -556,7 +568,7 @@ bool Node::kleftend(char newboard[][8],int row,int col,char player)
 	{
 		nrow = row + 2;
 		ncol = col - 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow-1][ncol+1] == 'X' || newboard[nrow-1][ncol+1] == 'Y')
 			{
@@ -574,7 +586,7 @@ void Node::kjumpleft(char newboard[][8],int row,int col,char player,int &crow,in
 	{
 		nrow = row + 2;
 		ncol = col - 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow-1][ncol+1] == 'O' || newboard[nrow-1][ncol+1] == 'P')
 			{
@@ -591,7 +603,7 @@ void Node::kjumpleft(char newboard[][8],int row,int col,char player,int &crow,in
 	{
 		nrow = row + 2;
 		ncol = col - 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow-1][ncol+1] == 'X' || newboard[nrow-1][ncol+1] == 'Y')
 			{
@@ -614,7 +626,7 @@ bool Node::krightend(char newboard[][8],int row,int col,char player)
 	{
 		nrow = row + 2;
 		ncol = col + 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow-1][ncol-1] == 'O' || newboard[nrow-1][ncol-1] == 'P')
 			{
@@ -626,7 +638,7 @@ bool Node::krightend(char newboard[][8],int row,int col,char player)
 	{
 		nrow = row + 2;
 		ncol = col + 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow-1][ncol-1] == 'X' || newboard[nrow-1][ncol-1] == 'Y')
 			{
@@ -644,7 +656,7 @@ void Node::kjumpright(char newboard[][8],int row,int col,char player,int &crow,i
 	{
 		nrow = row + 2;
 		ncol = col + 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow-1][ncol-1] == 'O' || newboard[nrow-1][ncol-1] == 'P')
 			{
@@ -661,7 +673,7 @@ void Node::kjumpright(char newboard[][8],int row,int col,char player,int &crow,i
 	{
 		nrow = row + 2;
 		ncol = col + 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow-1][ncol-1] == 'X' || newboard[nrow-1][ncol-1] == 'Y')
 			{
@@ -684,7 +696,7 @@ bool Node::ktopleftend(char newboard[][8],int row,int col,char player)
 	{
 		nrow = row - 2;
 		ncol = col - 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow+1][ncol+1] == 'O' || newboard[nrow+1][ncol+1] == 'P')
 			{
@@ -696,7 +708,7 @@ bool Node::ktopleftend(char newboard[][8],int row,int col,char player)
 	{
 		nrow = row - 2;
 		ncol = col - 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow+1][ncol+1] == 'X' || newboard[nrow+1][ncol+1] == 'Y')
 			{
@@ -714,7 +726,7 @@ void Node::ktopleft(char newboard[][8],int row,int col,char player,int &crow,int
 	{
 		nrow = row - 2;
 		ncol = col - 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			//cout<<"Program stopped here"<<endl;
 			//cout<<"nrow is:"<<nrow<<endl;
@@ -735,7 +747,7 @@ void Node::ktopleft(char newboard[][8],int row,int col,char player,int &crow,int
 	{
 		nrow = row - 2;
 		ncol = col - 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow+1][ncol+1] == 'X' || newboard[nrow+1][ncol+1] == 'Y')
 			{
@@ -758,7 +770,7 @@ bool Node::ktoprightend(char newboard[][8],int row,int col,char player)
 	{
 		nrow = row - 2;
 		ncol = col + 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow+1][ncol-1] == 'O' || newboard[nrow+1][ncol-1] == 'P')
 			{
@@ -770,7 +782,7 @@ bool Node::ktoprightend(char newboard[][8],int row,int col,char player)
 	{
 		nrow = row - 2;
 		ncol = col + 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow+1][ncol-1] == 'X' || newboard[nrow+1][ncol-1] == 'Y')
 			{
@@ -788,7 +800,7 @@ void Node::ktopright(char newboard[][8],int row,int col,char player,int &crow,in
 	{
 		nrow = row - 2;
 		ncol = col + 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow+1][ncol-1] == 'O' || newboard[nrow+1][ncol-1] == 'P')
 			{
@@ -805,7 +817,7 @@ void Node::ktopright(char newboard[][8],int row,int col,char player,int &crow,in
 	{
 		nrow = row - 2;
 		ncol = col + 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow+1][ncol-1] == 'X' || newboard[nrow+1][ncol-1] == 'Y')
 			{
@@ -870,7 +882,7 @@ void Node::jumpleft(char newboard[][8],int row,int col,char player,int &crow,int
 	{
 		nrow = row + 2;
 		ncol = col - 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow-1][ncol+1] == 'O' || newboard[nrow-1][ncol+1] == 'P')
 			{
@@ -894,7 +906,7 @@ void Node::jumpleft(char newboard[][8],int row,int col,char player,int &crow,int
 	{
 		nrow = row - 2;
 		ncol = col - 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow+1][ncol+1] == 'X' || newboard[nrow+1][ncol+1] == 'Y')
 			{
@@ -922,7 +934,7 @@ void Node::jumpright(char newboard[][8],int row,int col,char player,int &crow,in
 	{
 		nrow = row + 2;
 		ncol = col + 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow-1][ncol-1] == 'O' || newboard[nrow-1][ncol-1] == 'P')
 			{
@@ -946,7 +958,7 @@ void Node::jumpright(char newboard[][8],int row,int col,char player,int &crow,in
 	{
 		nrow = row - 2;
 		ncol = col + 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && newboard[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && newboard[nrow][ncol] == '_'))
 		{
 			if(newboard[nrow+1][ncol-1] == 'X' || newboard[nrow+1][ncol-1] == 'Y')
 			{
@@ -1137,7 +1149,7 @@ bool checkPlayersEquality(char u[][8],char a[][8])
 	{
 		for(int j=0;j<8;j++)
 		{
-			if((u[i][j] == 'O' || u[i][j] == 'P') && (u[i][j] != a[i][j]))
+			if((a[i][j] == 'O' || a[i][j] == 'P') && (u[i][j] != a[i][j]))
 			{
 				//cout<<"u[i][j]: "<<u[i][j]<<endl;
 				//cout<<"a[i][j]: "<<a[i][j]<<endl;
@@ -1160,13 +1172,189 @@ int utilityCount(char b[8][8])
 				ocount++;
 		}
 	}
-	return xcount - ocount;
+	if(options == 1)
+		return xcount - ocount;
+	return ocount - xcount;
+}	
+/*
+void comVuser(char player,int row,int column,int nrow,int ncolumn,bool flag,bool flag2,char board[][8],char newboard[][8])
+{
+	while(flag2)
+	{
+		Node test;
+		test.setBoard(board);
+		test.setPlayer('X');
+		//test.move = count;
+		test.move = 0;
+		//count++;
+		alpha_beta_search(test,board);
+		cout<<"After Computer Turn board is:"<<endl;
+		//moveCount++;
+		printBoard(board);
+		Node test1;
+		test1.setBoard(board);
+		test1.setPlayer('O');
+		//test1.move = count;
+		test1.move = 0;
+		//count++;
+		test1.actions();
+		//if(moveCount >=200)
+		//{
+		//moveCount = 0;
+		//}
+		if(test1.terminal())
+		{
+			int w = test1.utility();
+			if(w == 1)
+			{
+				cout<<"Computer Won the game"<<endl;
+				exit(0);
+			}
+			else if(w == -1)
+			{
+				cout<<"You Won the game"<<endl;
+				exit(0);
+			}
+			else
+			{
+				cout<<"Game Tie"<<endl;
+				exit(0);
+			}
+		}
+		cout << "Your Turn"<<endl;
+		
+
+		//Create a copy of board and store it in newboard and do the following changed on new board
+		for(int i=0;i<8;i++)
+		{
+			for(int j=0;j<8;j++)
+			{
+				newboard[i][j] = board[i][j];
+			}
+		}
+		do
+		{
+			do
+			{
+				cout << "Choose a Row to move from(0-7): ";
+				cin >> row;
+				cout << "Choose a Column to move from(0-7): "<<endl;
+				cin >> column;
+				cout <<"Choose a Row to make a move to that position(0-7): ";
+				cin>>nrow;
+				cout<<"Choose a Column to make a move to that position(0-7): ";
+				cin>>ncolumn;
+				//Both the columns should match and that move should be valid
+				if(!((row >=0 && row <=7) && (column >=0 && column <=7) && (nrow >=0 && nrow <=7) && (ncolumn >=0 && ncolumn <=7)))
+				{
+					cout<<"Invalid row and Column Selected"<<endl;
+					flag = true;
+				}
+				else
+				{
+					flag = false;
+				}
+			}while(flag);
+			if(flag)
+				cout<<"True"<<endl;
+			else
+				cout<<"False"<<endl;
+			Node test2;
+			test2.setBoard(newboard);
+			test2.setPlayer('O');
+			test2.move = 0;
+			//count++;
+			test2.actions();
+			//cout<<"Printing Actions"<<endl;
+			//test2.printActions();
+			//The move can make the player coin a king
+			if(nrow == 0)
+			{
+				newboard[nrow][ncolumn] = 'P';
+			}
+			else
+			{
+				newboard[nrow][ncolumn] = newboard[row][column];
+			}
+			newboard[row][column] = '_';
+			//printBoard(newboard);
+			//To make sure that the move is valid derive the actions of the board(test object) after the computer move and check if the user
+			//move can be allowed
+			int count = 0;
+			for(int i=0;i<test2.childs.size();i++)
+			{
+				if(checkPlayersEquality(newboard,test2.childs[i].board))
+				{
+					//copy the action into board
+					//cout<<"Action Found"<<endl;
+					for(int j=0;j<8;j++)
+					{
+						for(int k=0;k<8;k++)
+							board[j][k] = test2.childs[i].board[j][k];
+					}
+					count++;
+					break;
+				}
+			}
+			if(count == 0)
+			{
+				//Action cannot be made
+				flag = true;
+				cout<<"Action Cannot be made.Choose a Valid Action"<<endl;
+				for(int i=0;i<8;i++)
+				{
+					for(int j=0;j<8;j++)
+					{
+						newboard[i][j] = board[i][j];
+					}
+				}
+			}
+			else
+			{
+				//Action can be made
+				flag = false;
+			}
+		}while(flag);
+		cout<<"After Your Turn board is:"<<endl;
+		//moveCount++;
+		printBoard(board);
+		Node test3;
+		test3.setBoard(board);
+		test3.setPlayer('X');
+		test3.move = 0;
+		//count++;
+		test3.actions();
+		//if(moveCount >=200)
+		//{
+		//moveCount = 0;
+		//}
+		if(test3.terminal())
+		{
+			int w = test3.utility();
+			if(w == 1)
+			{
+				cout<<"Computer Won the game"<<endl;
+				exit(0);
+			}
+			else if(w == -1)
+			{
+				cout<<"You Won the game"<<endl;
+				exit(0);
+			}
+			else
+			{
+				cout<<"Game Tie"<<endl;
+				exit(0);
+			}	
+		}
+	}
 }
+*/
 int main()
 {
 	char player = 'X';
 	int row,column,nrow,ncolumn;
-	char flag = false;
+	bool flag = false;
 	bool flag2 = true;
 	char newboard[8][8];
 	int  count = 0;
@@ -1181,7 +1369,9 @@ int main()
 		{'_','O','_','O','_','O','_','O'},
 		{'O','_','O','_','O','_','O','_'}
 	};
-
+	options = 1;
+	//comVuser(player,row,column,nrow,ncolumn,flag,flag2,board,newboard);
+	cout<<"No Problem"<<endl;
 	while(flag2)
 	{
 		Node test;
@@ -1189,8 +1379,10 @@ int main()
 		test.setPlayer('X');
 		//test.move = count;
 		test.move = 0;
-		count++;
+		//count++;
+		cout<<"No Problem"<<endl;
 		alpha_beta_search(test,board);
+		cout<<"Executed"<<endl;
 		cout<<"After Computer Turn board is:"<<endl;
 		//moveCount++;
 		printBoard(board);
@@ -1199,7 +1391,7 @@ int main()
 		test1.setPlayer('O');
 		//test1.move = count;
 		test1.move = 0;
-		count++;
+		//count++;
 		test1.actions();
 		//if(moveCount >=200)
 		//{
@@ -1264,7 +1456,7 @@ int main()
 			test2.setBoard(newboard);
 			test2.setPlayer('O');
 			test2.move = 0;
-			count++;
+			//count++;
 			test2.actions();
 			//cout<<"Printing Actions"<<endl;
 			//test2.printActions();
@@ -1278,7 +1470,8 @@ int main()
 				newboard[nrow][ncolumn] = newboard[row][column];
 			}
 			newboard[row][column] = '_';
-			//printBoard(newboard);
+			cout<<"Before checking if the action can be made board is:"<<endl;
+			printBoard(newboard);
 			//To make sure that the move is valid derive the actions of the board(test object) after the computer move and check if the user
 			//move can be allowed
 			int count = 0;
@@ -1323,7 +1516,7 @@ int main()
 		test3.setBoard(board);
 		test3.setPlayer('X');
 		test3.move = 0;
-		count++;
+		//count++;
 		test3.actions();
 		//if(moveCount >=200)
 		//{
