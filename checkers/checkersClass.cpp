@@ -2,6 +2,7 @@
 #include <vector>
 using namespace std;
 int moveCount = 0;
+int NodeCount = 0;
 int options;
 int utilityCount(char b[8][8]);
 class Node
@@ -221,7 +222,6 @@ position (row,col) else false
 }
 void Node::actions()
 {
-	moveCount++;
 	for(int i = 0;i < 8;i++)
 	{
 		for(int j = 0;j < 8;j++)
@@ -251,6 +251,7 @@ void Node::actions()
 						child1.setPlayer(newplayer);
 						child1.move = move+1;
 						childs.push_back(child1);
+						NodeCount++;
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
 					//Check right diagnoal
@@ -270,6 +271,7 @@ void Node::actions()
 						child1.setPlayer(newplayer);
 						child1.move = move+1;
 						childs.push_back(child1);
+						NodeCount++;
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
 					//Check jumps
@@ -298,6 +300,7 @@ void Node::actions()
 						child1.setPlayer(newplayer);
 						child1.move = move+1;
 						childs.push_back(child1);
+						NodeCount++;
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
 					//Check right diagnoal
@@ -317,6 +320,7 @@ void Node::actions()
 						child1.setPlayer(newplayer);
 						child1.move = move+1;
 						childs.push_back(child1);
+						NodeCount++;
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
 					//Check jumps
@@ -341,6 +345,7 @@ void Node::actions()
 						child1.setPlayer(newplayer);
 						child1.move = move+1;
 						childs.push_back(child1);
+						NodeCount++;
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
 					//Check right diagnoal 'X'
@@ -357,6 +362,7 @@ void Node::actions()
 						child1.setPlayer(newplayer);
 						child1.move = move+1;
 						childs.push_back(child1);
+						NodeCount++;
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
 					//Check left diagnoal 'O';
@@ -373,6 +379,7 @@ void Node::actions()
 						child1.setPlayer(newplayer);
 						child1.move = move+1;
 						childs.push_back(child1);
+						NodeCount++;
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
 					//Check right diagnoal 'O'
@@ -389,6 +396,7 @@ void Node::actions()
 						child1.setPlayer(newplayer);
 						child1.move = move+1;
 						childs.push_back(child1);
+						NodeCount++;
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}		
 					//Check jumps
@@ -414,6 +422,7 @@ void Node::actions()
 						child1.setPlayer(newplayer);
 						child1.move = move+1;
 						childs.push_back(child1);
+						NodeCount++;
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
 					//Check right diagnoal 'X'
@@ -430,6 +439,7 @@ void Node::actions()
 						child1.setPlayer(newplayer);
 						child1.move = move+1;
 						childs.push_back(child1);
+						NodeCount++;
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
 					//Check left diagnoal 'O';
@@ -446,6 +456,7 @@ void Node::actions()
 						child1.setPlayer(newplayer);
 						child1.move = move+1;
 						childs.push_back(child1);
+						NodeCount++;
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}
 					//Check right diagnoal 'O'
@@ -462,6 +473,7 @@ void Node::actions()
 						child1.setPlayer(newplayer);
 						child1.move = move+1;
 						childs.push_back(child1);
+						NodeCount++;
 						copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 					}		
 					//Check jumps
@@ -503,6 +515,7 @@ void Node::kjump(char board[][8],int row,int col,char player)
 		child1.setPlayer(newplayer);
 		child1.move = move+1;
 		childs.push_back(child1);
+		NodeCount++;
 	}
 	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 	
@@ -517,6 +530,7 @@ void Node::kjump(char board[][8],int row,int col,char player)
 		child1.setPlayer(newplayer);
 		child1.move = move+1;
 		childs.push_back(child1);
+		NodeCount++;
 	}
 	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 	
@@ -531,6 +545,7 @@ void Node::kjump(char board[][8],int row,int col,char player)
 		child1.setPlayer(newplayer);
 		child1.move = move+1;
 		childs.push_back(child1);
+		NodeCount++;
 	}
 	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 
@@ -545,6 +560,7 @@ void Node::kjump(char board[][8],int row,int col,char player)
 		child1.setPlayer(newplayer);
 		child1.move = move+1;
 		childs.push_back(child1);
+		NodeCount++;
 	}
 	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 }
@@ -857,6 +873,7 @@ void Node::jump(char board[][8],int row,int col,char player)
 		child1.setPlayer(newplayer);
 		child1.move = move+1;
 		childs.push_back(child1);
+		NodeCount++;
 	}
 	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 	jumpright(newboard,row,col,player,crow,ccol);
@@ -872,6 +889,7 @@ void Node::jump(char board[][8],int row,int col,char player)
 		child1.setPlayer(newplayer);
 		child1.move = move+1;
 		childs.push_back(child1);
+		NodeCount++;
 	}
 	copy(&board[0][0],&board[0][0]+8*8,&newboard[0][0]);
 }
@@ -1102,7 +1120,6 @@ int max_value(Node &n,int alpha,int beta)
 	//cout<<"Childs size is:"<<<<endl;
 	//n.displayBoard();
 	//cout<<"For loop Started"<<endl;
-	//cout<<"MoveCount is:"<<moveCount<<endl;
 	for(int i = 0; i < n.childs.size(); i++)
 	{
 		n.v = max(n.v,min_value(n.childs[i],alpha,beta));
@@ -1176,8 +1193,103 @@ int utilityCount(char b[8][8])
 		return xcount - ocount;
 	return ocount - xcount;
 }	
-/*
-void comVuser(char player,int row,int column,int nrow,int ncolumn,bool flag,bool flag2,char board[][8],char newboard[][8])
+void comVcom(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &flag,bool &flag2,char board[][8],char newboard[][8])
+{
+	while(flag2)
+	{
+		options = 1;
+		Node test;
+		test.setBoard(board);
+		test.setPlayer('X');
+		test.move = 0;
+		alpha_beta_search(test,board);
+		
+		cout<<"After Computer X Turn board is:"<<endl;
+		moveCount++;
+		printBoard(board);
+		Node test1;
+		test1.setBoard(board);
+		test1.setPlayer('O');
+		test1.move = 0;
+		test1.actions();
+		//Subtract the size of actions() from NodeCount
+		NodeCount -= test1.childs.size();
+		if(test1.terminal())
+		{
+			cout<<"Length of Game Path:"<<moveCount<<endl;
+			cout<<"No of Nodes Generated:"<<NodeCount<<endl;
+			int w = test1.utility();
+			if(w == 20)
+			{
+				cout<<"Computer X Won the game"<<endl;
+				exit(0);
+			}
+			else if(w == -20)
+			{
+				cout<<"Computer O Won the game"<<endl;
+				exit(0);
+			}
+			else
+			{
+				cout<<"Game Tie"<<endl;
+				exit(0);
+			}
+		}
+		if(moveCount >= 60)
+		{
+			cout<<"Game Tie"<<endl;
+			cout<<"Length of Game Path:"<<moveCount<<endl;
+			cout<<"No of Nodes Generated:"<<NodeCount<<endl;
+			exit(0);
+		}
+		options = 2;
+		Node test2;
+		test2.setBoard(board);
+		test2.setPlayer('O');
+		test2.move = 0;
+		alpha_beta_search(test2,board);
+
+		cout<<"After Computer O Turn board is:"<<endl;
+		moveCount++;
+		printBoard(board);
+		Node test3;
+		test3.setBoard(board);
+		test3.setPlayer('X');
+		test3.move = 0;
+		test3.actions();
+		//Subtract the size of actions() from NodeCount
+		NodeCount -= test3.childs.size();
+		if(test3.terminal())
+		{
+			cout<<"Length of Game Path:"<<moveCount<<endl;
+			cout<<"No of Nodes Generated:"<<NodeCount<<endl;
+			int w = test3.utility();
+			if(w == 20)
+			{
+				cout<<"Computer X Won the game"<<endl;
+				exit(0);
+			}
+			else if(w == -20)
+			{
+				cout<<"Computer O Won the game"<<endl;
+				exit(0);
+			}
+			else
+			{
+				cout<<"Game Tie"<<endl;
+				exit(0);
+			}	
+		}
+		if(moveCount >= 60)
+		{
+			cout<<"Game Tie"<<endl;
+			cout<<"Length of Game Path:"<<moveCount<<endl;
+			cout<<"No of Nodes Generated:"<<NodeCount<<endl;
+			exit(0);
+		}
+	}
+}
+void comVuser(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &flag,bool &flag2,char board[][8],char newboard[][8])
 {
 	while(flag2)
 	{
@@ -1189,7 +1301,7 @@ void comVuser(char player,int row,int column,int nrow,int ncolumn,bool flag,bool
 		//count++;
 		alpha_beta_search(test,board);
 		cout<<"After Computer Turn board is:"<<endl;
-		//moveCount++;
+		moveCount++;
 		printBoard(board);
 		Node test1;
 		test1.setBoard(board);
@@ -1198,19 +1310,19 @@ void comVuser(char player,int row,int column,int nrow,int ncolumn,bool flag,bool
 		test1.move = 0;
 		//count++;
 		test1.actions();
-		//if(moveCount >=200)
-		//{
-		//moveCount = 0;
-		//}
+		//Subtract the size of actions() from NodeCount
+		NodeCount -= test1.childs.size();
 		if(test1.terminal())
 		{
+			cout<<"Length of Game Path:"<<moveCount<<endl;
+			cout<<"No of Nodes Generated:"<<NodeCount<<endl;
 			int w = test1.utility();
-			if(w == 1)
+			if(w == 20)
 			{
 				cout<<"Computer Won the game"<<endl;
 				exit(0);
 			}
-			else if(w == -1)
+			else if(w == -20)
 			{
 				cout<<"You Won the game"<<endl;
 				exit(0);
@@ -1220,6 +1332,13 @@ void comVuser(char player,int row,int column,int nrow,int ncolumn,bool flag,bool
 				cout<<"Game Tie"<<endl;
 				exit(0);
 			}
+		}
+		if(moveCount >= 60)
+		{
+			cout<<"Game Tie"<<endl;
+			cout<<"Length of Game Path:"<<moveCount<<endl;
+			cout<<"No of Nodes Generated:"<<NodeCount<<endl;
+			exit(0);
 		}
 		cout << "Your Turn"<<endl;
 		
@@ -1265,6 +1384,8 @@ void comVuser(char player,int row,int column,int nrow,int ncolumn,bool flag,bool
 			test2.move = 0;
 			//count++;
 			test2.actions();
+			//Subtract the size of actions() from NodeCount
+			NodeCount -= test2.childs.size();
 			//cout<<"Printing Actions"<<endl;
 			//test2.printActions();
 			//The move can make the player coin a king
@@ -1316,7 +1437,7 @@ void comVuser(char player,int row,int column,int nrow,int ncolumn,bool flag,bool
 			}
 		}while(flag);
 		cout<<"After Your Turn board is:"<<endl;
-		//moveCount++;
+		moveCount++;
 		printBoard(board);
 		Node test3;
 		test3.setBoard(board);
@@ -1324,19 +1445,19 @@ void comVuser(char player,int row,int column,int nrow,int ncolumn,bool flag,bool
 		test3.move = 0;
 		//count++;
 		test3.actions();
-		//if(moveCount >=200)
-		//{
-		//moveCount = 0;
-		//}
+		//Subtract the size of actions() from NodeCount
+		NodeCount -= test3.childs.size();
 		if(test3.terminal())
 		{
+			cout<<"Length of Game Path:"<<moveCount<<endl;
+			cout<<"No of Nodes Generated:"<<NodeCount<<endl;
 			int w = test3.utility();
-			if(w == 1)
+			if(w == 20)
 			{
 				cout<<"Computer Won the game"<<endl;
 				exit(0);
 			}
-			else if(w == -1)
+			else if(w == -20)
 			{
 				cout<<"You Won the game"<<endl;
 				exit(0);
@@ -1347,9 +1468,16 @@ void comVuser(char player,int row,int column,int nrow,int ncolumn,bool flag,bool
 				exit(0);
 			}	
 		}
+		if(moveCount >= 60)
+		{
+			cout<<"Game Tie"<<endl;
+			cout<<"Length of Game Path:"<<moveCount<<endl;
+			cout<<"No of Nodes Generated:"<<NodeCount<<endl;
+			exit(0);
+		}
 	}
 }
-*/
+
 int main()
 {
 	char player = 'X';
@@ -1369,177 +1497,29 @@ int main()
 		{'_','O','_','O','_','O','_','O'},
 		{'O','_','O','_','O','_','O','_'}
 	};
-	options = 1;
-	//comVuser(player,row,column,nrow,ncolumn,flag,flag2,board,newboard);
-	cout<<"No Problem"<<endl;
-	while(flag2)
+		
+	cout<<"Available Options are:"<<endl;
+	cout<<"1.Computer Vs User"<<endl;
+	cout<<"2.Computer Vs Computer"<<endl;
+	cout<<"3.Exit"<<endl;
+	cout<<"Choose one of the above options: ";
+	do
 	{
-		Node test;
-		test.setBoard(board);
-		test.setPlayer('X');
-		//test.move = count;
-		test.move = 0;
-		//count++;
-		cout<<"No Problem"<<endl;
-		alpha_beta_search(test,board);
-		cout<<"Executed"<<endl;
-		cout<<"After Computer Turn board is:"<<endl;
-		//moveCount++;
-		printBoard(board);
-		Node test1;
-		test1.setBoard(board);
-		test1.setPlayer('O');
-		//test1.move = count;
-		test1.move = 0;
-		//count++;
-		test1.actions();
-		//if(moveCount >=200)
-		//{
-		//moveCount = 0;
-		//}
-		if(test1.terminal())
-		{
-			int w = test1.utility();
-			if(w == 1)
-			{
-				cout<<"Computer Won the game"<<endl;
-				exit(0);
-			}
-			else if(w == -1)
-			{
-				cout<<"You Won the game"<<endl;
-				exit(0);
-			}
-			else
-			{
-				cout<<"Game Tie"<<endl;
-				exit(0);
-			}
-		}
-		cout << "Your Turn"<<endl;
-		//Create a copy of board and store it in newboard and do the following changed on new board
-		for(int i=0;i<8;i++)
-		{
-			for(int j=0;j<8;j++)
-			{
-				newboard[i][j] = board[i][j];
-			}
-		}
-		do
-		{
-			do
-			{
-				cout << "Choose a Row to move from(0-7): ";
-				cin >> row;
-				cout << "Choose a Column to move from(0-7): "<<endl;
-				cin >> column;
-				cout <<"Choose a Row to make a move to that position(0-7): ";
-				cin>>nrow;
-				cout<<"Choose a Column to make a move to that position(0-7): ";
-				cin>>ncolumn;
-				//Both the columns should match and that move should be valid
-				if(!((row >=0 && row <=7) && (column >=0 && column <=7) && (nrow >=0 && nrow <=7) && (ncolumn >=0 && ncolumn <=7)))
-				{
-					cout<<"Invalid row and Column Selected"<<endl;
-					flag = true;
-				}
-				else
-				{
-					flag = false;
-				}
-			}while(flag);
-			if(flag)
-				cout<<"True"<<endl;
-			else
-				cout<<"False"<<endl;
-			Node test2;
-			test2.setBoard(newboard);
-			test2.setPlayer('O');
-			test2.move = 0;
-			//count++;
-			test2.actions();
-			//cout<<"Printing Actions"<<endl;
-			//test2.printActions();
-			//The move can make the player coin a king
-			if(nrow == 0)
-			{
-				newboard[nrow][ncolumn] = 'P';
-			}
-			else
-			{
-				newboard[nrow][ncolumn] = newboard[row][column];
-			}
-			newboard[row][column] = '_';
-			cout<<"Before checking if the action can be made board is:"<<endl;
-			printBoard(newboard);
-			//To make sure that the move is valid derive the actions of the board(test object) after the computer move and check if the user
-			//move can be allowed
-			int count = 0;
-			for(int i=0;i<test2.childs.size();i++)
-			{
-				if(checkPlayersEquality(newboard,test2.childs[i].board))
-				{
-					//copy the action into board
-					//cout<<"Action Found"<<endl;
-					for(int j=0;j<8;j++)
-					{
-						for(int k=0;k<8;k++)
-							board[j][k] = test2.childs[i].board[j][k];
-					}
-					count++;
-					break;
-				}
-			}
-			if(count == 0)
-			{
-				//Action cannot be made
-				flag = true;
-				cout<<"Action Cannot be made.Choose a Valid Action"<<endl;
-				for(int i=0;i<8;i++)
-				{
-					for(int j=0;j<8;j++)
-					{
-						newboard[i][j] = board[i][j];
-					}
-				}
-			}
-			else
-			{
-				//Action can be made
-				flag = false;
-			}
-		}while(flag);
-		cout<<"After Your Turn board is:"<<endl;
-		//moveCount++;
-		printBoard(board);
-		Node test3;
-		test3.setBoard(board);
-		test3.setPlayer('X');
-		test3.move = 0;
-		//count++;
-		test3.actions();
-		//if(moveCount >=200)
-		//{
-		//moveCount = 0;
-		//}
-		if(test3.terminal())
-		{
-			int w = test3.utility();
-			if(w == 1)
-			{
-				cout<<"Computer Won the game"<<endl;
-				exit(0);
-			}
-			else if(w == -1)
-			{
-				cout<<"You Won the game"<<endl;
-				exit(0);
-			}
-			else
-			{
-				cout<<"Game Tie"<<endl;
-				exit(0);
-			}	
-		}
+		cin>>options;
+	}while( options != 1 && options != 2 && options != 3);
+	if(options == 1)
+	{
+		cout<<"Computer Turn...."<<endl;
+		comVuser(player,row,column,nrow,ncolumn,flag,flag2,board,newboard);
+	}
+	else if(options == 3)
+	{
+		cout<<"Thank You."<<endl;
+		exit(0);
+	}
+	else if(options == 2)
+	{
+		//Computer Vs Computer
+		comVcom(player,row,column,nrow,ncolumn,flag,flag2,board,newboard);
 	}
 }
