@@ -157,7 +157,7 @@ position (row,col) else false
 	{
 		nrow = row + 2;
 		ncol = col - 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && board[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && board[nrow][ncol] == '_'))
 		{
 			if(board[nrow-1][ncol+1] == 'O' || board[nrow-1][ncol+1] == 'P')
 			{
@@ -171,7 +171,7 @@ position (row,col) else false
 	{
 		nrow = row - 2;
 		ncol = col - 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && board[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && board[nrow][ncol] == '_'))
 		{
 			if(board[nrow+1][ncol+1] == 'X' || board[nrow+1][ncol+1] == 'Y')
 			{
@@ -194,7 +194,7 @@ position (row,col) else false
 	{
 		nrow = row + 2;
 		ncol = col + 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && board[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && board[nrow][ncol] == '_'))
 		{
 			if(board[nrow-1][ncol-1] == 'O' || board[nrow-1][ncol-1] == 'P')
 			{
@@ -208,7 +208,7 @@ position (row,col) else false
 	{
 		nrow = row - 2;
 		ncol = col + 2;
-		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && nrow <= 7 && board[nrow][ncol] == '_'))
+		if((nrow >= 0 && nrow <= 7 && ncol >= 0 && ncol <= 7 && board[nrow][ncol] == '_'))
 		{
 			if(board[nrow+1][ncol-1] == 'X' || board[nrow+1][ncol-1] == 'Y')
 			{
@@ -1374,10 +1374,12 @@ void comVuser(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &fla
 					flag = false;
 				}
 			}while(flag);
+			/*
 			if(flag)
 				cout<<"True"<<endl;
 			else
 				cout<<"False"<<endl;
+			*/
 			Node test2;
 			test2.setBoard(newboard);
 			test2.setPlayer('O');
