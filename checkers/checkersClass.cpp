@@ -71,13 +71,13 @@ bool Node::terminal()
 	//If there are no actions then return true
 	if(childs.size() == 0)
 		return true;
-	if(move >= 10)
+	if(move >= 9)
 	{
 		return true;
 	}
 	return false;
 	//There can be many more conditions
-	//1) The game contines and cannot stop i.e in like 100 steps or something like that
+	//1) The game continues and cannot stop i.e in like 100 steps or something like that
 }
 void Node::printActions()
 {
@@ -1066,6 +1066,7 @@ void printBoard(char array2D[][8])
 void alpha_beta_search(Node n,char array2D[][8]) 
 {
 	n.v = max_value(n,-100,100);
+
 	//cout<<"Selected v value in alpha_beta_search is:"<<n.v<<endl;
 	//cout<<"No of Chils for this node are: "<<n.childs.size()<<endl;
 	for(int i = 0; i < n.childs.size();i++)
@@ -1085,9 +1086,10 @@ void alpha_beta_search(Node n,char array2D[][8])
 	}
 	for (int i = 0; i < n.childs.size(); i++) 
 	{
+		//cout<<endl<<endl<<n.childs[i].v<<endl<<endl;
 		if (n.childs[i].v == n.v) 
 		{
-			// found store it into a 2-D array and return the array
+			//cout<<"found store it into a 2-D array and return the array"<<endl;
 			//cout<<"Found"<<endl;
 			for(int h = 0; h < 8 ;h++)
 			{
@@ -1116,7 +1118,8 @@ int max_value(Node &n,int alpha,int beta)
 		return n.utility();
 	}
 	//cout<<"If End"<<endl;
-	n.v = -5;
+	//n.v = -5;
+	n.v = -30;
 	//cout<<"Childs size is:"<<<<endl;
 	//n.displayBoard();
 	//cout<<"For loop Started"<<endl;
@@ -1145,7 +1148,8 @@ int min_value(Node &n,int alpha,int beta)
 		//cout<<"Min End"<<endl;
 		return n.utility();
 	}
-	n.v = 5;
+	//n.v = 5;
+	n.v = 30;
 	for(int i = 0; i < n.childs.size(); i++)
 	{
 		n.v = min(n.v,max_value(n.childs[i],alpha,beta));
@@ -1224,18 +1228,8 @@ void comVcom(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &flag
 				cout<<"Computer X Won the game"<<endl;
 				exit(0);
 			}
-			else if(w == -20)
-			{
-				cout<<"Computer O Won the game"<<endl;
-				exit(0);
-			}
-			else
-			{
-				cout<<"Game Tie"<<endl;
-				exit(0);
-			}
 		}
-		if(moveCount >= 60)
+		if(moveCount >= 80)
 		{
 			cout<<"Game Tie"<<endl;
 			cout<<"Length of Game Path:"<<moveCount<<endl;
@@ -1266,21 +1260,11 @@ void comVcom(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &flag
 			int w = test3.utility();
 			if(w == 20)
 			{
-				cout<<"Computer X Won the game"<<endl;
-				exit(0);
-			}
-			else if(w == -20)
-			{
 				cout<<"Computer O Won the game"<<endl;
-				exit(0);
-			}
-			else
-			{
-				cout<<"Game Tie"<<endl;
 				exit(0);
 			}	
 		}
-		if(moveCount >= 60)
+		if(moveCount >= 80)
 		{
 			cout<<"Game Tie"<<endl;
 			cout<<"Length of Game Path:"<<moveCount<<endl;
@@ -1293,6 +1277,7 @@ void comVuser(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &fla
 {
 	while(flag2)
 	{
+		options = 1;
 		Node test;
 		test.setBoard(board);
 		test.setPlayer('X');
@@ -1322,24 +1307,15 @@ void comVuser(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &fla
 				cout<<"Computer Won the game"<<endl;
 				exit(0);
 			}
-			else if(w == -20)
-			{
-				cout<<"You Won the game"<<endl;
-				exit(0);
-			}
-			else
-			{
-				cout<<"Game Tie"<<endl;
-				exit(0);
-			}
 		}
-		if(moveCount >= 60)
+		if(moveCount >= 80)
 		{
 			cout<<"Game Tie"<<endl;
 			cout<<"Length of Game Path:"<<moveCount<<endl;
 			cout<<"No of Nodes Generated:"<<NodeCount<<endl;
 			exit(0);
 		}
+		options = 2;
 		cout << "Your Turn"<<endl;
 		
 
@@ -1456,21 +1432,11 @@ void comVuser(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &fla
 			int w = test3.utility();
 			if(w == 20)
 			{
-				cout<<"Computer Won the game"<<endl;
-				exit(0);
-			}
-			else if(w == -20)
-			{
 				cout<<"You Won the game"<<endl;
-				exit(0);
-			}
-			else
-			{
-				cout<<"Game Tie"<<endl;
 				exit(0);
 			}	
 		}
-		if(moveCount >= 60)
+		if(moveCount >= 80)
 		{
 			cout<<"Game Tie"<<endl;
 			cout<<"Length of Game Path:"<<moveCount<<endl;
@@ -1499,7 +1465,19 @@ int main()
 		{'_','O','_','O','_','O','_','O'},
 		{'O','_','O','_','O','_','O','_'}
 	};
-		
+	/*
+	char board[8][8] =
+	{
+		{'_','_','_','_','_','_','_','_'},
+		{'_','_','_','_','_','_','_','_'},
+		{'_','_','_','_','_','_','_','_'},
+		{'_','_','_','_','_','_','_','_'},
+		{'_','_','_','_','_','_','_','X'},
+		{'_','_','X','_','X','_','_','_'},
+		{'_','_','_','X','_','_','_','X'},
+		{'_','_','Y','_','P','_','_','_'}
+	};
+	*/
 	cout<<"Available Options are:"<<endl;
 	cout<<"1.Computer Vs User"<<endl;
 	cout<<"2.Computer Vs Computer"<<endl;
