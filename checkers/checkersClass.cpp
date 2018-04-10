@@ -1,13 +1,15 @@
 #include <iostream>
 #include <vector>
 using namespace std;
+
 int moveCount = 0;
 int NodeCount = 0;
 int options;
-int utilityCount(char b[8][8]);
+
 class Node
 {
 public:
+	int utilityCount();
 	char board[8][8],player;
 	vector<Node>childs;
 	int v;
@@ -38,10 +40,12 @@ public:
 	bool ktoprightend(char board[][8],int row,int col,char player);
 	bool terminal();
 };
+
 void alpha_beta_search(Node n,char [][8]);
 int max_value(Node &n, int alpha, int beta);
 int min_value(Node &n, int alpha, int beta);
 void printBoard(char s[][8]);
+
 int Node::utility()
 {
 	if(options == 1)
@@ -64,14 +68,14 @@ int Node::utility()
 				return -20;
 		}
 	}
-	return utilityCount(board);
+	return utilityCount();
 }
 bool Node::terminal()
 {
 	//If there are no actions then return true
 	if(childs.size() == 0)
 		return true;
-	if(move >= 9)
+	if(move >= 5)
 	{
 		return true;
 	}
@@ -1180,16 +1184,16 @@ bool checkPlayersEquality(char u[][8],char a[][8])
 	}
 	return true;
 }
-int utilityCount(char b[8][8])
+int Node::utilityCount()
 {
 	int xcount = 0,ocount = 0;
 	for(int i=0;i<8;i++)
 	{
 		for(int j=0;j<8;j++)
 		{
-			if(b[i][j] == 'X' || b[i][j] == 'Y')
+			if(board[i][j] == 'X' || board[i][j] == 'Y')
 				xcount++;
-			else if(b[i][j] == 'O' || b[i][j] == 'P')
+			else if(board[i][j] == 'O' || board[i][j] == 'P')
 				ocount++;
 		}
 	}
@@ -1318,7 +1322,7 @@ void comVuser(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &fla
 		options = 2;
 		cout << "Your Turn"<<endl;
 		
-
+		int tempNodeCount = NodeCount;
 		//Create a copy of board and store it in newboard and do the following changed on new board
 		for(int i=0;i<8;i++)
 		{
@@ -1415,6 +1419,9 @@ void comVuser(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &fla
 			}
 		}while(flag);
 		cout<<"After Your Turn board is:"<<endl;
+		/* Deletes all the nodes which are generated for checking 
+		it it's a valid move or not */
+		NodeCount -= tempNodeCount;
 		moveCount++;
 		printBoard(board);
 		Node test3;
