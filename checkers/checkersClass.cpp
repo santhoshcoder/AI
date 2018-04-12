@@ -1070,9 +1070,9 @@ void printBoard(char array2D[][8])
 void alpha_beta_search(Node n,char array2D[][8]) 
 {
 	n.v = max_value(n,-100,100);
-
 	//cout<<"Selected v value in alpha_beta_search is:"<<n.v<<endl;
 	//cout<<"No of Chils for this node are: "<<n.childs.size()<<endl;
+	/*
 	for(int i = 0; i < n.childs.size();i++)
 	{
 		//cout<<"Action "<<(i+1)<<"Utility value is: "<<n.childs[i].utility()<<endl;
@@ -1088,6 +1088,7 @@ void alpha_beta_search(Node n,char array2D[][8])
 			return ;
 		}
 	}
+	*/
 	for (int i = 0; i < n.childs.size(); i++) 
 	{
 		//cout<<endl<<endl<<n.childs[i].v<<endl<<endl;
