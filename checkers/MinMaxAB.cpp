@@ -1299,11 +1299,11 @@ void comVcom(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &flag
 		}
 	}
 }
-/*
 void comVuser(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &flag,bool &flag2,char board[][8],char newboard[][8])
 {
 	while(flag2)
 	{
+		bestPath.clear();
 		options = 1;
 		Node test;
 		test.setBoard(board);
@@ -1311,7 +1311,15 @@ void comVuser(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &fla
 		//test.move = count;
 		test.move = 0;
 		//count++;
-		alpha_beta_search(test,board);
+		Node comp1 = MinMaxAB(test,test.move,test.player,100,-120);
+		for(int i=0;i<8;i++)
+		{
+			for(int j=0;j<8;j++)
+			{
+				//find child with move 0 and then store it into board
+				board[i][j] = bestPath[bestPath.size() -1].board[i][j];
+			}
+		}
 		cout<<"After Computer Turn board is:"<<endl;
 		moveCount++;
 		printBoard(board);
@@ -1467,7 +1475,6 @@ void comVuser(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &fla
 		}
 	}
 }
-*/
 int main()
 {
 	char player = 'X';
@@ -1512,7 +1519,7 @@ int main()
 	if(options == 1)
 	{
 		cout<<"Computer Turn...."<<endl;
-		//comVuser(player,row,column,nrow,ncolumn,flag,flag2,board,newboard);
+		comVuser(player,row,column,nrow,ncolumn,flag,flag2,board,newboard);
 	}
 	else if(options == 3)
 	{
