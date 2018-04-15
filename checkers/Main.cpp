@@ -1580,6 +1580,97 @@ void comVuserAB(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &f
 		}
 	}
 }
+void abValpha(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &flag,bool &flag2,char board[][8],char newboard[][8])
+{
+	while(flag2)
+	{
+		options = 1;
+		Node test;
+		test.setBoard(board);
+		test.setPlayer('X');
+		test.move = 0;
+		alpha_beta_search(test,board);
+		
+		cout<<"After Computer X Turn board is:"<<endl;
+		moveCount++;
+		printBoard(board);
+		Node test1;
+		test1.setBoard(board);
+		test1.setPlayer('O');
+		test1.move = 0;
+		test1.actions();
+		//Subtract the size of actions() from NodeCount
+		NodeCount -= test1.childs.size();
+		if(test1.terminal())
+		{
+			cout<<"Length of Game Path:"<<moveCount<<endl;
+			cout<<"No of Nodes Generated:"<<NodeCount<<endl;
+			int w = test1.utility();
+			if(w == 20)
+			{
+				cout<<"Computer X Won the game"<<endl;
+				exit(0);
+			}
+		}
+		if(moveCount >= 80)
+		{
+			cout<<"Game Tie"<<endl;
+			cout<<"Length of Game Path:"<<moveCount<<endl;
+			cout<<"No of Nodes Generated:"<<NodeCount<<endl;
+			exit(0);
+		}
+		bestPath.clear();
+		options = 2;
+		Node test2;
+		test2.setBoard(board);
+		test2.setPlayer('O');
+		test2.move = 0;
+		Node comp1 = MinMaxAB(test2,test2.move,test2.player,120,-100);
+		for(int k = bestPath.size() - 1;k>=0;k--)
+		{
+			if(bestPath[k].move == 1)
+			{
+				for(int i=0;i<8;i++)
+				{
+					for(int j=0;j<8;j++)
+					{
+						//find child with move 0 and then store it into board
+						board[i][j] = bestPath[k].board[i][j];
+					}
+				}
+				break;
+			}
+		}
+		cout<<"After Computer O Turn board is:"<<endl;
+		moveCount++;
+		printBoard(board);
+		Node test3;
+		test3.setBoard(board);
+		test3.setPlayer('X');
+		test3.move = 0;
+		test3.actions();
+		//Subtract the size of actions() from NodeCount
+		NodeCount -= test3.childs.size();
+		if(test3.terminal())
+		{
+			cout<<"Length of Game Path:"<<moveCount<<endl;
+			cout<<"No of Nodes Generated:"<<NodeCount<<endl;
+			int w = test3.utility();
+			if(w == 20)
+			{
+				cout<<"Computer O Won the game"<<endl;
+				exit(0);
+			}	
+		}
+		if(moveCount >= 80)
+		{
+			cout<<"Game Tie"<<endl;
+			cout<<"Length of Game Path:"<<moveCount<<endl;
+			cout<<"No of Nodes Generated:"<<NodeCount<<endl;
+			exit(0);
+		}
+	}
+}
 void comVcom(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &flag,bool &flag2,char board[][8],char newboard[][8])
 {
 	while(flag2)
@@ -1869,12 +1960,13 @@ int main()
 	cout<<"2.Computer Vs Computer - Alpha-Beta-Search"<<endl;
 	cout<<"3.Computer Vs User - MinMaxAB"<<endl;
 	cout<<"4.Computer Vs Computer - MinMaxAB"<<endl;
-	cout<<"5.Exit"<<endl;
+	cout<<"5.Alpha-Beta-Search Vs MinMaxAB"<<endl;
+	cout<<"6.Exit"<<endl;
 	cout<<"Choose one of the above options: ";
 	do
 	{
 		cin>>options;
-	}while( !(options >=1 && options <= 5));
+	}while( !(options >=1 && options <= 6));
 	if(options == 1)
 	{
 		cout<<"Computer Turn...."<<endl;
@@ -1895,6 +1987,10 @@ int main()
 		comVcomAB(player,row,column,nrow,ncolumn,flag,flag2,board,newboard);
 	}
 	else if(options == 5)
+	{
+		abValpha(player,row,column,nrow,ncolumn,flag,flag2,board,newboard);
+	}
+	else if(options == 6)
 	{
 		cout<<"Thank You."<<endl;
 		exit(0);
