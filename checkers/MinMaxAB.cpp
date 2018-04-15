@@ -72,7 +72,7 @@ bool Node::terminal()
 	//If there are no actions then return true
 	if(childs.size() == 0)
 		return true;
-	if(move >= 1)
+	if(move >= 5)
 	{
 		return true;
 	}
@@ -1100,19 +1100,47 @@ int Node::utilityCount()
 }
 bool DeepEnough(int d)
 {
-	return d >= 2;
+	return d >= 6;
 }	
 Node MinMaxAB(Node &b,int depth,char player,int ut,int pt)
 {
 	if(DeepEnough(depth))
 	{
 		b.v = b.utility();
+		if(options == 1)
+		{
+			//'X' is Max
+			//'O' is Min
+			if(b.player == 'O')
+				b.v *= -1;
+		}
+		if(options == 2)
+		{
+			//'O' is Max
+			//'X' is Min
+			if(b.player == 'X')
+				b.v *= -1;
+		}
 		return b;
 	}
 	b.actions(); // Generating one ply
 	if(b.childs.size() == 0)
 	{
 		b.v = b.utility();
+		if(options == 1)
+		{
+			//'X' is Max
+			//'O' is Min
+			if(b.player == 'O')
+				b.v *= -1;
+		}
+		if(options == 2)
+		{
+			//'O' is Max
+			//'X' is Min
+			if(b.player == 'X')
+				b.v *= -1;
+		}
 		return b;
 	}
 	for(int i = 0;i<b.childs.size();i++)
@@ -1123,17 +1151,6 @@ Node MinMaxAB(Node &b,int depth,char player,int ut,int pt)
 		{
 			pt = newValue;
 			bestPath.push_back(b.childs[i]);
-			/*
-			if(b.childs[i].move == 1)
-			{
-				cout<<"Depth 1 is pushed"<<endl;
-				printBoard(b.childs[i].board);
-			}
-			else
-			{
-				cout<<"Depth 1 is not pushed"<<endl;
-			}
-			*/
 		}
 		if(pt >= ut)
 		{
@@ -1156,7 +1173,7 @@ void comVcom(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &flag
 		test.move = 0;
 		//alpha_beta_search(test,board);
 		Node comp1 = MinMaxAB(test,test.move,test.player,100,-120);
-		for(int k=0;k<bestPath.size() -1;k++)
+		for(int k = bestPath.size() - 1;k>=0;k--)
 		{
 			if(bestPath[k].move == 1)
 			{
@@ -1210,7 +1227,7 @@ void comVcom(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &flag
 		test2.setPlayer('O');
 		test2.move = 0;
 		comp1 = MinMaxAB(test2,test2.move,test2.player,120,-100);
-		for(int k=0;k<bestPath.size() -1;k++)
+		for(int k = bestPath.size() - 1;k>=0;k--)
 		{
 			if(bestPath[k].move == 1)
 			{
