@@ -1100,12 +1100,13 @@ int Node::utilityCount()
 }
 bool DeepEnough(int d)
 {
-	return d >= 6;
+	return d >= 5;
 }	
 Node MinMaxAB(Node &b,int depth,char player,int ut,int pt)
 {
 	if(DeepEnough(depth))
 	{
+		b.actions(); // DeepEnough doesn't mean the current node is a leaf node.
 		b.v = b.utility();
 		if(options == 1)
 		{
@@ -1121,9 +1122,11 @@ Node MinMaxAB(Node &b,int depth,char player,int ut,int pt)
 			if(b.player == 'X')
 				b.v *= -1;
 		}
+		//You can print the utility value here
 		return b;
 	}
 	b.actions(); // Generating one ply
+	//b.printActions();
 	if(b.childs.size() == 0)
 	{
 		b.v = b.utility();
@@ -1150,12 +1153,17 @@ Node MinMaxAB(Node &b,int depth,char player,int ut,int pt)
 		if(newValue > pt)
 		{
 			pt = newValue;
-			bestPath.push_back(b.childs[i]);
+			if(depth == 0)
+				bestPath.push_back(b.childs[i]);
 		}
 		if(pt >= ut)
 		{
 			b.childs[i].v = pt;
 			return b.childs[i];
+			/*
+			b.v = pt;
+			return b;
+			*/
 		}
 	}
 	b.v = pt;
@@ -1173,6 +1181,7 @@ void comVcom(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &flag
 		test.move = 0;
 		//alpha_beta_search(test,board);
 		Node comp1 = MinMaxAB(test,test.move,test.player,100,-120);
+		/*
 		for(int k = bestPath.size() - 1;k>=0;k--)
 		{
 			if(bestPath[k].move == 1)
@@ -1188,6 +1197,24 @@ void comVcom(char &player,int &row,int &column,int &nrow,int &ncolumn,bool &flag
 				break;
 			}
 		}
+		*/
+		for(int i=0;i<8;i++)
+		{
+			for(int j=0;j<8;j++)
+			{
+				//find child with move 0 and then store it into board
+				board[i][j] = bestPath[bestPath.size() -1].board[i][j];
+			}
+		}
+		/*
+		for(int i=0;i<bestPath.size() - 1;i++)
+		{
+			cout<< bestPath[i].move <<endl;
+			cout<<"*****************************************"<<endl;
+			printBoard(bestPath[i].board);
+			cout<<"*****************************************"<<endl;
+		}
+		*/
 		cout<<"After Computer X Turn board is:"<<endl;
 		moveCount++;
 		printBoard(board);
@@ -1466,11 +1493,11 @@ int main()
 		{'_','_','_','_','_','_','_','_'},
 		{'_','_','_','_','_','_','_','_'},
 		{'_','_','_','_','_','_','_','_'},
+		{'_','_','_','X','_','_','_','_'},
+		{'_','_','X','_','_','_','_','_'},
 		{'_','_','_','_','_','_','_','_'},
-		{'_','_','_','_','_','_','_','X'},
-		{'_','_','X','_','X','_','_','_'},
-		{'_','_','_','X','_','_','_','X'},
-		{'_','_','Y','_','P','_','_','_'}
+		{'_','_','_','_','O','_','_','_'},
+		{'_','_','_','_','_','_','_','_'}
 	};
 	*/
 	cout<<"Available Options are:"<<endl;
